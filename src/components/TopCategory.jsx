@@ -1,21 +1,22 @@
 import Icon from "@mdi/react";
 import { mdiArrowRightThin } from "@mdi/js";
+import { Link } from "react-router-dom";
 
 function TopCategory() {
   return (
-    <section className="max-w-7xl mx-auto px-6 mt-8">
+    <section className="max-w-7xl mx-auto px-6 py-4">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-xl lg:text-2xl font-bold">Kategori Populer</h2>
 
-        <button
-          className="text-sm font-medium text-blue-600 flex items-center gap-1 
-  hover:text-blue-700 transition-colors duration-300 group"
+        <Link
+          to="/kategori"
+          className="text-sm font-medium text-blue-600 flex items-center gap-1 hover:text-blue-700 transition group"
         >
           Selengkapnya
-          <span className="transform transition-transform duration-300 group-hover:translate-x-1">
+          <span className="transition group-hover:translate-x-1">
             <Icon path={mdiArrowRightThin} size={1} />
           </span>
-        </button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

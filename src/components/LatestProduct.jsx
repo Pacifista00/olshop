@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Icon from "@mdi/react";
-import { mdiArrowRightThin } from "@mdi/js";
+import { mdiArrowRightThin, mdiPlus } from "@mdi/js";
+import { Link } from "react-router-dom";
 
 export default function LatestProduct() {
   const products = [
@@ -65,36 +66,31 @@ export default function LatestProduct() {
     scrollLeft = dragRef.current.scrollLeft;
   };
 
-  const handleMouseLeave = () => {
-    isDown = false;
-  };
-
-  const handleMouseUp = () => {
-    isDown = false;
-  };
+  const handleMouseLeave = () => (isDown = false);
+  const handleMouseUp = () => (isDown = false);
 
   const handleMouseMove = (e) => {
     if (!isDown) return;
     e.preventDefault();
     const x = e.pageX - dragRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // speed
+    const walk = (x - startX) * 1.5;
     dragRef.current.scrollLeft = scrollLeft - walk;
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-4 ">
+    <section className="max-w-7xl mx-auto px-6 py-4">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-xl lg:text-2xl font-bold">Produk Terbaru</h2>
 
-        <button
-          className="text-sm font-medium text-blue-600 flex items-center gap-1 
-        hover:text-blue-700 transition-colors duration-300 group"
+        <Link
+          to="/produk"
+          className="text-sm font-medium text-blue-600 flex items-center gap-1 hover:text-blue-700 transition group"
         >
           Selengkapnya
-          <span className="transform transition-transform duration-300 group-hover:translate-x-1">
+          <span className="transition group-hover:translate-x-1">
             <Icon path={mdiArrowRightThin} size={1} />
           </span>
-        </button>
+        </Link>
       </div>
 
       {/* MOBILE: drag-to-scroll */}
@@ -110,8 +106,13 @@ export default function LatestProduct() {
           {products.map((p) => (
             <div
               key={p.id}
-              className="min-w-[90px] bg-white shadow rounded-lg p-2 select-none flex flex-col justify-between h-[140px]"
+              className="relative min-w-[90px] bg-white shadow rounded-lg p-2 select-none flex flex-col justify-between h-[140px]"
             >
+              {/* BUTTON + */}
+              <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center hover:scale-110 transition">
+                <Icon path={mdiPlus} size={0.7} />
+              </button>
+
               <img
                 src={p.img}
                 alt={p.title}
@@ -126,13 +127,18 @@ export default function LatestProduct() {
         </div>
       </div>
 
-      {/* DESKTOP: grid */}
+      {/* DESKTOP GRID */}
       <div className="hidden lg:grid lg:grid-cols-8 gap-4">
         {products.map((p) => (
           <div
             key={p.id}
-            className="bg-white shadow rounded-lg p-2 flex flex-col justify-between h-[180px]"
+            className="relative bg-white shadow rounded-lg p-2 h-[180px]"
           >
+            {/* BUTTON + */}
+            <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center hover:scale-110 transition cursor-pointer">
+              <Icon path={mdiPlus} size={0.8} />
+            </button>
+
             <img
               src={p.img}
               alt={p.title}

@@ -2,6 +2,8 @@ import Carousel from "../components/Carousel";
 import LatestProduct from "../components/LatestProduct";
 import Navbar from "../components/Navbar";
 import TopCategory from "../components/TopCategory";
+import MostProduct from "../components/MostProduct";
+import Footer from "../components/Footer";
 
 function Home() {
   return (
@@ -12,6 +14,8 @@ function Home() {
       </div>
       <LatestProduct />
       <TopCategory />
+      <MostProduct />
+      <Footer />
     </>
   );
 }
