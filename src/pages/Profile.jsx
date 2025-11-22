@@ -330,7 +330,7 @@ const ProfilePage = () => {
 
   return (
     // Padding responsif: p-4 di mobile, sm:p-8 di tablet/desktop
-    <div className=" min-h-screen">
+    <div className=" min-h-screen text-gray-800">
       <Navbar />
       <div className="max-w-7xl mx-auto px-6 py-4 pb-10 text-center pt-44 md:pt-40">
         <h2 className="text-xl lg:text-2xl font-bold text-gray-800 mb-8 text-start">

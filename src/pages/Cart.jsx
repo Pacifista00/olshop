@@ -53,7 +53,7 @@ const ShoppingCart = () => {
   }, [cart]);
 
   return (
-    <>
+    <div className="text-gray-800">
       <Navbar />
       <div className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
         <h1 className="text-xl lg:text-2xl font-bold text-gray-900 mb-8">
@@ -91,24 +91,24 @@ const ShoppingCart = () => {
             {/* Bagian Kanan: Ringkasan Pesanan */}
             <div className="lg:w-1/4">
               <div className="sticky top-4 bg-white p-6 rounded-lg shadow-xl border border-indigo-100">
-                <h2 className="text-xl font-bold text-gray-900 mb-4 border-b pb-3">
+                <h2 className="text-lg font-bold text-gray-900 mb-4 border-b pb-3">
                   Ringkasan Pesanan
                 </h2>
 
-                <div className="space-y-3">
-                  <div className="flex justify-between text-base">
+                <div className="space-y-3 text-sm lg:text-base">
+                  <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal Produk</span>
                     <span className="font-medium">
                       Rp {cartTotal.toLocaleString("id-ID")}
                     </span>
                   </div>
 
-                  <div className="flex justify-between text-base">
+                  <div className="flex justify-between">
                     <span className="text-gray-600">Biaya Pengiriman</span>
                     <span className="font-medium text-green-600">Gratis</span>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-200 flex justify-between text-xl font-bold">
+                  <div className="pt-4 border-t border-gray-200 flex justify-between text-base lg:text-md font-bold">
                     <span>Total Bayar</span>
                     <span className="text-blue-600">
                       Rp {cartTotal.toLocaleString("id-ID")}
@@ -116,7 +116,7 @@ const ShoppingCart = () => {
                   </div>
                 </div>
 
-                <button className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-lg">
+                <button className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-sm">
                   Lanjutkan ke Pembayaran
                 </button>
 
@@ -129,7 +129,7 @@ const ShoppingCart = () => {
         )}
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

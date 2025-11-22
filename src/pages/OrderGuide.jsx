@@ -82,8 +82,10 @@ export default function OrderGuide() {
     <div className="text-gray-800">
       <Navbar />
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
-        <h2 className="text-3xl font-bold text-center mb-4">Cara Belanja</h2>
-        <p className="text-center text-gray-600 mb-10">
+        <h2 className="text-xl lg:text-2xl font-bold text-center mb-4">
+          Cara Belanja
+        </h2>
+        <p className="text-center text-gray-600 mb-10 text-sm">
           Ikuti langkah-langkah berikut untuk melakukan pemesanan dengan mudah
           dan aman di website kami.
         </p>
@@ -99,7 +101,9 @@ export default function OrderGuide() {
                 <Icon path={step.icon} size={1} className="text-blue-600" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold">{step.title}</h3>
+                <h3 className="text-md lg:text-lg font-semibold">
+                  {step.title}
+                </h3>
                 <p className="text-gray-600 text-sm mt-1">{step.desc}</p>
               </div>
             </div>
@@ -107,10 +111,10 @@ export default function OrderGuide() {
         </div>
 
         {/* Metode Pembayaran Midtrans */}
-        <h2 className="text-2xl font-bold mb-4">
+        <h2 className="text-xl lg:text-2xl font-bold mb-4">
           Metode Pembayaran (Midtrans)
         </h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 mb-6 text-sm">
           Kami menggunakan <strong>Midtrans</strong> sebagai penyedia gateway
           pembayaran yang aman, cepat, dan terpercaya. Anda dapat memilih
           berbagai metode pembayaran sesuai kebutuhan.
@@ -126,7 +130,7 @@ export default function OrderGuide() {
                 <Icon path={m.icon} size={1} className="text-orange-600" />
               </div>
               <div>
-                <h3 className="font-bold">{m.title}</h3>
+                <h3 className="text-md lg:text-lg font-bold">{m.title}</h3>
                 <p className="text-sm text-gray-600 mt-1">{m.detail}</p>
               </div>
             </div>
@@ -134,35 +138,42 @@ export default function OrderGuide() {
         </div>
 
         {/* Catatan Tambahan */}
-        <h2 className="text-2xl font-bold mb-4">Informasi Penting</h2>
+        <h2 className="text-xl lg:text-2xl font-bold mb-4">
+          Informasi Penting
+        </h2>
 
-        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-5 text-sm rounded-xl space-y-2">
-          <p>
-            • Pesanan otomatis dibatalkan jika pembayaran tidak dilakukan dalam
-            waktu <strong>1 × 24 jam</strong>.
-          </p>
-          <p>
-            • Seluruh pembayaran diproses oleh Midtrans, sehingga{" "}
-            <strong>kami tidak menyimpan data kartu kredit Anda</strong>.
-          </p>
-          <p>
-            • Jika pembayaran sudah dilakukan namun status belum berubah, proses
-            verifikasi biasanya memerlukan waktu 1–3 menit.
-          </p>
-          <p>
-            • Jika mengalami kendala pembayaran, silakan hubungi CS kami melalui
-            WhatsApp.
-          </p>
+        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-5 text-sm rounded-xl">
+          <ul className="space-y-2 list-disc **list-outside** px-3">
+            <li className="text-gray-700 **pl-6**">
+              Pesanan otomatis dibatalkan jika pembayaran tidak dilakukan dalam
+              waktu <strong className="font-semibold">1 × 24 jam</strong>.
+            </li>
+            <li className="text-gray-700 **pl-6**">
+              Seluruh pembayaran diproses oleh Midtrans, sehingga{" "}
+              <strong className="font-semibold">
+                kami tidak menyimpan data kartu kredit Anda
+              </strong>
+              .
+            </li>
+            <li className="text-gray-700 **pl-6**">
+              Jika pembayaran sudah dilakukan namun status belum berubah, proses
+              verifikasi biasanya memerlukan waktu 1–3 menit.
+            </li>
+            <li className="text-gray-700 **pl-6**">
+              Jika mengalami kendala pembayaran, silakan hubungi CS kami melalui
+              WhatsApp.
+            </li>
+          </ul>
         </div>
 
         {/* Bantuan */}
         <div className="text-center mt-10">
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm">
             Masih mengalami kendala? Kami siap membantu.
           </p>
           <a
             href="#"
-            className="inline-block mt-3 bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition"
+            className="inline-block mt-3 bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-sm"
           >
             Hubungi Customer Support
           </a>

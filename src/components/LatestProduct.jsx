@@ -111,9 +111,9 @@ export default function LatestProduct() {
               className="relative min-w-[90px] bg-white shadow rounded-lg p-2 select-none flex flex-col justify-between h-[140px]"
             >
               {/* BUTTON + */}
-              <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center hover:scale-110 transition">
+              {/* <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center hover:scale-110 transition">
                 <Icon path={mdiPlus} size={0.7} />
-              </button>
+              </button> */}
 
               <img
                 src={p.img}

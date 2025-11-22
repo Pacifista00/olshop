@@ -133,7 +133,7 @@ export default function ProdukTerlaris() {
       <div className="flex justify-center mt-8">
         <Link
           to="/produk"
-          className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-full flex items-center gap-2 cursor-pointer hover:bg-blue-700 transition"
+          className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-full flex items-center gap-2 cursor-pointer hover:bg-blue-700 transition text-sm"
         >
           Load More
           <Icon path={mdiArrowRightThin} size={1} />

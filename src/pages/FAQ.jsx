@@ -104,15 +104,15 @@ export default function FAQPage() {
     <div className="text-gray-800">
       <Navbar />
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
-        <h1 className="text-3xl font-bold text-center mb-4">
+        <h1 className="text-xl lg:text-2xl font-bold text-center mb-4">
           Frequently Asked Questions
         </h1>
-        <p className="text-center text-gray-600 mb-8">
+        <p className="text-sm text-center text-gray-600 mb-8">
           Temukan jawaban dari pertanyaan yang paling sering ditanyakan.
         </p>
 
         {/* Search Bar */}
-        <div className="max-w-md mx-auto mb-10">
+        {/* <div className="max-w-md mx-auto mb-10">
           <div className="relative">
             <Icon
               path={mdiMagnify}
@@ -127,17 +127,17 @@ export default function FAQPage() {
               className="w-full border border-gray-300 rounded-full pl-10 pr-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
-        </div>
+        </div> */}
 
         {/* FAQ List */}
         {filteredCategories.map((cat, catIndex) =>
           cat.items.length > 0 ? (
             <div key={catIndex} className="mb-10">
-              <h2 className="text-xl font-bold border-l-4 border-blue-500 pl-3 mb-4">
+              <h2 className="text-lg lg:text-xl font-bold border-l-4 border-blue-500 pl-3 mb-4">
                 {cat.title}
               </h2>
 
-              <div className="space-y-3">
+              <div className="space-y-3 text-sm">
                 {cat.items.map((item, itemIndex) => {
                   const currentIndex = indexCounter++;
                   const isOpen = openIndex === currentIndex;
@@ -145,7 +145,7 @@ export default function FAQPage() {
                   return (
                     <div
                       key={currentIndex}
-                      className="border rounded-xl p-4 transition hover:shadow-md"
+                      className="border rounded-xl px-3 py-2 transition hover:shadow-md"
                     >
                       <button
                         onClick={() => handleToggle(currentIndex)}
@@ -179,12 +179,12 @@ export default function FAQPage() {
 
         {/* Bantuan */}
         <div className="text-center mt-10">
-          <p className="text-gray-600">
+          <p className="text-gray-600 text-sm">
             Masih mengalami kendala? Kami siap membantu.
           </p>
           <a
             href="#"
-            className="inline-block mt-3 bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition"
+            className="inline-block mt-3 bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-sm"
           >
             Hubungi Customer Support
           </a>
