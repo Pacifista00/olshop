@@ -134,10 +134,12 @@ export default function ProductList() {
       <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
         {/* Title + Filter */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
-          <h2 className="text-xl lg:text-2xl font-bold">Daftar Produk</h2>
+          <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
+            Daftar Produk
+          </h2>
 
           {/* Filter */}
-          <div className="flex flex-col md:flex-row md:items-center gap-3 mt-4 md:mt-0 text-sm">
+          <div className="flex flex-col md:flex-row md:items-center gap-3 mt-4 md:mt-0 text-sm text-gray-800">
             {/* Kategori */}
             <select
               className="px-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm 

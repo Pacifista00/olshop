@@ -93,7 +93,9 @@ export default function ProdukTerlaris() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-xl lg:text-2xl font-bold">Produk Terlaris</h2>
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
+          Produk Terlaris
+        </h2>
       </div>
 
       {/* Grid Responsive */}
@@ -109,7 +111,7 @@ export default function ProdukTerlaris() {
               className="w-full h-32 lg:h-44 object-cover rounded-lg"
             />
 
-            <h3 className="text-sm font-semibold mt-2 line-clamp-2">
+            <h3 className="text-sm font-semibold mt-2 line-clamp-2 text-gray-800">
               {item.title}
             </h3>
 

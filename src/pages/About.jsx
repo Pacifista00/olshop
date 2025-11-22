@@ -17,11 +17,11 @@ import Footer from "../components/Footer";
 
 export default function About() {
   return (
-    <>
+    <div className="text-gray-800">
       <Navbar />
       {/* Header Section */}
-      <section className="max-w-7xl mx-auto px-6 py-4 pb-10 text-center  pt-44 md:pt-40">
-        <h2 className="text-4xl font-bold mb-3">Tentang Kami</h2>
+      <section className="max-w-7xl mx-auto px-6 py-4 pb-10 text-center pt-44 md:pt-40">
+        <h2 className="text-4xl font-bold mb-3 ">Tentang Kami</h2>
         <p className="max-w-2xl mx-auto text-gray-600">
           Kami adalah platform online shop modern yang berfokus pada kualitas,
           kecepatan pengiriman, dan pengalaman belanja terbaik untuk pelanggan.
@@ -116,6 +116,6 @@ export default function About() {
         </div>
       </section>
       <Footer />
-    </>
+    </div>
   );
 }

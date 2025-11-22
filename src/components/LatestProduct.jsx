@@ -80,7 +80,9 @@ export default function LatestProduct() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-xl lg:text-2xl font-bold">Produk Terbaru</h2>
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
+          Produk Terbaru
+        </h2>
 
         <Link
           to="/produk"
@@ -118,7 +120,7 @@ export default function LatestProduct() {
                 alt={p.title}
                 className="w-full h-20 object-cover rounded"
               />
-              <h3 className="text-xs font-semibold mt-1 line-clamp-2 min-h-[32px]">
+              <h3 className="text-xs font-semibold mt-1 line-clamp-2 min-h-[32px] text-gray-800">
                 {p.title}
               </h3>
               <p className="text-[10px] text-gray-600">{p.price}</p>

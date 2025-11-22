@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 
 export default function TermsAndConditions() {
   return (
-    <>
+    <div className="text-gray-800">
       <Navbar />
 
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
@@ -256,6 +256,6 @@ export default function TermsAndConditions() {
       </section>
 
       <Footer />
-    </>
+    </div>
   );
 }

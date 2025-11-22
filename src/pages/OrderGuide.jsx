@@ -79,7 +79,7 @@ export default function OrderGuide() {
   ];
 
   return (
-    <>
+    <div className="text-gray-800">
       <Navbar />
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
         <h2 className="text-3xl font-bold text-center mb-4">Cara Belanja</h2>
@@ -169,6 +169,6 @@ export default function OrderGuide() {
         </div>
       </section>
       <Footer />
-    </>
+    </div>
   );
 }

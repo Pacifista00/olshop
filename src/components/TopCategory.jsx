@@ -6,7 +6,9 @@ function TopCategory() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-xl lg:text-2xl font-bold">Kategori Populer</h2>
+        <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
+          Kategori Populer
+        </h2>
 
         <Link
           to="/kategori"
