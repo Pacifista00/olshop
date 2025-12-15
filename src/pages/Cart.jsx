@@ -3,6 +3,7 @@ import React, { useState, useMemo } from "react";
 import CartItem from "../components/CartItem";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { checkout } from "../services/CheckoutService";
 
 const initialCart = [
   {
@@ -30,6 +31,29 @@ const initialCart = [
 
 const ShoppingCart = () => {
   const [cart, setCart] = useState(initialCart);
+  const [shippingAddressId, setShippingAddressId] = useState(null);
+
+  const handleCheckout = async () => {
+    try {
+      const { snapToken } = await checkout(
+        "a088eb07-88c1-4c73-8df4-43d56f78c86c"
+      );
+
+      window.snap.pay(snapToken, {
+        onSuccess: () => alert("Pembayaran berhasil"),
+        onPending: () => alert("Menunggu pembayaran"),
+        onError: () => alert("Pembayaran gagal"),
+        onClose: () => alert("Popup ditutup"),
+      });
+    } catch (error) {
+      // ← INI WAJIB
+      console.error("ERROR:", error);
+      console.error("RESPONSE:", error.response);
+      console.error("DATA:", error.response?.data);
+
+      alert(error.response?.data?.message || error.message || "Checkout gagal");
+    }
+  };
 
   // Fungsi untuk memperbarui kuantitas item
   const updateQuantity = (id, newQuantity) => {
@@ -116,7 +140,10 @@ const ShoppingCart = () => {
                   </div>
                 </div>
 
-                <button className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                <button
+                  onClick={handleCheckout}
+                  className="mt-6 w-full px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                >
                   Lanjutkan ke Pembayaran
                 </button>
 
