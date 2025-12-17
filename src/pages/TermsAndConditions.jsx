@@ -1,11 +1,6 @@
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-
 export default function TermsAndConditions() {
   return (
     <div className="text-gray-800">
-      <Navbar />
-
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
         <h2 className="text-xl lg:text-2xl  font-bold mb-6">
           Syarat & Ketentuan
@@ -188,7 +183,7 @@ export default function TermsAndConditions() {
           <h2 className="text-lg lg:text-xl font-semibold mb-3">
             10. Hak Kekayaan Intelektual
           </h2>
-          <p className="text-gray-700 leading-relaxed text-sm text-sm">
+          <p className="text-gray-700 leading-relaxed text-sm">
             Seluruh konten pada website ini seperti teks, desain, logo, ikon,
             gambar, struktur, dan perangkat lunak dilindungi oleh hukum Hak
             Kekayaan Intelektual. Pengguna dilarang menyalin, mendistribusikan,
@@ -268,8 +263,6 @@ export default function TermsAndConditions() {
           </p>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

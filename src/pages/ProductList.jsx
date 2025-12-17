@@ -1,5 +1,3 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
@@ -129,8 +127,6 @@ export default function ProductList() {
 
   return (
     <>
-      <Navbar />
-
       <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
         {/* Title + Filter */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
@@ -206,8 +202,6 @@ export default function ProductList() {
           ))}
         </div>
       </section>
-
-      <Footer />
     </>
   );
 }

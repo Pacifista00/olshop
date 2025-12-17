@@ -1,5 +1,3 @@
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
 import Icon from "@mdi/react";
@@ -72,7 +70,6 @@ export default function CategoryList() {
 
   return (
     <>
-      <Navbar />
       <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
         <h2 className="text-xl lg:text-2xl font-bold mb-10">Semua Kategori</h2>
 
@@ -98,8 +95,6 @@ export default function CategoryList() {
           ))}
         </div>
       </section>
-
-      <Footer />
     </>
   );
 }

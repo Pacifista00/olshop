@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://surround-forty-imports-journals.trycloudflare.com/api",
+  baseURL: " https://knight-frozen-hugh-solely.trycloudflare.com/api",
   headers: {
     Accept: "application/json",
   },

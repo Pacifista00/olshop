@@ -9,8 +9,6 @@ import {
   mdiQrcodeScan,
   mdiWalletOutline,
 } from "@mdi/js";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 
 export default function OrderGuide() {
   const steps = [
@@ -80,7 +78,6 @@ export default function OrderGuide() {
 
   return (
     <div className="text-gray-800">
-      <Navbar />
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
         <h2 className="text-xl lg:text-2xl font-bold text-center mb-4">
           Cara Belanja
@@ -179,7 +176,6 @@ export default function OrderGuide() {
           </a>
         </div>
       </section>
-      <Footer />
     </div>
   );
 }

@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { mdiChevronDown, mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -102,7 +100,6 @@ export default function FAQPage() {
 
   return (
     <div className="text-gray-800">
-      <Navbar />
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
         <h1 className="text-xl lg:text-2xl font-bold text-center mb-4">
           Frequently Asked Questions
@@ -190,7 +187,6 @@ export default function FAQPage() {
           </a>
         </div>
       </section>
-      <Footer />
     </div>
   );
 }

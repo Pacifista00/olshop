@@ -12,13 +12,10 @@ import {
   mdiMapMarker,
 } from "@mdi/js";
 import Icon from "@mdi/react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 export default function About() {
   return (
     <div className="text-gray-800">
-      <Navbar />
       {/* Header Section */}
       <section className="max-w-7xl mx-auto px-6 py-2 pb-10 text-center pt-44 md:pt-40">
         <h2 className="text-xl lg:text-2xl font-bold mb-3">Tentang Kami</h2>
@@ -129,7 +126,6 @@ export default function About() {
           </div>
         </div>
       </section>
-      <Footer />
     </div>
   );
 }

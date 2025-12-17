@@ -1,20 +1,34 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home.jsx";
-import FAQ from "./pages/FAQ.jsx";
-import OrderGuide from "./pages/OrderGuide.jsx";
-import About from "./pages/About.jsx";
-import TermsAndConditions from "./pages/TermsAndConditions.jsx";
-import ScrollToTop from "./components/ScrollToTop.jsx";
-import ProductList from "./pages/ProductList.jsx";
-import CategoryList from "./pages/CategoryList.jsx";
-import ProfilePage from "./pages/Profile.jsx";
-import CartPage from "./pages/Cart.jsx";
+
+import MainLayout from "./layouts/AuthLayout";
+import AuthLayout from "./layouts/AuthLayout";
+import ProtectedRoute from "./auth/ProtectedRoute";
+
+// pages
+import Home from "./pages/Home";
+import FAQ from "./pages/FAQ";
+import OrderGuide from "./pages/OrderGuide";
+import About from "./pages/About";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import ProductList from "./pages/ProductList";
+import CategoryList from "./pages/CategoryList";
+import ProfilePage from "./pages/Profile";
+import CartPage from "./pages/Cart";
+import LoginPage from "./pages/Auth/Login";
+import RegisterPage from "./pages/Auth/Register";
 
 export default function App() {
   return (
-    <>
-      <ScrollToTop />
-      <Routes>
+    <Routes>
+      {/* ===== AUTH ROUTES (NO NAVBAR) ===== */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
+
+      {/* ===== MAIN ROUTES (WITH NAVBAR) ===== */}
+      <Route element={<MainLayout />}>
+        {/* PUBLIC */}
         <Route path="/" element={<Home />} />
         <Route path="/tentang-kami" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
@@ -22,9 +36,25 @@ export default function App() {
         <Route path="/syarat-dan-ketentuan" element={<TermsAndConditions />} />
         <Route path="/produk" element={<ProductList />} />
         <Route path="/kategori" element={<CategoryList />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/cart" element={<CartPage />} />
-      </Routes>
-    </>
+
+        {/* PROTECTED */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+    </Routes>
   );
 }

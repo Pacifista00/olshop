@@ -1,8 +1,6 @@
 // src/components/ShoppingCart.jsx
 import React, { useState, useMemo } from "react";
 import CartItem from "../components/CartItem";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import { checkout } from "../services/CheckoutService";
 
 const initialCart = [
@@ -78,7 +76,6 @@ const ShoppingCart = () => {
 
   return (
     <div className="text-gray-800">
-      <Navbar />
       <div className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
         <h1 className="text-xl lg:text-2xl font-bold text-gray-900 mb-8">
           Keranjang Belanja
@@ -155,7 +152,6 @@ const ShoppingCart = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 };
