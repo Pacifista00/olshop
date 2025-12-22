@@ -16,6 +16,7 @@ import ProfilePage from "./pages/Profile";
 import CartPage from "./pages/Cart";
 import LoginPage from "./pages/Auth/Login";
 import RegisterPage from "./pages/Auth/Register";
+import ProductDetail from "./pages/ProductDetail";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/cara-belanja" element={<OrderGuide />} />
         <Route path="/syarat-dan-ketentuan" element={<TermsAndConditions />} />
         <Route path="/produk" element={<ProductList />} />
+        <Route path="/produk/:id" element={<ProductDetail />} />
         <Route path="/kategori" element={<CategoryList />} />
 
         {/* PROTECTED */}

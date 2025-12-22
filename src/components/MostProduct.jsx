@@ -1,94 +1,53 @@
+import { useEffect, useState } from "react";
 import Icon from "@mdi/react";
 import { mdiArrowRightThin, mdiPlus } from "@mdi/js";
 import { Link } from "react-router-dom";
+import api from "../services/Api"; // sesuaikan path
 
 export default function ProdukTerlaris() {
-  const products = [
-    {
-      id: 1,
-      title: "Produk A",
-      price: 120000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 2,
-      title: "Produk B",
-      price: 95000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 3,
-      title: "Produk C",
-      price: 175000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 4,
-      title: "Produk D",
-      price: 230000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 5,
-      title: "Produk E",
-      price: 199000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 6,
-      title: "Produk F",
-      price: 88000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 7,
-      title: "Produk G",
-      price: 160000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 8,
-      title: "Produk H",
-      price: 210000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 9,
-      title: "Produk I",
-      price: 99000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 10,
-      title: "Produk J",
-      price: 145000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 11,
-      title: "Produk K",
-      price: 250000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-    {
-      id: 12,
-      title: "Produk L",
-      price: 112000,
-      image:
-        "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProdukTerlaris = async () => {
+      try {
+        // endpoint contoh → sesuaikan dengan backend kamu
+        const res = await api.get("/products/best-seller");
+
+        const data = res.data.data.map((item) => ({
+          id: item.id,
+          title: item.name,
+          price: Number(item.price),
+          image: item.image?.startsWith("http")
+            ? item.image
+            : `${import.meta.env.VITE_API_URL}/storage/${item.image}`,
+        }));
+
+        setProducts(data);
+      } catch (error) {
+        console.error("Gagal mengambil produk terlaris:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProdukTerlaris();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="max-w-7xl mx-auto px-6 py-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          {[...Array(6)].map((_, i) => (
+            <div
+              key={i}
+              className="h-44 bg-gray-200 animate-pulse rounded-xl"
+            />
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
@@ -119,9 +78,8 @@ export default function ProdukTerlaris() {
               Rp {item.price.toLocaleString("id-ID")}
             </p>
 
-            {/* Tombol + */}
             <button
-              className="absolute bottom-3 right-3 bg-white-700 text-gray-800 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-gray-700 hover:text-white transition"
+              className="absolute bottom-3 right-3 bg-white text-gray-800 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-gray-700 hover:text-white transition"
               title="Tambah"
             >
               <Icon path={mdiPlus} size={1} />
@@ -133,7 +91,7 @@ export default function ProdukTerlaris() {
       <div className="flex justify-center mt-8">
         <Link
           to="/produk"
-          className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-full flex items-center gap-2 cursor-pointer hover:bg-blue-700 transition text-sm"
+          className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-full flex items-center gap-2 hover:bg-blue-700 transition text-sm"
         >
           Load More
           <Icon path={mdiArrowRightThin} size={1} />

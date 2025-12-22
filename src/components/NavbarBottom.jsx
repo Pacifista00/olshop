@@ -1,72 +1,68 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../services/Api";
 
-function NavbarBottom() {
-  const categories = [
-    "Elektronik",
-    "Fashion",
-    "Makanan",
-    "Otomotif",
-    "Kesehatan",
-    "Hobi",
-    "Kecantikan",
-    "Olahraga",
-    "Gaming",
-    "Perabot",
-  ];
+export default function NavbarBottom() {
+  const navigate = useNavigate();
 
-  const [displayCategories, setDisplayCategories] = useState(categories);
-  const [isMobile, setIsMobile] = useState(false); // Untuk tombol 'Lainnya'
+  const [categories, setCategories] = useState([]);
+  const [displayCategories, setDisplayCategories] = useState([]);
+  const [showMore, setShowMore] = useState(false);
 
+  // Fetch kategori dari API
   useEffect(() => {
-    const handleResize = () => {
-      const windowWidth = window.innerWidth;
-
-      // Definisikan breakpoint yang sesuai dengan Tailwind CSS (default)
-      const mdBreakpoint = 768; // Mobile < 768px
-      const lgBreakpoint = 1024; // Laptop/PC >= 1024px
-
-      let newDisplayedCategories = categories;
-      let mobileStatus = false;
-
-      if (windowWidth < mdBreakpoint) {
-        // **Mobile:** < 768px (Tampilkan 3)
-        newDisplayedCategories = categories.slice(0, 4);
-        mobileStatus = true; // Munculkan tombol 'Lainnya'
-      } else if (windowWidth >= mdBreakpoint && windowWidth < lgBreakpoint) {
-        // **Laptop/Tablet (MD-LG):** 768px - 1023px (Tampilkan 5)
-        newDisplayedCategories = categories.slice(0, 7);
-        mobileStatus = true; // Tetap munculkan tombol 'Lainnya'
-      } else {
-        // **PC (LG+):** >= 1024px (Tampilkan Semua)
-        newDisplayedCategories = categories;
-        mobileStatus = false;
+    const fetchCategories = async () => {
+      try {
+        const res = await api.get("/category");
+        setCategories(res.data.data);
+      } catch (err) {
+        console.error("Gagal mengambil kategori", err);
       }
-
-      setDisplayCategories(newDisplayedCategories);
-      setIsMobile(mobileStatus);
     };
 
-    handleResize(); // Jalan pertama kali
-    window.addEventListener("resize", handleResize);
+    fetchCategories();
+  }, []);
 
+  // Responsive handler
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+
+      if (width < 768) {
+        setDisplayCategories(categories.slice(0, 4));
+        setShowMore(true);
+      } else if (width < 1024) {
+        setDisplayCategories(categories.slice(0, 7));
+        setShowMore(true);
+      } else {
+        setDisplayCategories(categories);
+        setShowMore(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // Dependensi kosong, hanya jalan saat mount dan unmount
+  }, [categories]);
 
   return (
     <div className="bg-blue-600 py-3">
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-6">
         <ul className="flex gap-4 md:gap-8 text-white text-xs items-center">
-          {displayCategories.map((cat, index) => (
-            <li key={index} className="cursor-pointer">
-              {cat}
+          {displayCategories.map((cat) => (
+            <li
+              key={cat.id}
+              className="cursor-pointer hover:underline whitespace-nowrap"
+              onClick={() => navigate(`/produk?category=${cat.slug}`)}
+            >
+              {cat.name}
             </li>
           ))}
 
-          {/* Tombol 'Lainnya' muncul jika tidak semua kategori ditampilkan */}
-          {isMobile && (
+          {showMore && (
             <li
-              className="cursor-pointer font-semibold underline"
-              onClick={() => (window.location.href = "/kategori")}
+              className="cursor-pointer font-semibold underline whitespace-nowrap"
+              onClick={() => navigate("/produk")}
             >
               Lainnya
             </li>
@@ -76,5 +72,3 @@ function NavbarBottom() {
     </div>
   );
 }
-
-export default NavbarBottom;

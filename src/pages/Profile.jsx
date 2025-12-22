@@ -1,25 +1,52 @@
 // src/pages/ProfilePage.jsx
 import React, { useState } from "react";
+import { useAuth } from "../auth/AuthContext";
 
 // NOTE: Pastikan Anda memiliki komponen UserProfileCard.jsx di direktori yang sama
 // Jika Anda tidak memilikinya, Anda bisa membuat file terpisah untuk UserProfileCard
 // atau menggunakan placeholder <div> untuk bagian tersebut.
-const UserProfileCard = ({ user }) => (
-  <div className="bg-white p-6 rounded-lg shadow-lg">
-    <div className="flex flex-col items-center">
-      <img
-        src={user.avatarUrl}
-        alt="Avatar Pengguna"
-        className="w-24 h-24 rounded-full mb-4 border-4 border-blue-200 object-cover"
-      />
-      <h2 className="text-xl font-bold text-gray-800">{user.name}</h2>
-      <p className="text-sm text-gray-500">{user.email}</p>
-      <button className="mt-4 px-4 py-2 text-sm text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition duration-150">
-        Edit Profil
-      </button>
+const getInitials = (name) => {
+  if (!name) return "?";
+  const names = name.split(" ");
+  // Mengambil huruf pertama dari kata pertama (dan kata kedua jika ada)
+  const initials = names.map((n) => n[0]).join("");
+  return initials.substring(0, 2).toUpperCase();
+};
+const UserProfileCard = () => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <div>Memuat...</div>;
+  if (!user) return null;
+
+  // Akses data user (sesuaikan jika struktur datanya user.user atau langsung user)
+  const userData = user.user || user;
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="flex flex-col items-center">
+        {/* Logika Avatar vs Inisial */}
+        {userData.avatarUrl ? (
+          <img
+            src={userData.avatarUrl}
+            alt="Avatar"
+            className="w-24 h-24 rounded-full mb-4 border-4 border-blue-200 object-cover"
+          />
+        ) : (
+          <div className="w-24 h-24 rounded-full mb-4 border-4 border-blue-200 bg-blue-500 flex items-center justify-center text-white text-2xl font-bold uppercase">
+            {getInitials(userData.name)}
+          </div>
+        )}
+
+        <h2 className="text-xl font-bold text-gray-800">{userData.name}</h2>
+        <p className="text-sm text-gray-500">{userData.email}</p>
+
+        <button className="mt-4 px-4 py-2 text-sm text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition duration-150">
+          Edit Profil
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // --- DATA TIRUAN (MOCK DATA) ---
 
@@ -192,6 +219,13 @@ const OrderDetail = ({ order, onBack }) => {
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("orders"); // Default ke tab orders
   const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const { user, loading } = useAuth();
+
+  if (loading) return <div>Memuat...</div>;
+  if (!user) return null;
+
+  // Akses data user (sesuaikan jika struktur datanya user.user atau langsung user)
+  const userData = user.user || user;
 
   // Cari objek pesanan yang sesuai dengan ID yang dipilih
   const selectedOrder = mockOrders.find(
@@ -219,16 +253,13 @@ const ProfilePage = () => {
           <div className="p-6 bg-white rounded-lg shadow">
             <div className="space-y-3">
               <p className="text-gray-600">
-                <strong>Nama:</strong> {mockUser.name}
+                <strong>Nama:</strong> {userData.name}
               </p>
               <p className="text-gray-600">
-                <strong>Email:</strong> {mockUser.email}
+                <strong>Email:</strong> {userData.email}
               </p>
               <p className="text-gray-600">
-                <strong>Telepon:</strong> {mockUser.phone}
-              </p>
-              <p className="text-gray-600">
-                <strong>Alamat Utama:</strong> {mockUser.address}
+                <strong>Telepon:</strong> {userData.phone}
               </p>
             </div>
           </div>

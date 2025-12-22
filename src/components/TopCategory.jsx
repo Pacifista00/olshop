@@ -25,7 +25,7 @@ function TopCategory() {
         {/* Card 1 */}
         <div className="relative rounded-xl overflow-hidden cursor-pointer shadow-md">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp"
+            src="/image/top_category/electro.jpg"
             alt="Fashion"
             className="w-full h-40 md:h-56 object-cover transition-transform duration-500 hover:scale-110"
           />
@@ -37,7 +37,7 @@ function TopCategory() {
         {/* Card 2 */}
         <div className="relative rounded-xl overflow-hidden cursor-pointer shadow-md">
           <img
-            src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp"
+            src="/image/top_category/fashion.jpg"
             alt="Fashion"
             className="w-full h-40 md:h-56 object-cover transition-transform duration-500 hover:scale-110"
           />

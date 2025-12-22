@@ -1,64 +1,42 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "@mdi/react";
 import { mdiArrowRightThin, mdiPlus } from "@mdi/js";
 import { Link } from "react-router-dom";
+import api from "../services/Api"; // sesuaikan path
 
 export default function LatestProduct() {
-  const products = [
-    {
-      id: 1,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Lorem ipsum, dolor sit amet consectetur adipisicing.",
-      price: "Rp 50.000",
-    },
-    {
-      id: 2,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Produk 2",
-      price: "Rp 60.000",
-    },
-    {
-      id: 3,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Produk 3",
-      price: "Rp 70.000",
-    },
-    {
-      id: 4,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Produk 4",
-      price: "Rp 80.000",
-    },
-    {
-      id: 5,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Produk 5",
-      price: "Rp 90.000",
-    },
-    {
-      id: 6,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Produk 6",
-      price: "Rp 100.000",
-    },
-    {
-      id: 7,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Produk 7",
-      price: "Rp 110.000",
-    },
-    {
-      id: 8,
-      img: "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-      title: "Produk 8",
-      price: "Rp 120.000",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const dragRef = useRef(null);
   let isDown = false;
   let startX;
   let scrollLeft;
+
+  useEffect(() => {
+    const fetchLatestProducts = async () => {
+      try {
+        const res = await api.get("/products/latest");
+
+        const data = res.data.data.map((item) => ({
+          id: item.id,
+          img: item.image?.startsWith("http")
+            ? item.image
+            : `${import.meta.env.VITE_API_URL}/storage/${item.image}`,
+          title: item.name,
+          price: `Rp ${Number(item.price).toLocaleString("id-ID")}`,
+        }));
+
+        setProducts(data);
+      } catch (error) {
+        console.error("Gagal mengambil produk terbaru:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLatestProducts();
+  }, []);
 
   const handleMouseDown = (e) => {
     isDown = true;
@@ -76,6 +54,14 @@ export default function LatestProduct() {
     const walk = (x - startX) * 1.5;
     dragRef.current.scrollLeft = scrollLeft - walk;
   };
+
+  if (loading) {
+    return (
+      <section className="max-w-7xl mx-auto px-6 py-4">
+        <div className="h-40 bg-gray-200 animate-pulse rounded-lg" />
+      </section>
+    );
+  }
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
@@ -95,7 +81,7 @@ export default function LatestProduct() {
         </Link>
       </div>
 
-      {/* MOBILE: drag-to-scroll */}
+      {/* MOBILE */}
       <div className="block lg:hidden">
         <div
           ref={dragRef}
@@ -110,17 +96,12 @@ export default function LatestProduct() {
               key={p.id}
               className="relative min-w-[90px] bg-white shadow rounded-lg p-2 select-none flex flex-col justify-between h-[140px]"
             >
-              {/* BUTTON + */}
-              {/* <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center hover:scale-110 transition">
-                <Icon path={mdiPlus} size={0.7} />
-              </button> */}
-
               <img
                 src={p.img}
                 alt={p.title}
                 className="w-full h-20 object-cover rounded"
               />
-              <h3 className="text-xs font-semibold mt-1 line-clamp-2 min-h-[32px] text-gray-800">
+              <h3 className="text-xs font-semibold mt-1 line-clamp-2 min-h-8 text-gray-800">
                 {p.title}
               </h3>
               <p className="text-[10px] text-gray-600">{p.price}</p>
@@ -129,15 +110,14 @@ export default function LatestProduct() {
         </div>
       </div>
 
-      {/* DESKTOP GRID */}
+      {/* DESKTOP */}
       <div className="hidden lg:grid lg:grid-cols-8 gap-4">
         {products.map((p) => (
           <div
             key={p.id}
             className="relative bg-white shadow rounded-lg p-2 h-[180px]"
           >
-            {/* BUTTON + */}
-            <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center hover:scale-110 transition cursor-pointer">
+            <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center hover:scale-110 transition">
               <Icon path={mdiPlus} size={0.8} />
             </button>
 
@@ -146,7 +126,7 @@ export default function LatestProduct() {
               alt={p.title}
               className="w-full h-24 object-cover rounded"
             />
-            <h3 className="text-sm mt-2 font-semibold line-clamp-2 min-h-[40px]">
+            <h3 className="text-sm mt-2 font-semibold line-clamp-2 min-h-10">
               {p.title}
             </h3>
             <p className="text-xs text-gray-600">{p.price}</p>
