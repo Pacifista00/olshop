@@ -7,15 +7,20 @@ export default function MainLayout() {
   const location = useLocation();
 
   const hideNavbarRoutes = ["/login", "/register"];
-
   const hideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       <ScrollToTop />
+
       {!hideNavbar && <Navbar />}
-      <Outlet />
+
+      {/* CONTENT */}
+      <main className="grow">
+        <Outlet />
+      </main>
+
       {!hideNavbar && <Footer />}
-    </>
+    </div>
   );
 }

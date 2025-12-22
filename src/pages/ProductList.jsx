@@ -58,21 +58,6 @@ export default function ProductList() {
     fetchProducts();
   }, [categorySlug, sort]);
 
-  if (loading) {
-    return (
-      <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={i}
-              className="h-64 bg-gray-200 animate-pulse rounded-lg"
-            />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
       {/* Title + Filter */}
@@ -118,34 +103,37 @@ export default function ProductList() {
 
       {/* Products Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
-        {products.map((item) => (
-          <Link to={`/produk/${item.id}`} key={item.id} className="group">
-            <div className="relative rounded-lg border border-gray-100 shadow-md hover:shadow-lg transition p-4 flex flex-col h-full">
-              <button className="absolute bottom-3 right-3 bg-white rounded-full p-1 shadow-md hover:bg-gray-700 hover:text-white transition">
-                <Icon path={mdiPlus} size={0.8} />
-              </button>
+        {loading
+          ? [...Array(12)].map((_, i) => (
+              <div
+                key={i}
+                className="h-64 bg-gray-200 animate-pulse rounded-lg"
+              />
+            ))
+          : products.map((item) => (
+              <Link to={`/produk/${item.id}`} key={item.id} className="group">
+                <div className="relative rounded-lg border border-gray-100 shadow-md hover:shadow-lg transition p-4 flex flex-col h-full">
+                  <div className="rounded-lg h-32 sm:h-48 lg:h-56 overflow-hidden mb-4 bg-gray-100">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover group-hover:scale-110 transition-transform"
+                    />
+                  </div>
 
-              <div className="rounded-lg h-32 sm:h-48 lg:h-56 overflow-hidden mb-4 bg-gray-100">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="h-full w-full object-cover group-hover:scale-110 transition-transform"
-                />
-              </div>
+                  <p className="text-xs text-gray-500">Stok: {item.stock}</p>
+                  <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 text-sm">
+                    {item.name}
+                  </h3>
 
-              <p className="text-xs text-gray-500">Stok: {item.stock}</p>
-              <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 text-sm">
-                {item.name}
-              </h3>
-
-              <div className="mt-auto">
-                <p className="text-blue-600 font-bold text-sm">
-                  Rp {item.price.toLocaleString("id-ID")}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+                  <div className="mt-auto">
+                    <p className="text-blue-600 font-bold text-sm">
+                      Rp {item.price.toLocaleString("id-ID")}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
       </div>
     </section>
   );
