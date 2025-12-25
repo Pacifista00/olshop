@@ -1,18 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "@mdi/react";
 import { mdiArrowRightThin, mdiPlus } from "@mdi/js";
-import { Link } from "react-router-dom";
-import api from "../services/Api"; // sesuaikan path
+import { Link, useNavigate } from "react-router-dom";
+import api from "../services/Api";
+import { useAuth } from "../auth/AuthContext";
 
 export default function LatestProduct() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { user, loading: authLoading } = useAuth();
+  const navigate = useNavigate();
 
   const dragRef = useRef(null);
   let isDown = false;
   let startX;
   let scrollLeft;
 
+  /* ================= FETCH LATEST PRODUCTS ================= */
   useEffect(() => {
     const fetchLatestProducts = async () => {
       try {
@@ -38,6 +43,31 @@ export default function LatestProduct() {
     fetchLatestProducts();
   }, []);
 
+  /* ================= ADD TO CART ================= */
+  const handleAddToCart = async (productId) => {
+    // Tunggu auth selesai
+    if (authLoading) return;
+
+    // Jika belum login → ke login
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await api.post("/cart/store", {
+        product_id: productId,
+        quantity: 1,
+      });
+
+      alert("Produk berhasil ditambahkan ke keranjang");
+    } catch (error) {
+      console.error("Gagal menambahkan ke keranjang:", error);
+      alert("Gagal menambahkan produk ke keranjang");
+    }
+  };
+
+  /* ================= DRAG SCROLL (MOBILE) ================= */
   const handleMouseDown = (e) => {
     isDown = true;
     startX = e.pageX - dragRef.current.offsetLeft;
@@ -55,6 +85,7 @@ export default function LatestProduct() {
     dragRef.current.scrollLeft = scrollLeft - walk;
   };
 
+  /* ================= LOADING ================= */
   if (loading) {
     return (
       <section className="max-w-7xl mx-auto px-6 py-4">
@@ -65,6 +96,7 @@ export default function LatestProduct() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
+      {/* ================= HEADER ================= */}
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
           Produk Terbaru
@@ -81,7 +113,7 @@ export default function LatestProduct() {
         </Link>
       </div>
 
-      {/* MOBILE */}
+      {/* ================= MOBILE ================= */}
       <div className="block lg:hidden">
         <div
           ref={dragRef}
@@ -101,23 +133,41 @@ export default function LatestProduct() {
                 alt={p.title}
                 className="w-full h-20 object-cover rounded"
               />
+
               <h3 className="text-xs font-semibold mt-1 line-clamp-2 min-h-8 text-gray-800">
                 {p.title}
               </h3>
+
               <p className="text-[10px] text-gray-600">{p.price}</p>
+
+              <button
+                disabled={authLoading}
+                onClick={() => handleAddToCart(p.id)}
+                className="absolute bottom-2 right-2 bg-blue-600 text-white w-6 h-6 rounded-full
+                           flex items-center justify-center hover:scale-110 transition
+                           disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Icon path={mdiPlus} size={0.6} />
+              </button>
             </div>
           ))}
         </div>
       </div>
 
-      {/* DESKTOP */}
+      {/* ================= DESKTOP ================= */}
       <div className="hidden lg:grid lg:grid-cols-8 gap-4">
         {products.map((p) => (
           <div
             key={p.id}
             className="relative bg-white shadow rounded-lg p-2 h-[180px]"
           >
-            <button className="absolute bottom-2 right-2 bg-blue-600 text-white w-7 h-7 rounded-full flex items-center justify-center hover:scale-110 transition">
+            <button
+              disabled={authLoading}
+              onClick={() => handleAddToCart(p.id)}
+              className="absolute bottom-2 right-2 bg-blue-600 text-white w-7 h-7 rounded-full
+                         flex items-center justify-center hover:scale-110 transition
+                         disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <Icon path={mdiPlus} size={0.8} />
             </button>
 
@@ -126,9 +176,11 @@ export default function LatestProduct() {
               alt={p.title}
               className="w-full h-24 object-cover rounded"
             />
+
             <h3 className="text-sm mt-2 font-semibold line-clamp-2 min-h-10">
               {p.title}
             </h3>
+
             <p className="text-xs text-gray-600">{p.price}</p>
           </div>
         ))}

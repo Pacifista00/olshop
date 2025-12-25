@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import Icon from "@mdi/react";
+import { mdiPlus } from "@mdi/js";
 import api from "../services/Api";
+import { useAuth } from "../auth/AuthContext";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -16,13 +19,12 @@ export default function ProductList() {
     total: 0,
   });
 
+  const { user, loading: authLoading } = useAuth();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const categorySlug = searchParams.get("category") || "";
 
-  /* =========================
-     FETCH CATEGORIES
-  ========================= */
+  /* ================= FETCH CATEGORIES ================= */
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -36,9 +38,7 @@ export default function ProductList() {
     fetchCategories();
   }, []);
 
-  /* =========================
-     FETCH PRODUCTS
-  ========================= */
+  /* ================= FETCH PRODUCTS ================= */
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -75,12 +75,35 @@ export default function ProductList() {
     fetchProducts();
   }, [categorySlug, sort, page]);
 
-  /* =========================
-     RESET PAGE ON FILTER CHANGE
-  ========================= */
+  /* ================= RESET PAGE ================= */
   useEffect(() => {
     setPage(1);
   }, [categorySlug, sort]);
+
+  /* ================= ADD TO CART ================= */
+  const handleAddToCart = async (e, productId) => {
+    e.preventDefault(); // cegah buka detail
+    e.stopPropagation();
+
+    if (authLoading) return;
+
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await api.post("/cart/store", {
+        product_id: productId,
+        quantity: 1,
+      });
+
+      alert("Produk ditambahkan ke keranjang");
+    } catch (err) {
+      console.error("Gagal tambah ke keranjang", err);
+      alert("Gagal menambahkan produk");
+    }
+  };
 
   return (
     <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
@@ -135,8 +158,25 @@ export default function ProductList() {
               />
             ))
           : products.map((item) => (
-              <Link to={`/produk/${item.id}`} key={item.id} className="group">
+              <Link
+                to={`/produk/${item.id}`}
+                key={item.id}
+                className="group relative"
+              >
                 <div className="relative rounded-lg border border-gray-100 shadow-md hover:shadow-lg transition p-4 flex flex-col h-full">
+                  {/* ADD TO CART */}
+                  <button
+                    disabled={authLoading}
+                    onClick={(e) => handleAddToCart(e, item.id)}
+                    className="absolute bottom-3 right-3 bg-white w-8 h-8 rounded-full
+                               flex items-center justify-center shadow
+                               hover:bg-gray-800 hover:text-white transition
+                               disabled:opacity-50"
+                    title="Tambah ke keranjang"
+                  >
+                    <Icon path={mdiPlus} size={0.9} />
+                  </button>
+
                   <div className="rounded-lg h-32 sm:h-48 lg:h-56 overflow-hidden mb-4 bg-gray-100">
                     <img
                       src={item.image}
