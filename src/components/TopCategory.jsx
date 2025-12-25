@@ -22,29 +22,35 @@ function TopCategory() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Card 1 */}
-        <div className="relative rounded-xl overflow-hidden cursor-pointer shadow-md">
+        {/* ELEKTRONIK */}
+        <Link
+          to="/produk?category=elektronik"
+          className="relative rounded-xl overflow-hidden cursor-pointer shadow-md group"
+        >
           <img
             src="/image/top_category/electro.jpg"
-            alt="Fashion"
-            className="w-full h-40 md:h-56 object-cover transition-transform duration-500 hover:scale-110"
+            alt="Elektronik"
+            className="w-full h-40 md:h-56 object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <p className="text-white text-xl font-semibold">Elektronik</p>
           </div>
-        </div>
+        </Link>
 
-        {/* Card 2 */}
-        <div className="relative rounded-xl overflow-hidden cursor-pointer shadow-md">
+        {/* FASHION */}
+        <Link
+          to="/produk?category=fashion"
+          className="relative rounded-xl overflow-hidden cursor-pointer shadow-md group"
+        >
           <img
             src="/image/top_category/fashion.jpg"
             alt="Fashion"
-            className="w-full h-40 md:h-56 object-cover transition-transform duration-500 hover:scale-110"
+            className="w-full h-40 md:h-56 object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <p className="text-white text-xl font-semibold">Fashion</p>
           </div>
-        </div>
+        </Link>
       </div>
     </section>
   );

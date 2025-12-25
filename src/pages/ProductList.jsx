@@ -26,7 +26,7 @@ export default function ProductList() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await api.get("/category");
+        const res = await api.get("/categories");
         setCategories(res.data.data);
       } catch (err) {
         console.error("Gagal mengambil kategori", err);
