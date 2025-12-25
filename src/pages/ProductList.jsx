@@ -1,30 +1,44 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
-import Icon from "@mdi/react";
-import { mdiPlus } from "@mdi/js";
 import api from "../services/Api";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const [sort, setSort] = useState("");
+  const [page, setPage] = useState(1);
+
+  const [pagination, setPagination] = useState({
+    current_page: 1,
+    last_page: 1,
+    total: 0,
+  });
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const categorySlug = searchParams.get("category") || "";
 
-  // Fetch kategori
+  /* =========================
+     FETCH CATEGORIES
+  ========================= */
   useEffect(() => {
     const fetchCategories = async () => {
-      const res = await api.get("/category");
-      setCategories(res.data.data);
+      try {
+        const res = await api.get("/category");
+        setCategories(res.data.data);
+      } catch (err) {
+        console.error("Gagal mengambil kategori", err);
+      }
     };
 
     fetchCategories();
   }, []);
 
-  // Fetch produk (berdasarkan slug)
+  /* =========================
+     FETCH PRODUCTS
+  ========================= */
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -34,6 +48,7 @@ export default function ProductList() {
           params: {
             category: categorySlug || undefined,
             sort,
+            page,
           },
         });
 
@@ -48,6 +63,8 @@ export default function ProductList() {
               : `${import.meta.env.VITE_API_URL}/storage/${item.image}`,
           }))
         );
+
+        setPagination(res.data.meta);
       } catch (err) {
         console.error("Gagal mengambil produk", err);
       } finally {
@@ -56,11 +73,18 @@ export default function ProductList() {
     };
 
     fetchProducts();
+  }, [categorySlug, sort, page]);
+
+  /* =========================
+     RESET PAGE ON FILTER CHANGE
+  ========================= */
+  useEffect(() => {
+    setPage(1);
   }, [categorySlug, sort]);
 
   return (
     <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
-      {/* Title + Filter */}
+      {/* ================= TITLE + FILTER ================= */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
         <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
           Daftar Produk
@@ -101,7 +125,7 @@ export default function ProductList() {
         </div>
       </div>
 
-      {/* Products Grid */}
+      {/* ================= PRODUCTS GRID ================= */}
       <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
         {loading
           ? [...Array(12)].map((_, i) => (
@@ -122,6 +146,7 @@ export default function ProductList() {
                   </div>
 
                   <p className="text-xs text-gray-500">Stok: {item.stock}</p>
+
                   <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 text-sm">
                     {item.name}
                   </h3>
@@ -135,6 +160,42 @@ export default function ProductList() {
               </Link>
             ))}
       </div>
+
+      {/* ================= PAGINATION ================= */}
+      {!loading && pagination.last_page > 1 && (
+        <div className="flex justify-center mt-12 gap-2 flex-wrap">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage((p) => p - 1)}
+            className="px-4 py-2 text-sm border rounded-lg disabled:opacity-50"
+          >
+            Prev
+          </button>
+
+          {[...Array(pagination.last_page)].map((_, i) => {
+            const pageNumber = i + 1;
+            return (
+              <button
+                key={pageNumber}
+                onClick={() => setPage(pageNumber)}
+                className={`px-4 py-2 text-sm border rounded-lg ${
+                  page === pageNumber ? "bg-blue-600 text-white" : "bg-white"
+                }`}
+              >
+                {pageNumber}
+              </button>
+            );
+          })}
+
+          <button
+            disabled={page === pagination.last_page}
+            onClick={() => setPage((p) => p + 1)}
+            className="px-4 py-2 text-sm border rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </section>
   );
 }
