@@ -1,12 +1,13 @@
-import React from "react";
+import Icon from "@mdi/react";
+import { mdiDeleteOutline } from "@mdi/js";
 
 const CartItem = ({ item, updateQuantity, removeItem }) => {
   return (
-    <div className="flex items-center gap-4 border-b py-4">
+    <div className="flex items-center gap-4 py-5">
       <img
         src={`${import.meta.env.VITE_API_URL}/storage/${item.image}`}
         alt={item.product}
-        className="w-20 h-20 object-cover rounded"
+        className="w-20 h-20 object-cover rounded shadow"
       />
 
       <div className="flex-1">
@@ -36,9 +37,10 @@ const CartItem = ({ item, updateQuantity, removeItem }) => {
 
       <button
         onClick={() => removeItem(item.id)}
-        className="text-red-600 text-sm"
+        className="text-red-500 hover:text-red-700 transition"
+        title="Hapus"
       >
-        Hapus
+        <Icon path={mdiDeleteOutline} size={0.9} />
       </button>
     </div>
   );
