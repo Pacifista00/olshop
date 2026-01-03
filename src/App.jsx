@@ -17,6 +17,8 @@ import CartPage from "./pages/Cart";
 import LoginPage from "./pages/Auth/Login";
 import RegisterPage from "./pages/Auth/Register";
 import ProductDetail from "./pages/ProductDetail";
+import AfterPayment from "./pages/AfterPayment";
+import OrderDetail from "./pages/OrderDetail";
 
 export default function App() {
   return (
@@ -53,6 +55,22 @@ export default function App() {
           element={
             <ProtectedRoute>
               <CartPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/after-payment"
+          element={
+            <ProtectedRoute>
+              <AfterPayment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/orders/:id"
+          element={
+            <ProtectedRoute>
+              <OrderDetail />
             </ProtectedRoute>
           }
         />

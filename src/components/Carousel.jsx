@@ -4,10 +4,9 @@ export default function Carousel() {
   const [slide, setSlide] = useState(0);
 
   const images = [
-    "https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp",
-    "https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp",
-    "https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp",
-    "https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp",
+    "/image/carousel/2148036986.jpg",
+    "/image/carousel/2148134027.jpg",
+    "/image/carousel/2149339768.jpg",
   ];
 
   const nextSlide = () => setSlide((slide + 1) % images.length);
@@ -16,7 +15,7 @@ export default function Carousel() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-4">
       <div className="carousel w-full rounded-2xl relative">
-        <img src={images[slide]} className="w-full" />
+        <img src={images[slide]} className="w-full h-72 object-cover" />
 
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
           <button className="btn btn-circle" onClick={prevSlide}>

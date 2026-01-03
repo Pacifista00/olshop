@@ -7,8 +7,7 @@ import {
 } from "../services/CartService";
 import { checkout } from "../services/CheckoutService";
 import { previewVoucher } from "../services/VoucherService";
-
-const SHIPPING_COST = 20000;
+import api from "../services/Api";
 
 const ShoppingCart = () => {
   const [cart, setCart] = useState([]);
@@ -21,6 +20,14 @@ const ShoppingCart = () => {
   const [voucherLoading, setVoucherLoading] = useState(false);
   const [voucherInfo, setVoucherInfo] = useState(null);
 
+  // ===== SHIPPING STATE =====
+  const [shippingOptions, setShippingOptions] = useState([]);
+  const [selectedShipping, setSelectedShipping] = useState(null);
+  const [shippingLoading, setShippingLoading] = useState(false);
+
+  // ===== SHIPPING COST =====
+  const shippingCost = selectedShipping?.price || 0;
+
   useEffect(() => {
     loadCart();
   }, []);
@@ -30,6 +37,29 @@ const ShoppingCart = () => {
       removeVoucher();
     }
   }, [cart]);
+  useEffect(() => {
+    if (voucherCode) {
+      removeVoucher();
+    }
+  }, [selectedShipping]);
+  useEffect(() => {
+    if (cart.length > 0) {
+      loadShipping();
+      setSelectedShipping(null); // reset jika cart berubah
+    }
+  }, [cart]);
+  const loadShipping = async () => {
+    setShippingLoading(true);
+    try {
+      const res = await api.get("/preview-shipping"); // sesuaikan endpoint
+      console.log(res);
+      setShippingOptions(res.data.shipping_options || []);
+    } catch (err) {
+      alert("Gagal mengambil ongkir");
+    } finally {
+      setShippingLoading(false);
+    }
+  };
 
   const loadCart = async () => {
     try {
@@ -71,9 +101,9 @@ const ShoppingCart = () => {
 
   // ===== TOTAL =====
   const total = useMemo(() => {
-    const result = cartSubtotal + SHIPPING_COST - voucherDiscount;
+    const result = cartSubtotal + shippingCost - voucherDiscount;
     return result > 0 ? result : 0;
-  }, [cartSubtotal, voucherDiscount]);
+  }, [cartSubtotal, voucherDiscount, shippingCost]);
 
   // ===== APPLY VOUCHER =====
   const applyVoucher = async () => {
@@ -107,14 +137,22 @@ const ShoppingCart = () => {
 
   // ===== CHECKOUT =====
   const handleCheckout = async () => {
+    if (!selectedShipping) {
+      alert("Silakan pilih kurir terlebih dahulu");
+      return;
+    }
+
     try {
-      const { snapToken } = await checkout(
-        "a088eb07-88c1-4c73-8df4-43d56f78c86c",
-        voucherCode // null jika tidak ada
-      );
+      const { snapToken } = await checkout({
+        courier_code: selectedShipping.courier_code,
+        courier_service_code: selectedShipping.courier_service_code,
+        shipping_price: selectedShipping.price,
+        voucher_code: voucherCode,
+      });
+
       window.snap.pay(snapToken);
     } catch (err) {
-      alert("Checkout gagal");
+      alert(err.response?.data?.message || "Checkout gagal");
     }
   };
 
@@ -153,7 +191,61 @@ const ShoppingCart = () => {
 
             <div className="flex justify-between text-sm mb-2">
               <span>Biaya Pengiriman</span>
-              <span>Rp {SHIPPING_COST.toLocaleString("id-ID")}</span>
+              <span>Rp {shippingCost.toLocaleString("id-ID")}</span>
+            </div>
+            {/* ===== PILIH KURIR ===== */}
+            <div className="mt-4">
+              <label className="text-sm font-medium">Pilih Pengiriman</label>
+
+              {shippingLoading && (
+                <p className="text-sm text-gray-500 mt-1">Memuat ongkir...</p>
+              )}
+
+              {!shippingLoading && shippingOptions.length === 0 && (
+                <p className="text-sm text-gray-500 mt-1">
+                  Kurir tidak tersedia
+                </p>
+              )}
+
+              <div className="mt-2 space-y-2">
+                {shippingOptions.map((opt, idx) => (
+                  <label
+                    key={idx}
+                    className={`flex justify-between items-center border rounded p-3 cursor-pointer text-sm
+          ${
+            selectedShipping?.courier_code === opt.courier_code &&
+            selectedShipping?.courier_service_code === opt.courier_service_code
+              ? "border-blue-600 bg-blue-50"
+              : "border-gray-200"
+          }
+        `}
+                  >
+                    <div>
+                      <input
+                        type="radio"
+                        name="shipping"
+                        className="mr-2"
+                        checked={
+                          selectedShipping?.courier_code === opt.courier_code &&
+                          selectedShipping?.courier_service_code ===
+                            opt.courier_service_code
+                        }
+                        onChange={() => setSelectedShipping(opt)}
+                      />
+                      <span className="font-medium uppercase">
+                        {opt.courier_code} {opt.courier_service_code}
+                      </span>
+                      <div className="text-xs text-gray-500">
+                        Estimasi {opt.etd || "-"} hari
+                      </div>
+                    </div>
+
+                    <span className="font-semibold">
+                      Rp {opt.price.toLocaleString("id-ID")}
+                    </span>
+                  </label>
+                ))}
+              </div>
             </div>
 
             {/* ===== VOUCHER ===== */}
@@ -214,7 +306,9 @@ const ShoppingCart = () => {
 
             <button
               onClick={handleCheckout}
-              className="mt-6 w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              disabled={!selectedShipping}
+              className="mt-6 w-full bg-blue-600 text-white py-2 rounded
+             disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Bayar Sekarang
             </button>
