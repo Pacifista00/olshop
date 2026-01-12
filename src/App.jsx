@@ -19,6 +19,15 @@ import RegisterPage from "./pages/Auth/Register";
 import ProductDetail from "./pages/ProductDetail";
 import AfterPayment from "./pages/AfterPayment";
 import OrderDetail from "./pages/OrderDetail";
+import HomeDashboard from "./pages/Admin/Home";
+import AppLayout from "./layouts/Admin/AppLayout";
+import ProductAddPage from "./pages/Admin/ProductAddPage";
+import BasicTables from "./pages/Admin/BasicTables";
+import ProductTables from "./pages/Admin/ProductTables";
+import VoucherTables from "./pages/Admin/VoucherTables";
+import ProductCategoryTables from "./pages/Admin/ProductCategoryTables";
+import CategoryProductAddPage from "./pages/Admin/CategoryProductAddPage";
+import VoucherAddPage from "./pages/Admin/VoucherAddPage";
 
 export default function App() {
   return (
@@ -27,6 +36,36 @@ export default function App() {
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard" element={<HomeDashboard />} />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route path="/table" element={<BasicTables />} />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard/product" element={<ProductTables />} />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route
+          path="/dashboard/product-category"
+          element={<ProductCategoryTables />}
+        />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard/voucher" element={<VoucherTables />} />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard/product/add" element={<ProductAddPage />} />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route
+          path="/dashboard/product-category/add"
+          element={<CategoryProductAddPage />}
+        />
+      </Route>
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard/voucher/add" element={<VoucherAddPage />} />
       </Route>
 
       {/* ===== MAIN ROUTES (WITH NAVBAR) ===== */}
