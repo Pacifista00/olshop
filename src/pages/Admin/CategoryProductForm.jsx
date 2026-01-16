@@ -2,9 +2,9 @@ import React from "react";
 
 import PageMeta from "../../components/Admin/common/PageMeta";
 import PageBreadcrumb from "../../components/Admin/common/PageBreadCrumb";
-import VoucherAdd from "../../components/Admin/form/VoucherAdd";
+import CategoryProductAdd from "../../components/Admin/form/CategoryProductForm";
 
-export default function VoucherAddPage() {
+export default function CategoryProductForm() {
   return (
     <div>
       <PageMeta
@@ -14,11 +14,11 @@ export default function VoucherAddPage() {
         } untuk mengelola produk, kategori, voucher, pesanan, dan laporan penjualan secara terpusat.`}
       />
 
-      <PageBreadcrumb pageTitle="Tambah Voucher" />
+      <PageBreadcrumb pageTitle="Kategori Produk" />
 
       <div className="grid grid-cols-1 gap-6">
         <div className="space-y-6">
-          <VoucherAdd />
+          <CategoryProductAdd />
         </div>
       </div>
     </div>

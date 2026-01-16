@@ -5,16 +5,24 @@ export default function ProtectedAdminRoute({ children }) {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // Saat cek auth (misal refresh)
+  // Saat cek auth (misal refresh halaman)
   if (loading) {
     return <p style={{ textAlign: "center" }}>Loading...</p>;
   }
 
-  // Jika belum login → redirect ke login
+  // Belum login → redirect ke login
   if (!user) {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  // Jika sudah login → tampilkan halaman
+  // Role yang diizinkan
+  const allowedRoles = ["admin", "developer"];
+
+  // Jika login tapi bukan admin / developer
+  if (!allowedRoles.includes(user.user.role)) {
+    return <Navigate to="/403" replace />;
+  }
+
+  // Jika role sesuai → tampilkan halaman
   return children;
 }

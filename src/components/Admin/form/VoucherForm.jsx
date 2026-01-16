@@ -1,10 +1,16 @@
 import ComponentCard from "../common/ComponentCard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Label from "./Label";
 import Input from "./input/InputField";
 import Select from "./Select";
+import api from "../../../services/Api";
 
-const VoucherAdd = () => {
+const VoucherForm = () => {
+  const { id } = useParams();
+  const isEdit = Boolean(id);
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     code: "",
     name: "",
@@ -18,6 +24,12 @@ const VoucherAdd = () => {
     is_active: 1,
   });
 
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
+
+  /* ======================
+     INPUT CHANGE
+  ====================== */
   const onChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -27,13 +39,77 @@ const VoucherAdd = () => {
     { value: "fixed", label: "Nominal (Rp)" },
   ];
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log("Voucher Payload:", form);
+  /* ======================
+     FETCH DATA (EDIT)
+  ====================== */
+  const fetchVoucher = async () => {
+    try {
+      setLoadingData(true);
+      const res = await api.get(`/voucher/${id}`);
+      const data = res.data.data;
+
+      setForm({
+        code: data.code,
+        name: data.name,
+        type: data.type,
+        value: data.value,
+        max_discount: data.max_discount ?? "",
+        min_order_amount: data.min_order_amount ?? "",
+        usage_limit: data.usage_limit ?? "",
+        starts_at: data.starts_at?.slice(0, 16) ?? "",
+        expires_at: data.expires_at?.slice(0, 16) ?? "",
+        is_active: data.is_active,
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Gagal memuat data voucher");
+    } finally {
+      setLoadingData(false);
+    }
   };
 
+  useEffect(() => {
+    if (isEdit) fetchVoucher();
+  }, [id]);
+
+  /* ======================
+     SUBMIT
+  ====================== */
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    Object.keys(form).forEach((key) => {
+      formData.append(key, form[key]);
+    });
+
+    try {
+      setLoadingSubmit(true);
+
+      if (isEdit) {
+        formData.append("_method", "PUT");
+        await api.post(`/voucher/update/${id}`, formData);
+        alert("Voucher berhasil diperbarui");
+      } else {
+        await api.post("/voucher/store", formData);
+        alert("Voucher berhasil ditambahkan");
+      }
+
+      navigate("/dashboard/voucher");
+    } catch (err) {
+      console.error(err);
+      alert("Gagal menyimpan voucher");
+    } finally {
+      setLoadingSubmit(false);
+    }
+  };
+
+  if (loadingData) {
+    return <p className="text-center">Memuat data voucher...</p>;
+  }
+
   return (
-    <ComponentCard title="Tambah Voucher">
+    <ComponentCard title={isEdit ? "Edit Voucher" : "Tambah Voucher"}>
       <form onSubmit={onSubmit} className="space-y-6">
         {/* CODE */}
         <div>
@@ -43,6 +119,7 @@ const VoucherAdd = () => {
             value={form.code}
             onChange={onChange}
             placeholder="DISKON25"
+            required
           />
         </div>
 
@@ -54,6 +131,7 @@ const VoucherAdd = () => {
             value={form.name}
             onChange={onChange}
             placeholder="Promo Tahun Baru"
+            required
           />
         </div>
 
@@ -75,19 +153,22 @@ const VoucherAdd = () => {
             name="value"
             value={form.value}
             onChange={onChange}
+            required
           />
         </div>
 
         {/* MAX DISCOUNT */}
-        <div>
-          <Label>Maksimal Diskon (Rp)</Label>
-          <Input
-            type="number"
-            name="max_discount"
-            value={form.max_discount}
-            onChange={onChange}
-          />
-        </div>
+        {form.type === "percentage" && (
+          <div>
+            <Label>Maksimal Diskon (Rp)</Label>
+            <Input
+              type="number"
+              name="max_discount"
+              value={form.max_discount}
+              onChange={onChange}
+            />
+          </div>
+        )}
 
         {/* MIN ORDER */}
         <div>
@@ -152,13 +233,18 @@ const VoucherAdd = () => {
         {/* SUBMIT */}
         <button
           type="submit"
-          className="rounded-lg bg-brand-500 px-6 py-3 text-white"
+          disabled={loadingSubmit}
+          className="rounded-lg bg-brand-500 px-6 py-3 text-white hover:bg-brand-600 disabled:opacity-50"
         >
-          Simpan Voucher
+          {loadingSubmit
+            ? "Menyimpan..."
+            : isEdit
+            ? "Update Voucher"
+            : "Simpan Voucher"}
         </button>
       </form>
     </ComponentCard>
   );
 };
 
-export default VoucherAdd;
+export default VoucherForm;

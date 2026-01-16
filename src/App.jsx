@@ -21,51 +21,23 @@ import AfterPayment from "./pages/AfterPayment";
 import OrderDetail from "./pages/OrderDetail";
 import HomeDashboard from "./pages/Admin/Home";
 import AppLayout from "./layouts/Admin/AppLayout";
-import ProductAddPage from "./pages/Admin/ProductAddPage";
-import BasicTables from "./pages/Admin/BasicTables";
+import ProductForm from "./pages/Admin/ProductForm";
 import ProductTables from "./pages/Admin/ProductTables";
 import VoucherTables from "./pages/Admin/VoucherTables";
 import ProductCategoryTables from "./pages/Admin/ProductCategoryTables";
-import CategoryProductAddPage from "./pages/Admin/CategoryProductAddPage";
-import VoucherAddPage from "./pages/Admin/VoucherAddPage";
+import CategoryProductForm from "./pages/Admin/CategoryProductForm";
+import VoucherForm from "./pages/Admin/VoucherForm";
+import ProtectedAdminRoute from "./auth/ProtectedAdminRoute";
+import Forbidden403 from "./pages/errors/Forbidden403";
 
 export default function App() {
   return (
     <Routes>
+      <Route path="/403" element={<Forbidden403 />} />
       {/* ===== AUTH ROUTES (NO NAVBAR) ===== */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route path="/dashboard" element={<HomeDashboard />} />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route path="/table" element={<BasicTables />} />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route path="/dashboard/product" element={<ProductTables />} />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route
-          path="/dashboard/product-category"
-          element={<ProductCategoryTables />}
-        />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route path="/dashboard/voucher" element={<VoucherTables />} />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route path="/dashboard/product/add" element={<ProductAddPage />} />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route
-          path="/dashboard/product-category/add"
-          element={<CategoryProductAddPage />}
-        />
-      </Route>
-      <Route element={<AppLayout />}>
-        <Route path="/dashboard/voucher/add" element={<VoucherAddPage />} />
       </Route>
 
       {/* ===== MAIN ROUTES (WITH NAVBAR) ===== */}
@@ -113,6 +85,39 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+      </Route>
+
+      {/* DASHBOARD */}
+      <Route
+        element={
+          <ProtectedAdminRoute>
+            <AppLayout />
+          </ProtectedAdminRoute>
+        }
+      >
+        <Route path="/dashboard" element={<HomeDashboard />} />
+
+        <Route path="/dashboard/product" element={<ProductTables />} />
+        <Route path="/dashboard/product/add" element={<ProductForm />} />
+
+        <Route
+          path="/dashboard/product-category"
+          element={<ProductCategoryTables />}
+        />
+        <Route
+          path="/dashboard/product-category/add"
+          element={<CategoryProductForm />}
+        />
+
+        <Route path="/dashboard/voucher" element={<VoucherTables />} />
+        <Route path="/dashboard/voucher/add" element={<VoucherForm />} />
+
+        <Route path="/dashboard/product/edit/:id" element={<ProductForm />} />
+        <Route
+          path="/dashboard/product-category/edit/:id"
+          element={<CategoryProductForm />}
+        />
+        <Route path="/dashboard/voucher/edit/:id" element={<VoucherForm />} />
       </Route>
     </Routes>
   );
