@@ -24,6 +24,7 @@ const ShoppingCart = () => {
   const [shippingOptions, setShippingOptions] = useState([]);
   const [selectedShipping, setSelectedShipping] = useState(null);
   const [shippingLoading, setShippingLoading] = useState(false);
+  const shippingUnavailable = !shippingLoading && shippingOptions.length === 0;
 
   // ===== SHIPPING COST =====
   const shippingCost = selectedShipping?.price || 0;
@@ -55,7 +56,11 @@ const ShoppingCart = () => {
       console.log(res);
       setShippingOptions(res.data.shipping_options || []);
     } catch (err) {
-      alert("Gagal mengambil ongkir");
+      setShippingOptions([]);
+      alert(
+        err.response?.data?.message ||
+          "Alamat belum lengkap atau ongkir tidak tersedia"
+      );
     } finally {
       setShippingLoading(false);
     }
@@ -191,8 +196,13 @@ const ShoppingCart = () => {
 
             <div className="flex justify-between text-sm mb-2">
               <span>Biaya Pengiriman</span>
-              <span>Rp {shippingCost.toLocaleString("id-ID")}</span>
+              {selectedShipping ? (
+                <span>Rp {shippingCost.toLocaleString("id-ID")}</span>
+              ) : (
+                <span className="text-gray-400 italic">Belum dipilih</span>
+              )}
             </div>
+
             {/* ===== PILIH KURIR ===== */}
             <div className="mt-4">
               <label className="text-sm font-medium">Pilih Pengiriman</label>
@@ -202,9 +212,18 @@ const ShoppingCart = () => {
               )}
 
               {!shippingLoading && shippingOptions.length === 0 && (
-                <p className="text-sm text-gray-500 mt-1">
-                  Kurir tidak tersedia
-                </p>
+                <div className="mt-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded p-3">
+                  <p className="font-medium">Ongkir tidak tersedia</p>
+                  <p className="text-xs mt-1 text-red-500">
+                    Pastikan alamat pengiriman sudah benar dan lengkap.
+                  </p>
+                  <button
+                    onClick={() => (window.location.href = "/address")}
+                    className="mt-2 text-xs text-blue-600 underline"
+                  >
+                    Atur alamat pengiriman
+                  </button>
+                </div>
               )}
 
               <div className="mt-2 space-y-2">
@@ -306,12 +325,17 @@ const ShoppingCart = () => {
 
             <button
               onClick={handleCheckout}
-              disabled={!selectedShipping}
+              disabled={!selectedShipping || shippingUnavailable}
               className="mt-6 w-full bg-blue-600 text-white py-2 rounded
              disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Bayar Sekarang
             </button>
+            {shippingUnavailable && (
+              <p className="mt-2 text-xs text-red-500 text-center">
+                Tidak bisa checkout sebelum ongkir tersedia
+              </p>
+            )}
           </div>
         </div>
       )}

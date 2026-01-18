@@ -8,18 +8,17 @@ import Select from "./Select";
 import api from "../../../services/Api";
 
 const ProductForm = () => {
-  const { id } = useParams(); // jika ada → edit
+  const { id } = useParams();
   const isEdit = Boolean(id);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
     category_id: "",
     name: "",
-    slug: "",
     description: "",
     price: "",
-    weight: "",
     stock: "",
+    weight: "",
     length: "",
     width: "",
     height: "",
@@ -47,9 +46,9 @@ const ProductForm = () => {
     try {
       const res = await api.get("/categories");
       setCategories(
-        res.data.data.map((cat) => ({
-          value: cat.id,
-          label: cat.name,
+        res.data.data.map((item) => ({
+          value: item.id,
+          label: item.name,
         }))
       );
     } catch (err) {
@@ -71,15 +70,14 @@ const ProductForm = () => {
       setForm({
         category_id: product.category_id,
         name: product.name,
-        slug: product.slug,
-        description: product.description,
+        description: product.description ?? "",
         price: product.price,
-        weight: product.weight,
         stock: product.stock,
-        length: product.length,
-        width: product.width,
-        height: product.height,
-        is_active: product.is_active,
+        weight: product.weight ?? "",
+        length: product.length ?? "",
+        width: product.width ?? "",
+        height: product.height ?? "",
+        is_active: product.is_active ? 1 : 0,
       });
 
       setPreview(product.image_url);
@@ -117,9 +115,14 @@ const ProductForm = () => {
     e.preventDefault();
 
     const formData = new FormData();
+
     Object.keys(form).forEach((key) => {
       if (form[key] !== "" && form[key] !== null) {
-        formData.append(key, form[key]);
+        if (key === "is_active") {
+          formData.append(key, Number(form[key]));
+        } else {
+          formData.append(key, form[key]);
+        }
       }
     });
 
@@ -173,6 +176,7 @@ const ProductForm = () => {
             </p>
           )}
         </div>
+
         {/* CATEGORY */}
         <div>
           <Label>Kategori</Label>
@@ -190,12 +194,6 @@ const ProductForm = () => {
         <div>
           <Label>Nama Produk</Label>
           <Input name="name" value={form.name} onChange={onChange} required />
-        </div>
-
-        {/* SLUG */}
-        <div>
-          <Label>Slug</Label>
-          <Input name="slug" value={form.slug} onChange={onChange} />
         </div>
 
         {/* DESCRIPTION */}
@@ -218,6 +216,7 @@ const ProductForm = () => {
             name="price"
             value={form.price}
             onChange={onChange}
+            min={0}
             required
           />
         </div>
@@ -230,8 +229,55 @@ const ProductForm = () => {
             name="stock"
             value={form.stock}
             onChange={onChange}
+            min={0}
             required
           />
+        </div>
+
+        {/* WEIGHT */}
+        <div>
+          <Label>Berat (gram)</Label>
+          <Input
+            type="number"
+            name="weight"
+            value={form.weight}
+            onChange={onChange}
+            min={0}
+          />
+        </div>
+
+        {/* DIMENSIONS */}
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <Label>Panjang (cm)</Label>
+            <Input
+              type="number"
+              name="length"
+              value={form.length}
+              onChange={onChange}
+              min={0}
+            />
+          </div>
+          <div>
+            <Label>Lebar (cm)</Label>
+            <Input
+              type="number"
+              name="width"
+              value={form.width}
+              onChange={onChange}
+              min={0}
+            />
+          </div>
+          <div>
+            <Label>Tinggi (cm)</Label>
+            <Input
+              type="number"
+              name="height"
+              value={form.height}
+              onChange={onChange}
+              min={0}
+            />
+          </div>
         </div>
 
         {/* STATUS */}
@@ -240,7 +286,9 @@ const ProductForm = () => {
           <select
             name="is_active"
             value={form.is_active}
-            onChange={onChange}
+            onChange={(e) =>
+              setForm({ ...form, is_active: Number(e.target.value) })
+            }
             className="w-full rounded-lg border p-3"
           >
             <option value={1}>Aktif</option>

@@ -20,6 +20,7 @@ const AfterPayment = () => {
         const res = await api.get(`/orders/by-number/${orderNumber}`);
 
         const order = res.data.data;
+        console.log(order);
 
         // ✅ SUKSES
         if (order.payment_status === "paid") {
