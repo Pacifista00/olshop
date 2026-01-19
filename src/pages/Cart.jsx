@@ -24,7 +24,10 @@ const ShoppingCart = () => {
   const [shippingOptions, setShippingOptions] = useState([]);
   const [selectedShipping, setSelectedShipping] = useState(null);
   const [shippingLoading, setShippingLoading] = useState(false);
-  const shippingUnavailable = !shippingLoading && shippingOptions.length === 0;
+  const [shippingError, setShippingError] = useState(null);
+
+  const shippingUnavailable =
+    !shippingLoading && (shippingOptions.length === 0 || shippingError);
 
   // ===== SHIPPING COST =====
   const shippingCost = selectedShipping?.price || 0;
@@ -51,16 +54,33 @@ const ShoppingCart = () => {
   }, [cart]);
   const loadShipping = async () => {
     setShippingLoading(true);
+    setShippingError(null);
+
     try {
-      const res = await api.get("/preview-shipping"); // sesuaikan endpoint
-      console.log(res);
+      const res = await api.get("/preview-shipping");
       setShippingOptions(res.data.shipping_options || []);
     } catch (err) {
+      const message = err.response?.data?.message;
+
       setShippingOptions([]);
-      alert(
-        err.response?.data?.message ||
-          "Alamat belum lengkap atau ongkir tidak tersedia"
-      );
+
+      // 🔑 mapping error backend
+      if (message?.includes("belum ditambahkan")) {
+        setShippingError({
+          type: "NO_ADDRESS",
+          message,
+        });
+      } else if (message?.includes("belum ditentukan")) {
+        setShippingError({
+          type: "NO_DEFAULT",
+          message,
+        });
+      } else {
+        setShippingError({
+          type: "GENERAL",
+          message: message || "Ongkir tidak tersedia",
+        });
+      }
     } finally {
       setShippingLoading(false);
     }
@@ -83,7 +103,9 @@ const ShoppingCart = () => {
     try {
       await updateCartQty(id, qty);
       setCart((prev) =>
-        prev.map((item) => (item.id === id ? { ...item, quantity: qty } : item))
+        prev.map((item) =>
+          item.id === id ? { ...item, quantity: qty } : item,
+        ),
       );
     } catch {
       alert("Gagal update quantity");
@@ -211,18 +233,23 @@ const ShoppingCart = () => {
                 <p className="text-sm text-gray-500 mt-1">Memuat ongkir...</p>
               )}
 
-              {!shippingLoading && shippingOptions.length === 0 && (
-                <div className="mt-2 text-sm text-red-600 bg-red-50 border border-red-200 rounded p-3">
-                  <p className="font-medium">Ongkir tidak tersedia</p>
-                  <p className="text-xs mt-1 text-red-500">
-                    Pastikan alamat pengiriman sudah benar dan lengkap.
+              {!shippingLoading && shippingError && (
+                <div className="mt-2 text-sm bg-red-50 border border-red-200 rounded p-3">
+                  <p className="font-medium text-red-600">
+                    {shippingError.message}
                   </p>
-                  <button
-                    onClick={() => (window.location.href = "/address")}
-                    className="mt-2 text-xs text-blue-600 underline"
-                  >
-                    Atur alamat pengiriman
-                  </button>
+
+                  {(shippingError.type === "NO_ADDRESS" ||
+                    shippingError.type === "NO_DEFAULT") && (
+                    <button
+                      onClick={() =>
+                        (window.location.href = "/profile/address")
+                      }
+                      className="mt-2 text-xs text-blue-600 underline"
+                    >
+                      Atur alamat pengiriman
+                    </button>
+                  )}
                 </div>
               )}
 

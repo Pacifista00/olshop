@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import api from "../services/Api";
 
@@ -11,13 +12,19 @@ import AddressList from "../components/profile/AddressList";
 
 const ProfilePage = () => {
   const { user, loading } = useAuth();
+  const { tab } = useParams();
+  const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState("orders");
+  // ⬇️ TAB AKTIF DARI URL
+  const activeTab = tab || "orders";
+
   const [orders, setOrders] = useState([]);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const [loadingOrders, setLoadingOrders] = useState(true);
 
   useEffect(() => {
+    if (activeTab !== "orders") return;
+
     const fetchOrders = async () => {
       try {
         const res = await api.get("/orders");
@@ -30,12 +37,12 @@ const ProfilePage = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [activeTab]);
 
   if (loading) return <div>Memuat user...</div>;
   if (!user) return null;
 
-  const selectedOrder = orders.find((order) => order.id === selectedOrderId);
+  const selectedOrder = orders.find((o) => o.id === selectedOrderId);
 
   return (
     <div className="min-h-screen">
@@ -49,7 +56,7 @@ const ProfilePage = () => {
             <ProfileTabs
               activeTab={activeTab}
               onChange={(tab) => {
-                setActiveTab(tab);
+                navigate(`/profile/${tab}`);
                 setSelectedOrderId(null);
               }}
             />
@@ -76,6 +83,7 @@ const ProfilePage = () => {
                 )}
               </>
             )}
+
             {activeTab === "address" && <AddressList />}
           </div>
         </div>

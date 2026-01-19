@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/AuthLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import { Navigate } from "react-router-dom";
 
 // pages
 import Home from "./pages/Home";
@@ -61,7 +62,13 @@ export default function App() {
               <ProfilePage />
             </ProtectedRoute>
           }
-        />
+        >
+          {/* default */}
+          <Route index element={<Navigate to="orders" replace />} />
+
+          {/* tab */}
+          <Route path=":tab" element={<ProfilePage />} />
+        </Route>
 
         <Route
           path="/addresses/new"
