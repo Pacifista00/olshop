@@ -16,6 +16,8 @@ export default function VoucherList() {
   const [vouchers, setVouchers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
 
   // 🔴 modal delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -23,20 +25,24 @@ export default function VoucherList() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const fetchVouchers = async () => {
-      try {
-        const response = await api.get("/vouchers");
-        setVouchers(response.data.data);
-      } catch (err) {
-        console.error(err);
-        setError("Gagal memuat data voucher");
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchVouchers(currentPage);
+  }, [currentPage]);
 
-    fetchVouchers();
-  }, []);
+  const fetchVouchers = async (page = 1) => {
+    try {
+      setLoading(true);
+      const response = await api.get(`/vouchers?page=${page}`);
+
+      setVouchers(response.data.data);
+      setCurrentPage(response.data.meta.current_page);
+      setLastPage(response.data.meta.last_page);
+    } catch (err) {
+      console.error(err);
+      setError("Gagal memuat data voucher");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const openDeleteModal = (voucher) => {
     setSelectedVoucher(voucher);
@@ -57,7 +63,7 @@ export default function VoucherList() {
 
       // hapus dari state tanpa reload
       setVouchers((prev) =>
-        prev.filter((item) => item.id !== selectedVoucher.id)
+        prev.filter((item) => item.id !== selectedVoucher.id),
       );
 
       closeDeleteModal();
@@ -199,6 +205,44 @@ export default function VoucherList() {
               ))}
             </TableBody>
           </Table>
+        </div>
+      </div>
+      {/* ================= PAGINATION ================= */}
+      <div className="mt-4 flex items-center justify-between px-2">
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          Halaman {currentPage} dari {lastPage}
+        </span>
+
+        <div className="flex gap-2">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+            className="rounded-lg border px-3 py-1 text-sm disabled:opacity-50 dark:border-white/[0.05]"
+          >
+            Sebelumnya
+          </button>
+
+          {Array.from({ length: lastPage }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`rounded-lg px-3 py-1 text-sm ${
+                page === currentPage
+                  ? "bg-blue-600 text-white"
+                  : "border hover:bg-gray-100 dark:border-white/[0.05] dark:hover:bg-white/10"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === lastPage}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            className="rounded-lg border px-3 py-1 text-sm disabled:opacity-50 dark:border-white/[0.05]"
+          >
+            Berikutnya
+          </button>
         </div>
       </div>
 

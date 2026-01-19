@@ -16,6 +16,8 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
 
   // 🔴 modal delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -23,20 +25,24 @@ export default function ProductList() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await api.get("/products");
-        setProducts(response.data.data);
-      } catch (err) {
-        console.error(err);
-        setError("Gagal memuat data produk");
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchProducts(currentPage);
+  }, [currentPage]);
 
-    fetchProducts();
-  }, []);
+  const fetchProducts = async (page = 1) => {
+    try {
+      setLoading(true);
+      const response = await api.get(`/products?page=${page}`);
+
+      setProducts(response.data.data);
+      setCurrentPage(response.data.meta.current_page);
+      setLastPage(response.data.meta.last_page);
+    } catch (err) {
+      console.error(err);
+      setError("Gagal memuat data produk");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const openDeleteModal = (product) => {
     setSelectedProduct(product);
@@ -56,9 +62,15 @@ export default function ProductList() {
       await api.delete(`/product/delete/${selectedProduct.id}`);
 
       // hapus dari state
-      setProducts((prev) =>
-        prev.filter((item) => item.id !== selectedProduct.id)
-      );
+      setProducts((prev) => {
+        const updated = prev.filter((item) => item.id !== selectedProduct.id);
+
+        if (updated.length === 0 && currentPage > 1) {
+          setCurrentPage((prev) => prev - 1);
+        }
+
+        return updated;
+      });
 
       closeDeleteModal();
     } catch (error) {
@@ -190,6 +202,44 @@ export default function ProductList() {
               ))}
             </TableBody>
           </Table>
+        </div>
+      </div>
+      {/* ================= PAGINATION ================= */}
+      <div className="mt-4 flex items-center justify-between px-2">
+        <span className="text-sm text-gray-500">
+          Halaman {currentPage} dari {lastPage}
+        </span>
+
+        <div className="flex gap-2">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+            className="rounded-lg border px-3 py-1 text-sm disabled:opacity-50"
+          >
+            Sebelumnya
+          </button>
+
+          {Array.from({ length: lastPage }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`rounded-lg px-3 py-1 text-sm ${
+                page === currentPage
+                  ? "bg-blue-600 text-white"
+                  : "border hover:bg-gray-100"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === lastPage}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            className="rounded-lg border px-3 py-1 text-sm disabled:opacity-50"
+          >
+            Berikutnya
+          </button>
         </div>
       </div>
 

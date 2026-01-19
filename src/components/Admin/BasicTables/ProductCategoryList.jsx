@@ -14,6 +14,8 @@ export default function ProductCategoryList() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
 
   // 🔴 modal delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -21,20 +23,24 @@ export default function ProductCategoryList() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await api.get("/categories");
-        setCategories(response.data.data);
-      } catch (err) {
-        console.error(err);
-        setError("Gagal memuat data kategori");
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchCategories(currentPage);
+  }, [currentPage]);
 
-    fetchCategories();
-  }, []);
+  const fetchCategories = async (page = 1) => {
+    try {
+      setLoading(true);
+      const response = await api.get(`/categories?page=${page}`);
+
+      setCategories(response.data.data);
+      setCurrentPage(response.data.meta.current_page);
+      setLastPage(response.data.meta.last_page);
+    } catch (err) {
+      console.error(err);
+      setError("Gagal memuat data kategori");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const openDeleteModal = (category) => {
     setSelectedCategory(category);
@@ -54,9 +60,15 @@ export default function ProductCategoryList() {
       await api.delete(`/category/delete/${selectedCategory.id}`);
 
       // hapus dari state tanpa reload
-      setCategories((prev) =>
-        prev.filter((item) => item.id !== selectedCategory.id)
-      );
+      setCategories((prev) => {
+        const updated = prev.filter((item) => item.id !== selectedCategory.id);
+
+        if (updated.length === 0 && currentPage > 1) {
+          setCurrentPage((prev) => prev - 1);
+        }
+
+        return updated;
+      });
 
       closeDeleteModal();
     } catch (error) {
@@ -151,6 +163,44 @@ export default function ProductCategoryList() {
               ))}
             </TableBody>
           </Table>
+        </div>
+      </div>
+      {/* ================= PAGINATION ================= */}
+      <div className="mt-4 flex items-center justify-between px-2">
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          Halaman {currentPage} dari {lastPage}
+        </span>
+
+        <div className="flex gap-2">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+            className="rounded-lg border px-3 py-1 text-sm disabled:opacity-50 dark:border-white/[0.05]"
+          >
+            Sebelumnya
+          </button>
+
+          {Array.from({ length: lastPage }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`rounded-lg px-3 py-1 text-sm ${
+                page === currentPage
+                  ? "bg-blue-600 text-white"
+                  : "border hover:bg-gray-100 dark:border-white/[0.05] dark:hover:bg-white/10"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            disabled={currentPage === lastPage}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            className="rounded-lg border px-3 py-1 text-sm disabled:opacity-50 dark:border-white/[0.05]"
+          >
+            Berikutnya
+          </button>
         </div>
       </div>
 
