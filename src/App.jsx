@@ -29,6 +29,7 @@ import CategoryProductForm from "./pages/Admin/CategoryProductForm";
 import VoucherForm from "./pages/Admin/VoucherForm";
 import ProtectedAdminRoute from "./auth/ProtectedAdminRoute";
 import Forbidden403 from "./pages/errors/Forbidden403";
+import AddressFormPage from "./pages/AddressFormPage";
 
 export default function App() {
   return (
@@ -58,6 +59,23 @@ export default function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/addresses/new"
+          element={
+            <ProtectedRoute>
+              <AddressFormPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/addresses/:id/edit"
+          element={
+            <ProtectedRoute>
+              <AddressFormPage />
             </ProtectedRoute>
           }
         />

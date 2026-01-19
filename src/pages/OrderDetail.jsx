@@ -71,7 +71,7 @@ const OrderDetail = () => {
         <div className="text-center">
           <p className="text-red-600 font-medium">{error}</p>
           <button
-            onClick={() => navigate("/orders")}
+            onClick={() => navigate("/profile?tab=addresses")}
             className="mt-4 px-4 py-2 bg-black text-white rounded"
           >
             Kembali ke Pesanan
@@ -206,7 +206,7 @@ const OrderDetail = () => {
         )}
 
         <button
-          onClick={() => navigate("/orders")}
+          onClick={() => navigate("/profile?tab=addresses")}
           className="px-4 py-2 border rounded"
         >
           Kembali ke Daftar Pesanan
