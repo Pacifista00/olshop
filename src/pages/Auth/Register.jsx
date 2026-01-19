@@ -1,9 +1,39 @@
 import React, { useState } from "react";
-import { mdiAccountPlus, mdiAccount, mdiLock, mdiEmail } from "@mdi/js";
+import { mdiAccount, mdiLock, mdiEmail } from "@mdi/js";
 import Icon from "@mdi/react";
+import { useAuth } from "../../auth/AuthContext";
 
 function RegisterPage() {
   const [isChecked, setIsChecked] = useState(false);
+
+  const { register, loading } = useAuth();
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isChecked) return;
+
+    try {
+      await register(form);
+      window.location.href = `/verify-otp?email=${form.email}`;
+    } catch (error) {
+      alert(error.response?.data?.message || "Register gagal, coba lagi");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
@@ -14,146 +44,119 @@ function RegisterPage() {
           Daftarkan akunmu!
         </h2>
 
-        <form>
+        <form onSubmit={handleSubmit}>
+          {/* Nama Lengkap */}
+          <input
+            type="text"
+            name="name"
+            placeholder="Nama Lengkap Anda"
+            className="hidden"
+            value={form.name}
+            onChange={handleChange}
+          />
+
           {/* Input Nama Lengkap */}
           <div className="mb-4">
-            <label
-              htmlFor="fullName"
-              className="block text-gray-700 text-sm font-medium mb-2"
-            >
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Nama Lengkap
             </label>
-            <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-emerald-200">
+            <div className="flex items-center border border-gray-300 rounded-md">
               <Icon
                 path={mdiAccount}
                 size={0.8}
-                className="text-gray-400 ml-3"
+                className="ml-3 text-gray-400"
               />
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
+                name="name"
                 placeholder="Nama Lengkap Anda"
-                className="grow p-3 outline-none bg-transparent rounded-r-md"
+                className="grow p-3 outline-none"
+                value={form.name}
+                onChange={handleChange}
                 required
               />
             </div>
           </div>
 
-          {/* Input Email */}
+          {/* Email */}
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 text-sm font-medium mb-2"
-            >
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Email
             </label>
-            <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-emerald-200">
-              <Icon path={mdiEmail} size={0.8} className="text-gray-400 ml-3" />
+            <div className="flex items-center border border-gray-300 rounded-md">
+              <Icon path={mdiEmail} size={0.8} className="ml-3 text-gray-400" />
               <input
                 type="email"
-                id="email"
                 name="email"
                 placeholder="email@example.com"
-                className="grow p-3 outline-none bg-transparent rounded-r-md"
+                className="grow p-3 outline-none"
+                value={form.email}
+                onChange={handleChange}
                 required
               />
             </div>
           </div>
 
-          {/* Input Password */}
+          {/* Password */}
           <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 text-sm font-medium mb-2"
-            >
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Password
             </label>
-            <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-emerald-200">
-              <Icon path={mdiLock} size={0.8} className="text-gray-400 ml-3" />
+            <div className="flex items-center border border-gray-300 rounded-md">
+              <Icon path={mdiLock} size={0.8} className="ml-3 text-gray-400" />
               <input
                 type="password"
-                id="password"
                 name="password"
                 placeholder="Buat Password"
-                className="grow p-3 outline-none bg-transparent rounded-r-md"
+                className="grow p-3 outline-none"
+                value={form.password}
+                onChange={handleChange}
                 required
               />
             </div>
           </div>
 
-          {/* Input Konfirmasi Password */}
+          {/* Konfirmasi Password */}
           <div className="mb-6">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-gray-700 text-sm font-medium mb-2"
-            >
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Konfirmasi Password
             </label>
-            <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-emerald-200">
-              <Icon path={mdiLock} size={0.8} className="text-gray-400 ml-3" />
+            <div className="flex items-center border border-gray-300 rounded-md">
+              <Icon path={mdiLock} size={0.8} className="ml-3 text-gray-400" />
               <input
                 type="password"
-                id="confirmPassword"
-                name="confirmPassword"
+                name="password_confirmation"
                 placeholder="Ulangi Password"
-                className="grow p-3 outline-none bg-transparent rounded-r-md"
+                className="grow p-3 outline-none"
+                value={form.password_confirmation}
+                onChange={handleChange}
                 required
               />
             </div>
           </div>
 
-          {/* Persetujuan Syarat dan Ketentuan */}
+          {/* Terms */}
           <div className="flex items-center mb-6 text-sm">
             <input
               type="checkbox"
-              id="terms"
-              name="terms"
-              className="h-4 w-4 text-blue-600 focus:ring-blue-700 border-gray-300 rounded"
               checked={isChecked}
               onChange={(e) => setIsChecked(e.target.checked)}
-              required
             />
-            <label htmlFor="terms" className="ml-2 block text-gray-900">
-              Saya setuju dengan{" "}
-              <a
-                href="#"
-                className="font-medium text-blue-600 hover:text-blue-700"
-              >
-                Syarat dan Ketentuan
-              </a>
-            </label>
+            <span className="ml-2">
+              Saya setuju dengan Syarat dan Ketentuan
+            </span>
           </div>
 
-          {/* Tombol Daftar */}
           <button
             type="submit"
-            // 4. Tambahkan atribut disabled dan styling-nya
-            disabled={!isChecked}
-            className={`w-full p-3 rounded-md transition duration-150 ease-in-out text-white
-              ${
-                isChecked
-                  ? "bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-700 focus:ring-offset-2"
-                  : "bg-gray-400 cursor-not-allowed opacity-70"
-              }`}
+            disabled={!isChecked || loading}
+            className={`w-full p-3 rounded-md text-white ${
+              isChecked ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400"
+            }`}
           >
-            <span className="flex items-center justify-center space-x-2">
-              <Icon path={mdiAccountPlus} size={0.8} />
-              <span>Daftar Sekarang</span>
-            </span>
+            {loading ? "Memproses..." : "Daftar Sekarang"}
           </button>
         </form>
-
-        {/* Opsi Login */}
-        <p className="mt-8 text-center text-gray-600 text-sm">
-          Sudah punya akun?{" "}
-          <a
-            href="/login"
-            className="font-medium text-blue-600 hover:text-blue-700"
-          >
-            Login di Sini
-          </a>
-        </p>
       </div>
     </div>
   );

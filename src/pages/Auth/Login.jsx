@@ -17,6 +17,8 @@ function LoginPage() {
   });
 
   const [error, setError] = useState("");
+  const [needVerification, setNeedVerification] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   // Jika sudah login → redirect
@@ -33,7 +35,18 @@ function LoginPage() {
       await login(form);
       navigate(from, { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || "Email atau password salah");
+      const message = err.response?.data?.message;
+
+      // 🔴 EMAIL BELUM TERVERIFIKASI
+      if (err.response?.status === 403) {
+        setError(message);
+        setNeedVerification(true);
+        return;
+      }
+
+      // ❌ ERROR NORMAL
+      setNeedVerification(false);
+      setError(message || "Email atau password salah");
     } finally {
       setLoading(false);
     }
@@ -51,8 +64,26 @@ function LoginPage() {
         </h2>
 
         {/* ERROR MESSAGE */}
+        {/* ERROR MESSAGE */}
         {error && (
-          <div className="mb-4 text-red-600 text-sm text-center">{error}</div>
+          <div className="mb-4 text-red-600 text-sm text-center">
+            {error}
+
+            {needVerification && (
+              <div className="mt-3">
+                <button
+                  onClick={() =>
+                    navigate(`/verify-otp?email=${form.email}`, {
+                      replace: true,
+                    })
+                  }
+                  className="text-blue-600 hover:underline font-medium"
+                >
+                  Verifikasi Email Sekarang
+                </button>
+              </div>
+            )}
+          </div>
         )}
 
         <form onSubmit={handleSubmit}>
