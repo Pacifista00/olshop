@@ -8,6 +8,7 @@ import { useAuth } from "../auth/AuthContext";
 export default function LatestProduct() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isDragging = useRef(false);
 
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -70,20 +71,25 @@ export default function LatestProduct() {
   /* ================= DRAG SCROLL (MOBILE) ================= */
   const handleMouseDown = (e) => {
     isDown = true;
+    isDragging.current = false;
     startX = e.pageX - dragRef.current.offsetLeft;
     scrollLeft = dragRef.current.scrollLeft;
   };
 
-  const handleMouseLeave = () => (isDown = false);
-  const handleMouseUp = () => (isDown = false);
-
   const handleMouseMove = (e) => {
     if (!isDown) return;
     e.preventDefault();
+    isDragging.current = true; // ⛔ sedang drag
     const x = e.pageX - dragRef.current.offsetLeft;
     const walk = (x - startX) * 1.5;
     dragRef.current.scrollLeft = scrollLeft - walk;
   };
+
+  const handleMouseUp = () => {
+    isDown = false;
+  };
+
+  const handleMouseLeave = () => (isDown = false);
 
   /* ================= LOADING ================= */
   if (loading) {
@@ -126,7 +132,14 @@ export default function LatestProduct() {
           {products.map((p) => (
             <div
               key={p.id}
-              className="relative min-w-[90px] bg-white shadow rounded-lg p-2 select-none flex flex-col justify-between h-[140px]"
+              onClick={() => {
+                if (!isDragging.current) {
+                  navigate(`/produk/${p.id}`);
+                }
+              }}
+              className="relative min-w-[90px] bg-white shadow rounded-lg p-2
+             select-none flex flex-col justify-between h-[140px]
+             cursor-pointer"
             >
               <img
                 src={p.img}
@@ -142,10 +155,13 @@ export default function LatestProduct() {
 
               <button
                 disabled={authLoading}
-                onClick={() => handleAddToCart(p.id)}
+                onClick={(e) => {
+                  e.stopPropagation(); // ⛔ cegah navigasi
+                  handleAddToCart(p.id);
+                }}
                 className="absolute bottom-2 right-2 bg-blue-600 text-white w-6 h-6 rounded-full
-                           flex items-center justify-center hover:scale-110 transition
-                           disabled:opacity-50 disabled:cursor-not-allowed"
+               flex items-center justify-center hover:scale-110 transition
+               disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Icon path={mdiPlus} size={0.6} />
               </button>
@@ -159,14 +175,19 @@ export default function LatestProduct() {
         {products.map((p) => (
           <div
             key={p.id}
-            className="relative bg-white shadow rounded-lg p-2 h-[180px]"
+            onClick={() => navigate(`/produk/${p.id}`)}
+            className="relative bg-white shadow rounded-lg p-2 h-[180px]
+             cursor-pointer hover:shadow-lg transition"
           >
             <button
               disabled={authLoading}
-              onClick={() => handleAddToCart(p.id)}
+              onClick={(e) => {
+                e.stopPropagation(); // ⛔
+                handleAddToCart(p.id);
+              }}
               className="absolute bottom-2 right-2 bg-blue-600 text-white w-7 h-7 rounded-full
-                         flex items-center justify-center hover:scale-110 transition
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+               flex items-center justify-center hover:scale-110 transition
+               disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Icon path={mdiPlus} size={0.8} />
             </button>

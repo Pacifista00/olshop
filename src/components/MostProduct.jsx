@@ -90,7 +90,9 @@ export default function ProdukTerlaris() {
         {products.map((item) => (
           <div
             key={item.id}
-            className="bg-white rounded-xl shadow p-3 hover:shadow-lg transition relative flex flex-col"
+            onClick={() => navigate(`/produk/${item.id}`)}
+            className="bg-white rounded-xl shadow p-3 hover:shadow-lg transition
+             relative flex flex-col cursor-pointer"
           >
             <img
               src={item.image}
@@ -106,14 +108,18 @@ export default function ProdukTerlaris() {
               Rp {item.price.toLocaleString("id-ID")}
             </p>
 
+            {/* BUTTON ADD TO CART */}
             <button
               disabled={authLoading}
-              onClick={() => handleAddToCart(item.id)}
+              onClick={(e) => {
+                e.stopPropagation(); // ⛔ agar tidak trigger navigasi
+                handleAddToCart(item.id);
+              }}
               title="Tambah ke keranjang"
               className="absolute bottom-3 right-3 bg-white text-gray-800
-                         w-8 h-8 rounded-full flex items-center justify-center shadow
-                         hover:bg-gray-800 hover:text-white transition
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+               w-8 h-8 rounded-full flex items-center justify-center shadow
+               hover:bg-gray-800 hover:text-white transition
+               disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Icon path={mdiPlus} size={1} />
             </button>
