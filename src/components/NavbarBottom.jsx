@@ -1,29 +1,26 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../services/Api";
 
 export default function NavbarBottom() {
   const navigate = useNavigate();
 
-  const [categories, setCategories] = useState([]);
+  // ✅ Manual categories
+  const categories = [
+    { id: 1, name: "Fashion", slug: "fashion" },
+    { id: 2, name: "Makanan", slug: "makanan" },
+    { id: 3, name: "Herbal", slug: "herbal" },
+    { id: 4, name: "Kecantikan", slug: "kecantikan" },
+    { id: 5, name: "Alat Tulis", slug: "alat-tulis" },
+    { id: 6, name: "Elektronik", slug: "elektronik" },
+    { id: 7, name: "Kesehatan", slug: "kesehatan" },
+    { id: 8, name: "Olahraga", slug: "olahraga" },
+    { id: 9, name: "Buku", slug: "buku" },
+    { id: 10, name: "Minuman", slug: "minuman" },
+  ];
+
   const [displayCategories, setDisplayCategories] = useState([]);
   const [showMore, setShowMore] = useState(false);
 
-  // Fetch kategori dari API
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await api.get("/categories");
-        setCategories(res.data.data);
-      } catch (err) {
-        console.error("Gagal mengambil kategori", err);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  // Responsive handler
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
@@ -43,7 +40,7 @@ export default function NavbarBottom() {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [categories]);
+  }, []);
 
   return (
     <div className="bg-blue-600 py-3">
