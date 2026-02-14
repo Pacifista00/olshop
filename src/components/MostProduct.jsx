@@ -21,6 +21,7 @@ export default function ProdukTerlaris() {
         const data = res.data.data.map((item) => ({
           id: item.id,
           title: item.name,
+          stock: item.stock,
           price: Number(item.price),
           image: item.image?.startsWith("http")
             ? item.image

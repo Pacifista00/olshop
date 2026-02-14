@@ -4,9 +4,9 @@ export default function Carousel() {
   const [slide, setSlide] = useState(0);
 
   const images = [
-    "/image/carousel/2148036986.jpg",
-    "/image/carousel/2148134027.jpg",
-    "/image/carousel/2149339768.jpg",
+    "/image/carousel/jalan.jpg",
+    "/image/carousel/ramad.webp",
+    "/image/carousel/trip.jpg",
   ];
 
   const nextSlide = () => setSlide((slide + 1) % images.length);

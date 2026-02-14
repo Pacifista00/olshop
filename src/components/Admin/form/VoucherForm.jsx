@@ -14,7 +14,9 @@ const VoucherForm = () => {
   const [form, setForm] = useState({
     code: "",
     name: "",
+    description: "",
     type: "percentage",
+    visibility: "public",
     value: "",
     max_discount: "",
     min_order_amount: "",
@@ -31,12 +33,22 @@ const VoucherForm = () => {
      INPUT CHANGE
   ====================== */
   const onChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value, type } = e.target;
+
+    setForm({
+      ...form,
+      [name]: type === "number" ? Number(value) : value,
+    });
   };
 
   const typeOptions = [
     { value: "percentage", label: "Persentase (%)" },
     { value: "fixed", label: "Nominal (Rp)" },
+  ];
+
+  const visibilityOptions = [
+    { label: "Public (Tampil di halaman voucher)", value: "public" },
+    { label: "Hidden (Hanya via kode)", value: "hidden" },
   ];
 
   /* ======================
@@ -51,7 +63,9 @@ const VoucherForm = () => {
       setForm({
         code: data.code,
         name: data.name,
+        description: data.description,
         type: data.type,
+        visibility: data.visibility,
         value: data.value,
         max_discount: data.max_discount ?? "",
         min_order_amount: data.min_order_amount ?? "",
@@ -135,6 +149,20 @@ const VoucherForm = () => {
           />
         </div>
 
+        {/* DESCRIPTION */}
+        <div>
+          <Label>Deskripsi</Label>
+          <textarea
+            id="description"
+            name="description"
+            rows={5}
+            value={form.description}
+            onChange={onChange}
+            required
+            className="w-full rounded-lg border border-gray-300 bg-transparent py-3 px-5 outline-none transition focus:border-gray-400 focus:ring-0 dark:border-gray-600 dark:focus:border-gray-500"
+          />
+        </div>
+
         {/* TYPE */}
         <div>
           <Label>Tipe Voucher</Label>
@@ -142,6 +170,15 @@ const VoucherForm = () => {
             options={typeOptions}
             value={form.type}
             onChange={(value) => setForm({ ...form, type: value })}
+          />
+        </div>
+
+        <div>
+          <Label>Visibilitas Voucher</Label>
+          <Select
+            options={visibilityOptions}
+            value={form.visibility}
+            onChange={(value) => setForm({ ...form, visibility: value })}
           />
         </div>
 
@@ -239,8 +276,8 @@ const VoucherForm = () => {
           {loadingSubmit
             ? "Menyimpan..."
             : isEdit
-            ? "Update Voucher"
-            : "Simpan Voucher"}
+              ? "Update Voucher"
+              : "Simpan Voucher"}
         </button>
       </form>
     </ComponentCard>

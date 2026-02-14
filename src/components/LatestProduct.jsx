@@ -30,6 +30,7 @@ export default function LatestProduct() {
             ? item.image
             : `${import.meta.env.VITE_API_URL}/storage/${item.image}`,
           title: item.name,
+          stock: item.stock,
           price: `Rp ${Number(item.price).toLocaleString("id-ID")}`,
         }));
 
@@ -201,7 +202,6 @@ export default function LatestProduct() {
             <h3 className="text-sm mt-2 font-semibold line-clamp-2 min-h-10">
               {p.title}
             </h3>
-
             <p className="text-xs text-gray-600">{p.price}</p>
           </div>
         ))}
