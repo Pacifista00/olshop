@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/Api";
+import SubHeading from "../components/SubHeading";
 
 export default function CategoryList() {
   const [categories, setCategories] = useState([]);
@@ -31,9 +32,9 @@ export default function CategoryList() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
-      <h2 className="text-xl lg:text-2xl font-bold mb-10">Semua Kategori</h2>
+      <SubHeading className="text-gray-800">Daftar Kategori</SubHeading>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-4 gap-6">
         {categories.map((cat) => (
           <Link
             key={cat.id}

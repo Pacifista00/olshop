@@ -4,6 +4,7 @@ import Icon from "@mdi/react";
 import { mdiPlus } from "@mdi/js";
 import api from "../services/Api";
 import { useAuth } from "../auth/AuthContext";
+import SubHeading from "../components/SubHeading";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -61,7 +62,7 @@ export default function ProductList() {
             image: item.image?.startsWith("http")
               ? item.image
               : `${import.meta.env.VITE_API_URL}/storage/${item.image}`,
-          }))
+          })),
         );
 
         setPagination(res.data.meta);
@@ -109,9 +110,7 @@ export default function ProductList() {
     <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
       {/* ================= TITLE + FILTER ================= */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
-        <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
-          Daftar Produk
-        </h2>
+        <SubHeading className="text-gray-800">Daftar Produk</SubHeading>
 
         <div className="flex flex-col md:flex-row gap-3 mt-4 md:mt-0 text-sm">
           {/* Filter Kategori */}
@@ -121,7 +120,7 @@ export default function ProductList() {
               navigate(
                 e.target.value
                   ? `/produk?category=${e.target.value}`
-                  : "/produk"
+                  : "/produk",
               )
             }
             className="px-3 py-2 border border-gray-300 rounded-lg bg-white shadow-sm"

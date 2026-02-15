@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { mdiChevronDown, mdiMagnify } from "@mdi/js";
 import Icon from "@mdi/react";
+import SubHeadingCenter from "../components/SubHeadingCenter";
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -89,7 +90,7 @@ export default function FAQPage() {
   const filteredCategories = categories.map((cat) => ({
     ...cat,
     items: cat.items.filter((item) =>
-      item.q.toLowerCase().includes(search.toLowerCase())
+      item.q.toLowerCase().includes(search.toLowerCase()),
     ),
   }));
 
@@ -101,10 +102,10 @@ export default function FAQPage() {
   return (
     <div className="text-gray-800">
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
-        <h1 className="text-xl lg:text-2xl font-bold text-center mb-4">
+        <SubHeadingCenter className="text-gray-800">
           Frequently Asked Questions
-        </h1>
-        <p className="text-sm text-center text-gray-600 mb-8">
+        </SubHeadingCenter>
+        <p className="text-xs lg:text-sm text-center text-gray-600 mb-8">
           Temukan jawaban dari pertanyaan yang paling sering ditanyakan.
         </p>
 
@@ -130,11 +131,11 @@ export default function FAQPage() {
         {filteredCategories.map((cat, catIndex) =>
           cat.items.length > 0 ? (
             <div key={catIndex} className="mb-10">
-              <h2 className="text-lg lg:text-xl font-bold border-l-4 border-blue-500 pl-3 mb-4">
+              <h2 className="text-sm lg:text-lg font-bold border-l-4 border-blue-500 pl-3 mb-4">
                 {cat.title}
               </h2>
 
-              <div className="space-y-3 text-sm">
+              <div className="space-y-3 text-xs lg:text-sm">
                 {cat.items.map((item, itemIndex) => {
                   const currentIndex = indexCounter++;
                   const isOpen = openIndex === currentIndex;
@@ -142,7 +143,7 @@ export default function FAQPage() {
                   return (
                     <div
                       key={currentIndex}
-                      className="border rounded-xl px-3 py-2 transition hover:shadow-md"
+                      className="border rounded-xl px-3 py-1 lg:py-3 transition hover:shadow-md"
                     >
                       <button
                         onClick={() => handleToggle(currentIndex)}
@@ -160,7 +161,7 @@ export default function FAQPage() {
 
                       {/* Jawaban */}
                       <div
-                        className={`mt-3 text-gray-600 text-sm overflow-hidden transition-all ${
+                        className={` text-gray-600 text-xs lg:text-sm overflow-hidden transition-all ${
                           isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                         }`}
                       >
@@ -171,17 +172,17 @@ export default function FAQPage() {
                 })}
               </div>
             </div>
-          ) : null
+          ) : null,
         )}
 
         {/* Bantuan */}
         <div className="text-center mt-10">
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-xs lg:text-sm">
             Masih mengalami kendala? Kami siap membantu.
           </p>
           <a
             href="#"
-            className="inline-block mt-3 bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-sm"
+            className="inline-block mt-3 bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-xs lg:text-sm"
           >
             Hubungi Customer Support
           </a>

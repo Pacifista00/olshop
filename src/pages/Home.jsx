@@ -1,7 +1,7 @@
 import Carousel from "../components/Carousel";
-import LatestProduct from "../components/LatestProduct";
 import TopCategory from "../components/TopCategory";
-import MostProduct from "../components/MostProduct";
+import TopProduct from "../components/BestProduct";
+import LatestProduct from "../components/LatestProduct";
 
 function Home() {
   return (
@@ -9,9 +9,9 @@ function Home() {
       <div className="pt-40 md:pt-28">
         <Carousel />
       </div>
-      <LatestProduct />
+      <TopProduct />
       <TopCategory />
-      <MostProduct />
+      <LatestProduct />
     </>
   );
 }

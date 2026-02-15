@@ -1,18 +1,17 @@
 import Icon from "@mdi/react";
 import { mdiArrowRightThin } from "@mdi/js";
 import { Link } from "react-router-dom";
+import SubHeading from "./SubHeading";
 
 function TopCategory() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
-          Kategori Populer
-        </h2>
+        <SubHeading className="text-gray-800">Kategori Populer</SubHeading>
 
         <Link
           to="/kategori"
-          className="text-sm font-medium text-blue-600 flex items-center gap-1 hover:text-blue-700 transition group"
+          className="text-xs lg:text-sm font-medium text-blue-600 flex items-center gap-1 hover:text-blue-700 transition group"
         >
           Selengkapnya
           <span className="transition group-hover:translate-x-1">

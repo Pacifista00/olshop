@@ -15,7 +15,10 @@ export default function Carousel() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-4">
       <div className="carousel w-full rounded-2xl relative">
-        <img src={images[slide]} className="w-full h-72 object-cover" />
+        <img
+          src={images[slide]}
+          className="w-full h-24 sm:h-36 md:h-44 xl:h-72 object-cover"
+        />
 
         <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
           <button className="btn btn-circle" onClick={prevSlide}>

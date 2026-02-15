@@ -1,12 +1,13 @@
+import SubHeading from "../components/SubHeading";
+import SubHeading2 from "../components/SubHeading2";
+
 export default function TermsAndConditions() {
   return (
     <div className="text-gray-800">
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
-        <h2 className="text-xl lg:text-2xl  font-bold mb-6">
-          Syarat & Ketentuan
-        </h2>
+        <SubHeading className="text-gray-800 mb-4">Produk Terbaru</SubHeading>
 
-        <p className="text-gray-700 leading-relaxed mb-8 text-sm">
+        <p className="text-gray-700 leading-relaxed mb-8 text-xs lg:text-sm">
           Syarat dan Ketentuan ini mengatur penggunaan layanan pada
           <strong> TokoKu</strong>. Dengan mengakses, menggunakan, atau
           melakukan transaksi di website kami, Anda menyatakan telah membaca,
@@ -16,11 +17,11 @@ export default function TermsAndConditions() {
         </p>
 
         {/* 1. Ketentuan Umum */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             1. Ketentuan Umum
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             TokoKu adalah platform perdagangan online yang menyediakan berbagai
             jenis produk dari berbagai kategori. Pengguna setuju untuk tidak
             menggunakan layanan kami untuk tujuan ilegal, merusak, atau
@@ -30,11 +31,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 2. Kelayakan dan Umur Pengguna */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             2. Kelayakan & Batas Usia Pengguna
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             Layanan TokoKu hanya boleh digunakan oleh individu berusia minimal
             18 tahun atau telah dianggap dewasa berdasarkan hukum yang berlaku.
             Jika Anda berusia di bawah 18 tahun, Anda harus menggunakan layanan
@@ -43,11 +44,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 3. Pendaftaran Akun */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             3. Pendaftaran Akun
-          </h2>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm">
+          </SubHeading2>
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-xs lg:text-sm">
             <li>
               Pengguna wajib memberikan informasi yang benar, valid, dan
               terbaru.
@@ -68,15 +69,15 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 4. Informasi Produk & Harga */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             4. Informasi Produk & Harga
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3 text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed mb-3 text-xs lg:text-sm">
             TokoKu berusaha memberikan informasi produk yang akurat dan terbaru.
             Namun demikian, pengguna memahami bahwa:
           </p>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm">
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-xs lg:text-sm">
             <li>
               Gambar produk mungkin berbeda karena pencahayaan atau tampilan
               layar.
@@ -90,11 +91,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 5. Pemesanan & Transaksi */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             5. Pemesanan & Konfirmasi Transaksi
-          </h2>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm">
+          </SubHeading2>
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-xs lg:text-sm">
             <li>Pemesanan dianggap valid setelah pembayaran terverifikasi.</li>
             <li>
               TokoKu berhak membatalkan pesanan apabila ditemukan kesalahan
@@ -108,16 +109,16 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 6. Pembayaran */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             6. Pembayaran
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3 text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed mb-3 text-xs lg:text-sm">
             Pembayaran hanya dapat dilakukan melalui metode yang tersedia pada
             website. Pengguna wajib memastikan nominal pembayaran sesuai dengan
             instruksi transaksi.
           </p>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm">
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-xs lg:text-sm">
             <li>
               Pembayaran yang tidak sesuai menyebabkan pesanan otomatis gagal.
             </li>
@@ -129,11 +130,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 7. Pengiriman */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             7. Pengiriman
-          </h2>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm">
+          </SubHeading2>
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-xs lg:text-sm">
             <li>
               Estimasi pengiriman berbeda tergantung lokasi, beban kerja kurir,
               dan kondisi eksternal.
@@ -149,11 +150,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 8. Garansi Produk */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             8. Garansi Produk
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3 text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed mb-3 text-xs lg:text-sm">
             Garansi produk mengikuti kebijakan masing-masing produsen atau
             seller. Tidak semua produk memiliki garansi. Pengguna wajib membaca
             informasi garansi sebelum melakukan pembelian.
@@ -161,14 +162,14 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 9. Pengembalian & Refund */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             9. Pengembalian Barang (Retur) & Refund
-          </h2>
-          <p className="text-gray-700 leading-relaxed mb-3 text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed mb-3 text-xs lg:text-sm">
             Pengembalian barang hanya dapat dilakukan apabila memenuhi syarat:
           </p>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm">
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-xs lg:text-sm">
             <li>Produk rusak bukan karena kesalahan pengguna.</li>
             <li>Kemasan, label, dan kelengkapan masih utuh.</li>
             <li>
@@ -179,11 +180,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 10. Hak Kekayaan Intelektual */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             10. Hak Kekayaan Intelektual
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             Seluruh konten pada website ini seperti teks, desain, logo, ikon,
             gambar, struktur, dan perangkat lunak dilindungi oleh hukum Hak
             Kekayaan Intelektual. Pengguna dilarang menyalin, mendistribusikan,
@@ -192,11 +193,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 11. Larangan & Aktivitas Terlarang */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             11. Aktivitas yang Dilarang
-          </h2>
-          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-sm">
+          </SubHeading2>
+          <ul className="list-disc pl-5 text-gray-700 space-y-2 text-xs lg:text-sm">
             <li>Mengunggah konten yang melanggar hukum.</li>
             <li>Mencoba meretas atau mengganggu server TokoKu.</li>
             <li>Membuat pesanan palsu atau spam transaksi.</li>
@@ -205,11 +206,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 12. Pembatasan Tanggung Jawab */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             12. Pembatasan Tanggung Jawab
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             TokoKu tidak bertanggung jawab atas kerugian langsung, tidak
             langsung, insidental, atau konsekuensial yang timbul dari penggunaan
             situs, termasuk namun tidak terbatas pada kehilangan data,
@@ -218,11 +219,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 13. Force Majeure */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             13. Force Majeure
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             TokoKu dibebaskan dari tanggung jawab apabila terjadi kegagalan
             layanan akibat keadaan di luar kendali seperti bencana alam, perang,
             gangguan listrik, kebijakan pemerintah, atau serangan siber.
@@ -230,11 +231,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 14. Perubahan Syarat & Ketentuan */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             14. Perubahan Syarat & Ketentuan
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             TokoKu berhak mengubah Syarat dan Ketentuan tanpa pemberitahuan
             sebelumnya. Pengguna diharapkan memeriksa halaman ini secara berkala
             untuk mengetahui pembaruan terbaru.
@@ -242,11 +243,11 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 15. Penyelesaian Sengketa */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">
             15. Penyelesaian Sengketa
-          </h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+          </SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             Setiap perselisihan akan diselesaikan terlebih dahulu melalui
             musyawarah. Jika tidak tercapai kesepakatan, maka sengketa akan
             diselesaikan sesuai hukum yang berlaku di Indonesia.
@@ -254,9 +255,9 @@ export default function TermsAndConditions() {
         </div>
 
         {/* 16. Kontak */}
-        <div className="mb-10">
-          <h2 className="text-lg lg:text-xl font-semibold mb-3">16. Kontak</h2>
-          <p className="text-gray-700 leading-relaxed text-sm">
+        <div className="mb-5">
+          <SubHeading2 className="text-gray-800 mb-2">16. Kontak</SubHeading2>
+          <p className="text-gray-700 leading-relaxed text-xs lg:text-sm">
             Jika Anda memiliki pertanyaan mengenai Syarat & Ketentuan ini,
             silakan hubungi layanan pelanggan melalui halaman{" "}
             <strong>Kontak</strong>.
