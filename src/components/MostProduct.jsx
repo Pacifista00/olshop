@@ -101,7 +101,7 @@ export default function ProdukTerlaris() {
               className="w-full h-32 lg:h-44 object-cover rounded-lg"
             />
 
-            <h3 className="text-sm font-semibold mt-2 line-clamp-2 text-gray-800">
+            <h3 className="text-sm font-semibold mt-2 line-clamp-2 min-h-10 text-gray-800">
               {item.title}
             </h3>
 
