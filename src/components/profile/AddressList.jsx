@@ -6,6 +6,7 @@ import { mdiTrashCanOutline } from "@mdi/js";
 
 const AddressList = () => {
   const navigate = useNavigate();
+
   const [addresses, setAddresses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,8 +49,6 @@ const AddressList = () => {
     }
   };
 
-  if (loading) return <p>Memuat alamat...</p>;
-
   return (
     <>
       <div className="space-y-4">
@@ -63,12 +62,30 @@ const AddressList = () => {
           </button>
         </div>
 
-        {/* Empty State */}
-        {addresses.length === 0 ? (
+        {/* SKELETON LOADING */}
+        {loading ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <div
+              key={index}
+              className="bg-white p-5 rounded-xl border border-gray-200 animate-pulse"
+            >
+              <div className="flex justify-between">
+                <div className="space-y-3 w-full">
+                  <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+                  <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+                  <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-3 bg-gray-200 rounded w-1/5"></div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : addresses.length === 0 ? (
+          /* EMPTY STATE */
           <div className="text-center text-gray-500 py-10 rounded-xl bg-white">
             Belum ada alamat
           </div>
         ) : (
+          /* LIST DATA */
           addresses.map((address) => (
             <div
               key={address.id}

@@ -56,26 +56,141 @@ const OrderDetail = () => {
 
   if (loading) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-32 animate-pulse">
-        <div className="h-6 bg-gray-200 rounded w-1/3 mb-6" />
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="h-24 bg-gray-200 rounded mb-4" />
-        ))}
+      <div className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40 space-y-8 animate-pulse">
+        {/* STATUS */}
+        <div className="bg-white rounded shadow p-6 space-y-4">
+          <div className="flex justify-between">
+            <div className="space-y-2 w-2/3">
+              <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="h-6 bg-gray-200 rounded-full w-28"></div>
+          </div>
+        </div>
+
+        {/* SHIPPING */}
+        <div className="bg-white rounded shadow p-6 space-y-4">
+          <div className="h-5 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="space-y-2">
+                <div className="h-3 bg-gray-200 rounded w-20"></div>
+                <div className="h-4 bg-gray-200 rounded w-28"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ITEMS */}
+        <div className="bg-white rounded shadow p-6 space-y-4">
+          <div className="h-5 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+
+          {[1, 2].map((i) => (
+            <div key={i} className="flex items-center gap-4 py-4">
+              <div className="w-20 h-20 bg-gray-200 rounded"></div>
+
+              <div className="flex-1 space-y-2">
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+              </div>
+
+              <div className="h-4 bg-gray-200 rounded w-20"></div>
+            </div>
+          ))}
+        </div>
+
+        {/* SUMMARY */}
+        <div className="bg-white rounded shadow p-6 space-y-4">
+          <div className="h-5 bg-gray-200 rounded w-1/4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/3"></div>
+
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex justify-between">
+              <div className="h-4 bg-gray-200 rounded w-32"></div>
+              <div className="h-4 bg-gray-200 rounded w-20"></div>
+            </div>
+          ))}
+
+          <div className="border-t pt-3 flex justify-between">
+            <div className="h-5 bg-gray-200 rounded w-40"></div>
+            <div className="h-5 bg-gray-200 rounded w-24"></div>
+          </div>
+        </div>
+
+        {/* ACTION */}
+        <div className="flex justify-end gap-3">
+          <div className="h-10 bg-gray-200 rounded w-32"></div>
+          <div className="h-10 bg-gray-200 rounded w-40"></div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 font-medium">{error}</p>
-          <button
-            onClick={() => navigate("/profile/orders")}
-            className="mt-4 px-4 py-2 bg-black text-white rounded"
-          >
-            Kembali ke Pesanan
-          </button>
+      <div className="min-h-screen flex items-center justify-center px-6 py-24 bg-gray-50">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 max-w-lg w-full p-8 space-y-6">
+          {/* Icon + Title */}
+          <div className="flex items-start gap-4">
+            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+              <svg
+                className="w-6 h-6 text-red-600"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"
+                />
+              </svg>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-semibold text-gray-800">
+                Pesanan Tidak Dapat Ditampilkan
+              </h2>
+              <p className="text-sm text-gray-500 mt-1">
+                Terjadi kendala saat memuat detail pesanan Anda.
+              </p>
+            </div>
+          </div>
+
+          {/* Error Message Detail */}
+          <div className="bg-gray-50 border border-gray-100 rounded-lg p-4">
+            <p className="text-sm text-gray-600 leading-relaxed">{error}</p>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-end">
+            <button
+              onClick={() => window.location.reload()}
+              className="
+              px-4 py-2 text-sm font-medium
+              border border-gray-300 rounded-lg
+              hover:bg-gray-100 transition
+            "
+            >
+              Coba Lagi
+            </button>
+
+            <button
+              onClick={() => navigate("/profile/orders")}
+              className="
+              px-4 py-2 text-sm font-medium
+              bg-blue-600 text-white rounded-lg
+              hover:bg-blue-700 transition
+            "
+            >
+              Kembali ke Daftar Pesanan
+            </button>
+          </div>
         </div>
       </div>
     );

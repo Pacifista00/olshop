@@ -184,7 +184,56 @@ const ShoppingCart = () => {
   };
 
   if (loading) {
-    return <p className="text-center mt-20">Memuat keranjang...</p>;
+    return (
+      <div className="max-w-7xl mx-auto px-6 py-4 pt-40 animate-pulse">
+        <h1 className="text-xl font-bold mb-6 bg-gray-200 h-6 w-48 rounded"></h1>
+
+        <div className="flex flex-col lg:flex-row items-start gap-8">
+          {/* LIST SKELETON */}
+          <div className="w-full lg:w-3/4 bg-white p-6 rounded shadow space-y-4">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="flex gap-4">
+                <div className="w-24 h-24 bg-gray-200 rounded"></div>
+
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* SUMMARY SKELETON */}
+          <div className="w-full lg:w-1/4 bg-white p-6 rounded shadow space-y-4">
+            <div className="h-5 bg-gray-200 rounded w-1/2"></div>
+
+            <div className="space-y-2">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="space-y-2">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="space-y-2">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="space-y-2">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+            <div className="flex gap-7">
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 rounded w-full"></div>
+            </div>
+
+            <div className="h-12 bg-gray-200 rounded w-full mt-6"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

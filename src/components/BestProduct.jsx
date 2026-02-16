@@ -97,7 +97,96 @@ export default function TopProduct() {
   if (loading) {
     return (
       <section className="max-w-7xl mx-auto px-6 py-4">
-        <div className="h-40 bg-gray-200 animate-pulse rounded-lg" />
+        <div className="bg-blue-600 p-5 rounded-xl">
+          {/* ================= HEADER SKELETON ================= */}
+          <div className="flex items-center justify-between mb-5">
+            <div className="h-6 w-44 rounded bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" />
+            <div className="h-4 w-24 rounded bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" />
+          </div>
+
+          {/* ================= MOBILE SKELETON ================= */}
+          <div className="block lg:hidden">
+            <div className="flex gap-4 overflow-hidden">
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="relative min-w-[90px] bg-white shadow rounded-lg p-2
+                           flex flex-col justify-between h-[140px]"
+                >
+                  {/* image */}
+                  <div
+                    className="w-full h-20 rounded shadow-sm
+                                bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                  />
+
+                  {/* title */}
+                  <div className="mt-1 space-y-1">
+                    <div
+                      className="h-3 rounded
+                                  bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                    />
+                    <div
+                      className="h-3 w-2/3 rounded
+                                  bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                    />
+                  </div>
+
+                  {/* price */}
+                  <div
+                    className="h-2 w-1/2 rounded
+                                bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                  />
+
+                  {/* button */}
+                  <div
+                    className="absolute bottom-2 right-2 w-6 h-6 rounded-full
+                                bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ================= DESKTOP SKELETON ================= */}
+          <div className="hidden lg:grid lg:grid-cols-8 gap-4">
+            {[...Array(8)].map((_, i) => (
+              <div
+                key={i}
+                className="relative bg-white shadow rounded-lg p-2 h-[180px]"
+              >
+                {/* button */}
+                <div
+                  className="absolute bottom-2 right-2 w-7 h-7 rounded-full
+                              bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                />
+
+                {/* image */}
+                <div
+                  className="w-full h-24 rounded shadow-sm
+                              bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                />
+
+                {/* title */}
+                <div className="mt-2 space-y-2">
+                  <div
+                    className="h-4 rounded
+                                bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                  />
+                  <div
+                    className="h-4 w-2/3 rounded
+                                bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                  />
+                </div>
+
+                {/* price */}
+                <div
+                  className="mt-2 h-3 w-1/2 rounded
+                              bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
     );
   }

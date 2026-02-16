@@ -6,6 +6,28 @@ import api from "../services/Api";
 import { useAuth } from "../auth/AuthContext";
 import SubHeading from "../components/SubHeading";
 
+/* ================= PRODUCT SKELETON ================= */
+const ProductCardSkeleton = () => {
+  return (
+    <div className="relative rounded-lg border border-gray-100 shadow-md p-4 flex flex-col h-full animate-pulse">
+      {/* Image */}
+      <div className="rounded-lg h-32 sm:h-48 lg:h-56 mb-4 bg-gray-200" />
+
+      {/* Stock */}
+      <div className="h-3 bg-gray-200 rounded w-1/3 mb-2" />
+
+      {/* Title */}
+      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+
+      {/* Price */}
+      <div className="mt-auto h-4 bg-gray-200 rounded w-1/3" />
+
+      {/* Button circle */}
+      <div className="absolute bottom-3 right-3 w-8 h-8 bg-gray-200 rounded-full" />
+    </div>
+  );
+};
+
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -83,7 +105,7 @@ export default function ProductList() {
 
   /* ================= ADD TO CART ================= */
   const handleAddToCart = async (e, productId) => {
-    e.preventDefault(); // cegah buka detail
+    e.preventDefault();
     e.stopPropagation();
 
     if (authLoading) return;
@@ -113,7 +135,6 @@ export default function ProductList() {
         <SubHeading className="text-gray-800">Daftar Produk</SubHeading>
 
         <div className="flex flex-col md:flex-row gap-3 mt-4 md:mt-0 text-sm">
-          {/* Filter Kategori */}
           <select
             value={categorySlug}
             onChange={(e) =>
@@ -133,7 +154,6 @@ export default function ProductList() {
             ))}
           </select>
 
-          {/* Sorting */}
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
@@ -150,12 +170,7 @@ export default function ProductList() {
       {/* ================= PRODUCTS GRID ================= */}
       <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
         {loading
-          ? [...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="h-64 bg-gray-200 animate-pulse rounded-lg"
-              />
-            ))
+          ? [...Array(12)].map((_, i) => <ProductCardSkeleton key={i} />)
           : products.map((item) => (
               <Link
                 to={`/produk/${item.id}`}
@@ -163,7 +178,6 @@ export default function ProductList() {
                 className="group relative"
               >
                 <div className="relative rounded-lg border border-gray-100 shadow-md hover:shadow-lg transition p-4 flex flex-col h-full">
-                  {/* ADD TO CART */}
                   <button
                     disabled={authLoading}
                     onClick={(e) => handleAddToCart(e, item.id)}
@@ -176,7 +190,7 @@ export default function ProductList() {
                     <Icon path={mdiPlus} size={0.9} />
                   </button>
 
-                  <div className="rounded-lg h-32 sm:h-48 lg:h-56 overflow-hidden mb-4 bg-gray-100">
+                  <div className="rounded-lg h-32 sm:h-48 lg:h-48 overflow-hidden mb-4 bg-gray-100">
                     <img
                       src={item.image}
                       alt={item.name}

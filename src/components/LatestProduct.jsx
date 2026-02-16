@@ -6,6 +6,26 @@ import api from "../services/Api";
 import { useAuth } from "../auth/AuthContext";
 import SubHeading from "./SubHeading";
 
+/* ================= SKELETON CARD ================= */
+const ProductSkeleton = () => {
+  return (
+    <div className="bg-white rounded-xl shadow p-3 flex flex-col animate-pulse">
+      {/* Image */}
+      <div className="w-full h-32 lg:h-44 bg-gray-200 rounded-lg mb-3" />
+
+      {/* Title */}
+      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+      <div className="h-4 bg-gray-200 rounded w-1/2 mb-3" />
+
+      {/* Price */}
+      <div className="h-4 bg-gray-200 rounded w-1/3" />
+
+      {/* Button circle */}
+      <div className="absolute bottom-3 right-3 w-8 h-8 bg-gray-200 rounded-full" />
+    </div>
+  );
+};
+
 export default function LatestProduct() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +33,7 @@ export default function LatestProduct() {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
 
-  /* ================= FETCH BEST SELLER ================= */
+  /* ================= FETCH LATEST ================= */
   useEffect(() => {
     const fetchLatestProduct = async () => {
       try {
@@ -62,22 +82,6 @@ export default function LatestProduct() {
     }
   };
 
-  /* ================= LOADING ================= */
-  if (loading) {
-    return (
-      <section className="max-w-7xl mx-auto px-6 py-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="h-44 bg-gray-200 animate-pulse rounded-xl"
-            />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
       {/* ================= HEADER ================= */}
@@ -87,57 +91,61 @@ export default function LatestProduct() {
 
       {/* ================= GRID ================= */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-        {products.map((item) => (
-          <div
-            key={item.id}
-            onClick={() => navigate(`/produk/${item.id}`)}
-            className="bg-white rounded-xl shadow p-3 hover:shadow-lg transition
-             relative flex flex-col cursor-pointer"
-          >
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-32 lg:h-44 object-cover rounded-lg shadow-sm"
-            />
+        {loading
+          ? [...Array(6)].map((_, i) => <ProductSkeleton key={i} />)
+          : products.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => navigate(`/produk/${item.id}`)}
+                className="bg-white rounded-xl shadow p-3 hover:shadow-lg transition
+                relative flex flex-col cursor-pointer"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-32 lg:h-44 object-cover rounded-lg shadow-sm"
+                />
 
-            <h3 className="text-sm font-semibold mt-2 line-clamp-2 min-h-10 text-gray-800">
-              {item.title}
-            </h3>
+                <h3 className="text-sm font-semibold mt-2 line-clamp-2 min-h-10 text-gray-800">
+                  {item.title}
+                </h3>
 
-            <p className="text-blue-600 font-bold mt-1 text-sm">
-              Rp {item.price.toLocaleString("id-ID")}
-            </p>
+                <p className="text-blue-600 font-bold mt-1 text-sm">
+                  Rp {item.price.toLocaleString("id-ID")}
+                </p>
 
-            {/* BUTTON ADD TO CART */}
-            <button
-              disabled={authLoading}
-              onClick={(e) => {
-                e.stopPropagation(); // ⛔ agar tidak trigger navigasi
-                handleAddToCart(item.id);
-              }}
-              title="Tambah ke keranjang"
-              className="absolute bottom-3 right-3 bg-white text-gray-800
-               w-8 h-8 rounded-full flex items-center justify-center shadow
-               hover:bg-gray-800 hover:text-white transition
-               disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Icon path={mdiPlus} size={1} />
-            </button>
-          </div>
-        ))}
+                {/* BUTTON ADD TO CART */}
+                <button
+                  disabled={authLoading}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart(item.id);
+                  }}
+                  title="Tambah ke keranjang"
+                  className="absolute bottom-3 right-3 bg-white text-gray-800
+                  w-8 h-8 rounded-full flex items-center justify-center shadow
+                  hover:bg-gray-800 hover:text-white transition
+                  disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Icon path={mdiPlus} size={1} />
+                </button>
+              </div>
+            ))}
       </div>
 
       {/* ================= LOAD MORE ================= */}
-      <div className="flex justify-center mt-8">
-        <Link
-          to="/produk"
-          className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-full
-                     flex items-center gap-2 hover:bg-blue-700 transition text-sm"
-        >
-          Load More
-          <Icon path={mdiArrowRightThin} size={1} />
-        </Link>
-      </div>
+      {!loading && (
+        <div className="flex justify-center mt-8">
+          <Link
+            to="/produk"
+            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-full
+            flex items-center gap-2 hover:bg-blue-700 transition text-sm"
+          >
+            Load More
+            <Icon path={mdiArrowRightThin} size={1} />
+          </Link>
+        </div>
+      )}
     </section>
   );
 }
