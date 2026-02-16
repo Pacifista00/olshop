@@ -18,7 +18,6 @@ export const AuthProvider = ({ children }) => {
     api
       .get("/me")
       .then((res) => {
-        console.log("User loaded:", res.data.user);
         setUser(res.data.user);
       })
       .catch(() => {

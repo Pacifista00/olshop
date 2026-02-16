@@ -71,7 +71,7 @@ const AddressForm = ({ addressId = null }) => {
         await api.post("/addresses/store", form);
       }
 
-      navigate("/profile?tab=addresses");
+      navigate("/profile/address");
     } catch (err) {
       if (err.response?.status === 422) {
         setErrors(err.response.data.errors || {});

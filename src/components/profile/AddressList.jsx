@@ -17,7 +17,7 @@ const AddressList = () => {
     const fetchAddresses = async () => {
       try {
         const res = await api.get("/addresses");
-        setAddresses(res.data.data);
+        setAddresses(res.data.data || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -50,83 +50,83 @@ const AddressList = () => {
 
   if (loading) return <p>Memuat alamat...</p>;
 
-  if (addresses.length === 0) {
-    return (
-      <div className="text-center text-gray-500 py-10">Belum ada alamat</div>
-    );
-  }
-
   return (
     <>
       <div className="space-y-4">
+        {/* Tombol selalu tampil */}
         <div className="flex justify-end mb-4">
           <button
             onClick={() => navigate("/addresses/new")}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm"
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition"
           >
             + Tambah Alamat
           </button>
         </div>
 
-        {addresses.map((address) => (
-          <div
-            key={address.id}
-            className={`bg-white p-5 rounded-xl border transition
-              ${
+        {/* Empty State */}
+        {addresses.length === 0 ? (
+          <div className="text-center text-gray-500 py-10 rounded-xl bg-white">
+            Belum ada alamat
+          </div>
+        ) : (
+          addresses.map((address) => (
+            <div
+              key={address.id}
+              className={`bg-white p-5 rounded-xl border transition ${
                 address.is_default
                   ? "border-blue-500 ring-1 ring-blue-200"
                   : "border-gray-200"
-              }
-            `}
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="font-semibold text-gray-800">
-                    {address.recipient_name}
-                  </h4>
+              }`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-semibold text-gray-800">
+                      {address.recipient_name}
+                    </h4>
 
-                  {address.is_default && (
-                    <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-600">
-                      Alamat Utama
-                    </span>
-                  )}
+                    {address.is_default && (
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-600">
+                        Alamat Utama
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-sm text-gray-600 mt-1">{address.phone}</p>
+
+                  <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                    {address.street_address}, {address.city}, {address.province}{" "}
+                    {address.postal_code}
+                  </p>
+
+                  <p className="text-xs text-gray-400 mt-2">
+                    Ditambahkan: {address.created_at}
+                  </p>
                 </div>
 
-                <p className="text-sm text-gray-600 mt-1">{address.phone}</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => navigate(`/addresses/${address.id}/edit`)}
+                    className="text-sm text-blue-600 hover:underline"
+                  >
+                    Edit
+                  </button>
 
-                <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-                  {address.street_address}, {address.city}, {address.province}{" "}
-                  {address.postal_code}
-                </p>
-
-                <p className="text-xs text-gray-400 mt-2">
-                  Ditambahkan: {address.created_at}
-                </p>
-              </div>
-
-              <div className="flex gap-3">
-                <button
-                  onClick={() => navigate(`/addresses/${address.id}/edit`)}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  Edit
-                </button>
-
-                <button
-                  onClick={() => {
-                    setSelectedId(address.id);
-                    setShowConfirm(true);
-                  }}
-                  className="text-red-600 hover:text-red-700"
-                  title="Hapus alamat"
-                >
-                  <Icon path={mdiTrashCanOutline} size={0.9} />
-                </button>
+                  <button
+                    onClick={() => {
+                      setSelectedId(address.id);
+                      setShowConfirm(true);
+                    }}
+                    className="text-red-600 hover:text-red-700"
+                    title="Hapus alamat"
+                  >
+                    <Icon path={mdiTrashCanOutline} size={0.9} />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       {/* MODAL KONFIRMASI */}

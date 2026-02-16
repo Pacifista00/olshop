@@ -17,7 +17,6 @@ function Navbar() {
   const baseUrl = import.meta.env.VITE_API_URL;
 
   const { user, logout } = useAuth();
-  console.log(user);
 
   const handleLogout = async () => {
     await logout();
