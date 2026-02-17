@@ -19,7 +19,8 @@ export default function ProtectedAdminRoute({ children }) {
   const allowedRoles = ["admin", "developer"];
 
   // Jika login tapi bukan admin / developer
-  if (!allowedRoles.includes(user.user.role)) {
+  console.log(user.role);
+  if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/403" replace />;
   }
 

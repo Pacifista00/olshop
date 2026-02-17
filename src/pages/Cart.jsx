@@ -88,10 +88,14 @@ const ShoppingCart = () => {
 
   const loadCart = async () => {
     try {
-      const data = await getCart();
-      setCart(data.data.data.items);
+      const response = await getCart();
+
+      const items = response?.data?.data?.items ?? [];
+
+      setCart(items);
     } catch (err) {
       console.error("Gagal load cart:", err);
+      setCart([]);
     } finally {
       setLoading(false);
     }

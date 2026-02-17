@@ -136,7 +136,7 @@ const OrderDetail = () => {
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 max-w-lg w-full p-8 space-y-6">
           {/* Icon + Title */}
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+            <div className="shrink-0 w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
               <svg
                 className="w-6 h-6 text-red-600"
                 fill="none"
