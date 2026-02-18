@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import api from "../services/Api";
 
 const STATUS_MAP = {
-  pending: {
+  unpaid: {
     label: "Menunggu Pembayaran",
     color: "bg-yellow-100 text-yellow-800",
     description:
@@ -37,6 +37,19 @@ const OrderDetail = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const handleRetryPayment = async () => {
+    try {
+      const res = await api.post(`/checkout/order/${order.id}`);
+
+      if (res.data.snapToken) {
+        window.snap.pay(res.data.snapToken);
+      }
+    } catch (err) {
+      console.log(err.response?.data);
+      alert("Gagal memproses pembayaran ulang");
+    }
+  };
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -311,10 +324,10 @@ const OrderDetail = () => {
 
       {/* ================= ACTION ================= */}
       <div className="flex justify-end gap-3">
-        {order.payment_status === "pending" && (
+        {order.payment_status === "unpaid" && (
           <button
-            onClick={() => navigate("/checkout")}
-            className="px-4 py-2 bg-yellow-500 text-white rounded"
+            onClick={handleRetryPayment}
+            className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
           >
             Bayar Sekarang
           </button>
