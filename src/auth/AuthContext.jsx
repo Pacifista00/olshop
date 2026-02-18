@@ -29,8 +29,11 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (payload) => {
     const res = await api.post("/login", payload);
+
     localStorage.setItem("token", res.data.token);
-    setUser(res.data.user);
+
+    const userRes = await api.get("/me");
+    setUser(userRes.data.user);
   };
 
   const register = async (form) => {
@@ -52,7 +55,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider
+      value={{ user, setUser, login, register, logout, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
