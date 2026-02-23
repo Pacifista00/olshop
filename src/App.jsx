@@ -32,6 +32,7 @@ import ProtectedAdminRoute from "./auth/ProtectedAdminRoute";
 import Forbidden403 from "./pages/errors/Forbidden403";
 import AddressFormPage from "./pages/AddressFormPage";
 import VerifyOtpPage from "./pages/Auth/VerifyOtpPage";
+import GuestRoute from "./auth/GuestRoute";
 
 export default function App() {
   return (
@@ -39,9 +40,30 @@ export default function App() {
       <Route path="/403" element={<Forbidden403 />} />
       {/* ===== AUTH ROUTES (NO NAVBAR) ===== */}
       <Route element={<AuthLayout />}>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/verify-otp" element={<VerifyOtpPage />} />
+        <Route
+          path="/login"
+          element={
+            <GuestRoute>
+              <LoginPage />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <GuestRoute>
+              <RegisterPage />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/verify-otp"
+          element={
+            <GuestRoute>
+              <VerifyOtpPage />
+            </GuestRoute>
+          }
+        />
       </Route>
 
       {/* ===== MAIN ROUTES (WITH NAVBAR) ===== */}

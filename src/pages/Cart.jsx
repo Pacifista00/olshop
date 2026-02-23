@@ -8,10 +8,20 @@ import {
 import { checkout } from "../services/CheckoutService";
 import { previewVoucher } from "../services/VoucherService";
 import api from "../services/Api";
+import { useAuth } from "../auth/AuthContext";
 
 const ShoppingCart = () => {
+  const { user } = useAuth();
+
+  const userPoints = user?.point?.total_points;
+
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // ===== POINT STATE =====
+  const [pointsUsed, setPointsUsed] = useState(0);
+
+  const POINT_VALUE = 5000;
 
   // ===== VOUCHER STATE =====
   const [voucherInput, setVoucherInput] = useState("");
@@ -35,6 +45,9 @@ const ShoppingCart = () => {
   useEffect(() => {
     loadCart();
   }, []);
+  useEffect(() => {
+    setPointsUsed(0);
+  }, [cart]);
   useEffect(() => {
     if (voucherCode) {
       alert("Voucher dilepas karena keranjang berubah");
@@ -129,12 +142,29 @@ const ShoppingCart = () => {
   const cartSubtotal = useMemo(() => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   }, [cart]);
+  const pointDiscount = useMemo(() => {
+    const maxDiscount = Math.max(
+      0,
+      cartSubtotal - voucherDiscount + shippingCost,
+    );
+
+    const requestedDiscount = pointsUsed * POINT_VALUE;
+
+    return Math.min(requestedDiscount, maxDiscount);
+  }, [pointsUsed, cartSubtotal, voucherDiscount, shippingCost]);
+  const maxUsablePoints = Math.min(
+    userPoints,
+    Math.floor(
+      Math.max(0, cartSubtotal - voucherDiscount + shippingCost) / POINT_VALUE,
+    ),
+  );
 
   // ===== TOTAL =====
   const total = useMemo(() => {
-    const result = cartSubtotal + shippingCost - voucherDiscount;
+    const result =
+      cartSubtotal + shippingCost - voucherDiscount - pointDiscount;
     return result > 0 ? result : 0;
-  }, [cartSubtotal, voucherDiscount, shippingCost]);
+  }, [cartSubtotal, voucherDiscount, shippingCost, pointDiscount]);
 
   // ===== APPLY VOUCHER =====
   const applyVoucher = async () => {
@@ -179,6 +209,7 @@ const ShoppingCart = () => {
         courier_service_code: selectedShipping.courier_service_code,
         shipping_price: selectedShipping.price,
         voucher_code: voucherCode,
+        points_used: pointsUsed,
       });
 
       window.snap.pay(snapToken);
@@ -390,6 +421,37 @@ const ShoppingCart = () => {
                     </span>
                     <span>- Rp {voucherDiscount.toLocaleString("id-ID")}</span>
                   </div>
+                </div>
+              )}
+            </div>
+
+            {/* ===== POINT ===== */}
+            <div className="mt-4">
+              <label className="text-sm font-medium">
+                Gunakan Point (tersedia: {userPoints.toLocaleString("id-ID")})
+              </label>
+
+              <input
+                type="number"
+                min={0}
+                max={maxUsablePoints}
+                value={pointsUsed}
+                onChange={(e) => {
+                  let val = parseInt(e.target.value || 0);
+
+                  if (val < 0) val = 0;
+                  if (val > userPoints) val = userPoints;
+
+                  setPointsUsed(val);
+                }}
+                className="w-full border rounded px-3 py-2 text-sm mt-1"
+                placeholder="Masukkan jumlah point"
+              />
+
+              {pointsUsed > 0 && (
+                <div className="flex justify-between text-green-600 text-sm mt-1">
+                  <span>Diskon Point</span>
+                  <span>- Rp {pointDiscount.toLocaleString("id-ID")}</span>
                 </div>
               )}
             </div>

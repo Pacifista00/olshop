@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10">
           {/* Brand */}
           <div>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">TokoKu</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-3">LogoNyusul</h2>
             <p className="text-sm leading-relaxed">
               Platform belanja terpercaya dengan produk berkualitas dan
               pelayanan terbaik.

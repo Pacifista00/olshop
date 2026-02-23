@@ -26,7 +26,7 @@ function Navbar() {
           className="text-xl font-semibold text-gray-800 cursor-pointer"
           onClick={() => navigate("/")}
         >
-          Tokoku
+          LogoNyusul
         </h1>
 
         {/* Search Desktop */}

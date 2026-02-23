@@ -49,7 +49,7 @@ const ProductForm = () => {
         res.data.data.map((item) => ({
           value: item.id,
           label: item.name,
-        }))
+        })),
       );
     } catch (err) {
       console.error(err);
@@ -68,15 +68,15 @@ const ProductForm = () => {
       const product = res.data.data;
 
       setForm({
-        category_id: product.category_id,
+        category_id: product.category?.id,
         name: product.name,
         description: product.description ?? "",
         price: product.price,
         stock: product.stock,
         weight: product.weight ?? "",
-        length: product.length ?? "",
-        width: product.width ?? "",
-        height: product.height ?? "",
+        length: product.dimension?.length ?? "",
+        width: product.dimension?.width ?? "",
+        height: product.dimension?.height ?? "",
         is_active: product.is_active ? 1 : 0,
       });
 
@@ -305,8 +305,8 @@ const ProductForm = () => {
           {loadingSubmit
             ? "Menyimpan..."
             : isEdit
-            ? "Update Produk"
-            : "Simpan Produk"}
+              ? "Update Produk"
+              : "Simpan Produk"}
         </button>
       </form>
     </ComponentCard>

@@ -174,10 +174,11 @@ export default function ProductList() {
                   <TableCell className="px-4 py-3">
                     <Badge
                       size="sm"
-                      color={item.is_active === 1 ? "success" : "error"}
+                      color={item.is_active === true ? "success" : "error"}
                     >
-                      {item.is_active === 1 ? "Aktif" : "Nonaktif"}
+                      {item.is_active === true ? "Aktif" : "Nonaktif"}
                     </Badge>
+                    {item.is_active}
                   </TableCell>
 
                   {/* Aksi */}

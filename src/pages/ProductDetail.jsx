@@ -8,7 +8,7 @@ import { useAuth } from "../auth/AuthContext"; // Pastikan path benar
 export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth(); // Ambil data user dari context
+  const { user, loading: authLoading } = useAuth(); // Ambil data user dari context
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -20,14 +20,25 @@ export default function ProductDetail() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async (productId) => {
+    if (authLoading) return;
+
     if (!user) {
-      alert("Silakan login terlebih dahulu untuk belanja!");
       navigate("/login");
       return;
     }
-    // Lanjutkan logika tambah ke keranjang (API post ke /cart dsb)
-    console.log("Menambahkan ke keranjang:", product.name);
+
+    try {
+      await api.post("/cart/store", {
+        product_id: productId,
+        quantity: 1,
+      });
+
+      alert("Produk berhasil ditambahkan ke keranjang");
+    } catch (error) {
+      console.error("Gagal menambahkan ke keranjang:", error);
+      alert("Gagal menambahkan produk ke keranjang");
+    }
   };
 
   if (loading)
@@ -59,8 +70,8 @@ export default function ProductDetail() {
 
         {/* CONTENT */}
         <div className="flex flex-col justify-center flex-1">
-          <span className="text-blue-600 font-semibold tracking-wider uppercase text-sm mb-2">
-            {product.category?.name || "Kategori"}
+          <span className="text-gray-600 font-semibold tracking-wider uppercase text-sm mb-2">
+            Kategori : {product.category?.name || "Kategori"}
           </span>
 
           <h1 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
@@ -80,16 +91,16 @@ export default function ProductDetail() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <button
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart(product.id)}
               className="flex-1 bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-blue-700 transition shadow-lg shadow-blue-200"
             >
               <Icon path={user ? mdiCartOutline : mdiLogin} size={1} />
               {user ? "Tambah ke Keranjang" : "Login untuk Membeli"}
             </button>
 
-            <button className="flex-1 border-2 border-gray-200 text-gray-800 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100 transition">
+            {/* <button className="flex-1 border-2 border-gray-200 text-gray-800 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100 transition">
               Beli Sekarang
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
