@@ -57,7 +57,7 @@ function VerifyOtpPage() {
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-4">Verifikasi OTP</h2>
 
-        <p className="text-sm text-gray-600 text-center mb-6">
+        <p className="text-sm  text-center mb-6">
           Masukkan kode OTP yang dikirim ke <br />
           <span className="font-semibold">{email}</span>
         </p>

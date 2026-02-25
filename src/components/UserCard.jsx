@@ -12,7 +12,7 @@ const UserProfileCard = ({ user }) => {
       />
 
       {/* Nama dan Email */}
-      <h2 className="text-2xl font-semibold text-gray-800">{user.name}</h2>
+      <h2 className="text-2xl font-semibold">{user.name}</h2>
       <p className="text-gray-500 mb-4">{user.email}</p>
 
       {/* Tombol Edit Profil */}

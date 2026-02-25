@@ -13,7 +13,7 @@ const OrderList = ({ orders = [], loading = false }) => {
       case "failed":
         return "bg-red-100 text-red-700";
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-gray-100 text-gray-800";
     }
   };
 
@@ -85,13 +85,11 @@ const OrderList = ({ orders = [], loading = false }) => {
             <div className="flex flex-col sm:flex-row sm:items-center">
               {/* KIRI */}
               <div className="flex-1">
-                <p className="font-semibold text-gray-800">
-                  {order.order_number}
-                </p>
+                <p className="font-semibold">{order.order_number}</p>
                 <p className="text-sm text-gray-500">
                   {order.created_at_formatted}
                 </p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-gray-500 mt-1">
                   Kurir: {order.courier.code.toUpperCase()} (
                   {order.courier.service})
                 </p>
@@ -99,7 +97,7 @@ const OrderList = ({ orders = [], loading = false }) => {
 
               {/* KANAN */}
               <div className="mt-2 sm:mt-0 sm:text-right">
-                <p className="text-lg font-bold text-blue-600">
+                <p className="text-lg font-bold my-text-primary">
                   {formatRupiah(Number(order.total_amount))}
                 </p>
                 <p className="text-sm text-gray-500">

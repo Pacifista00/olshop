@@ -12,9 +12,7 @@ const CartItem = ({ item, updateQuantity, removeItem }) => {
 
       <div className="flex-1">
         <h3 className="font-semibold">{item.product}</h3>
-        <p className="text-sm text-gray-500">
-          Rp {item.price.toLocaleString("id-ID")}
-        </p>
+        <p className="text-sm ">Rp {item.price.toLocaleString("id-ID")}</p>
 
         <div className="flex items-center gap-2 mt-2">
           <button

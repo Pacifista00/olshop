@@ -97,7 +97,7 @@ export default function TopProduct() {
   if (loading) {
     return (
       <section className="max-w-7xl mx-auto px-6 py-4">
-        <div className="bg-blue-600 p-5 rounded-xl">
+        <div className="my-bg-primary p-5 rounded-xl">
           {/* ================= HEADER SKELETON ================= */}
           <div className="flex items-center justify-between mb-5">
             <div className="h-6 w-44 rounded bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse" />
@@ -193,7 +193,7 @@ export default function TopProduct() {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-4">
-      <div className="bg-blue-600 p-5 rounded-xl">
+      <div className="my-bg-primary p-5 rounded-xl">
         {/* ================= HEADER ================= */}
         <div className="flex items-center justify-between mb-5">
           <SubHeading className="text-white">Produk Terlaris</SubHeading>
@@ -237,11 +237,11 @@ export default function TopProduct() {
                   className="w-full h-20 object-cover rounded shadow-sm"
                 />
 
-                <h3 className="text-xs font-semibold mt-1 line-clamp-2 min-h-8 text-gray-800">
+                <h3 className="text-xs font-semibold mt-1 line-clamp-2 min-h-8 ">
                   {p.title}
                 </h3>
 
-                <p className="text-[10px] text-gray-600">{p.price}</p>
+                <p className="text-[10px] ">{p.price}</p>
 
                 <button
                   disabled={authLoading}
@@ -249,7 +249,7 @@ export default function TopProduct() {
                     e.stopPropagation();
                     handleAddToCart(p.id);
                   }}
-                  className="absolute bottom-2 right-2 bg-blue-600 text-white w-6 h-6 rounded-full
+                  className="absolute bottom-2 right-2 my-btn-primary text-white w-6 h-6 rounded-full
                flex items-center justify-center hover:scale-110 transition
                disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -275,7 +275,7 @@ export default function TopProduct() {
                   e.stopPropagation();
                   handleAddToCart(p.id);
                 }}
-                className="absolute bottom-2 right-2 bg-blue-600 text-white w-7 h-7 rounded-full
+                className="absolute bottom-2 right-2 my-btn-primary text-white w-7 h-7 rounded-full
                flex items-center justify-center hover:scale-110 transition
                disabled:opacity-50 disabled:cursor-not-allowed"
               >

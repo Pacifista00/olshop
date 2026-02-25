@@ -100,12 +100,10 @@ export default function FAQPage() {
   let indexCounter = 0;
 
   return (
-    <div className="text-gray-800">
+    <div>
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
-        <SubHeadingCenter className="text-gray-800">
-          Frequently Asked Questions
-        </SubHeadingCenter>
-        <p className="text-xs lg:text-sm text-center text-gray-600 mb-8">
+        <SubHeadingCenter>Frequently Asked Questions</SubHeadingCenter>
+        <p className="text-xs lg:text-sm text-center  mb-8">
           Temukan jawaban dari pertanyaan yang paling sering ditanyakan.
         </p>
 
@@ -161,7 +159,7 @@ export default function FAQPage() {
 
                       {/* Jawaban */}
                       <div
-                        className={` text-gray-600 text-xs lg:text-sm overflow-hidden transition-all ${
+                        className={`  text-xs lg:text-sm overflow-hidden transition-all ${
                           isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                         }`}
                       >
@@ -177,12 +175,12 @@ export default function FAQPage() {
 
         {/* Bantuan */}
         <div className="text-center mt-10">
-          <p className="text-gray-600 text-xs lg:text-sm">
+          <p className=" text-xs lg:text-sm">
             Masih mengalami kendala? Kami siap membantu.
           </p>
           <a
             href="#"
-            className="inline-block mt-3 bg-blue-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-xs lg:text-sm"
+            className="inline-block mt-3 my-btn-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-xs lg:text-sm"
           >
             Hubungi Customer Support
           </a>

@@ -164,7 +164,7 @@ const AddressForm = ({ addressId = null }) => {
         <button
           type="submit"
           disabled={loading}
-          className="px-6 py-2 bg-blue-600 text-white rounded"
+          className="px-6 py-2 my-btn-primary rounded"
         >
           {loading ? "Menyimpan..." : "Simpan"}
         </button>

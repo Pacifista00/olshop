@@ -70,20 +70,20 @@ export default function ProductDetail() {
 
         {/* CONTENT */}
         <div className="flex flex-col justify-center flex-1">
-          <span className="text-gray-600 font-semibold tracking-wider uppercase text-sm mb-2">
+          <span className=" font-semibold tracking-wider uppercase text-sm mb-2 text-gray-600">
             Kategori : {product.category?.name || "Kategori"}
           </span>
 
-          <h1 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-3xl lg:text-5xl font-bold mb-4">
             {product.name}
           </h1>
 
-          <p className="text-2xl font-medium text-gray-800 mb-6">
+          <p className="text-2xl font-medium mb-6">
             Rp {Number(product.price).toLocaleString("id-ID")}
           </p>
 
-          <div className="prose prose-sm text-gray-600 mb-8 max-w-none">
-            <h4 className="font-bold text-gray-800">Deskripsi Produk</h4>
+          <div className="prose prose-sm  mb-8 max-w-none">
+            <h4 className="font-bold">Deskripsi Produk</h4>
             <p>
               {product.description || "Tidak ada deskripsi untuk produk ini."}
             </p>
@@ -92,13 +92,13 @@ export default function ProductDetail() {
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={() => handleAddToCart(product.id)}
-              className="flex-1 bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-3 hover:bg-blue-700 transition shadow-lg shadow-blue-200"
+              className="flex-1 my-btn-primary px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-3  transition shadow-lg"
             >
               <Icon path={user ? mdiCartOutline : mdiLogin} size={1} />
               {user ? "Tambah ke Keranjang" : "Login untuk Membeli"}
             </button>
 
-            {/* <button className="flex-1 border-2 border-gray-200 text-gray-800 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100 transition">
+            {/* <button className="flex-1 border-2 border-gray-200 px-8 py-4 rounded-2xl font-bold hover:bg-gray-100 transition">
               Beli Sekarang
             </button> */}
           </div>

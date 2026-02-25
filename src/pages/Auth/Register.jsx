@@ -57,7 +57,7 @@ function RegisterPage() {
 
           {/* Input Nama Lengkap */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-sm font-medium mb-2">
               Nama Lengkap
             </label>
             <div className="flex items-center border border-gray-300 rounded-md">
@@ -80,9 +80,7 @@ function RegisterPage() {
 
           {/* Email */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              Email
-            </label>
+            <label className="block text-sm font-medium mb-2">Email</label>
             <div className="flex items-center border border-gray-300 rounded-md">
               <Icon path={mdiEmail} size={0.8} className="ml-3 text-gray-400" />
               <input
@@ -99,9 +97,7 @@ function RegisterPage() {
 
           {/* Password */}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              Password
-            </label>
+            <label className="block text-sm font-medium mb-2">Password</label>
             <div className="flex items-center border border-gray-300 rounded-md">
               <Icon path={mdiLock} size={0.8} className="ml-3 text-gray-400" />
               <input
@@ -118,7 +114,7 @@ function RegisterPage() {
 
           {/* Konfirmasi Password */}
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-sm font-medium mb-2">
               Konfirmasi Password
             </label>
             <div className="flex items-center border border-gray-300 rounded-md">

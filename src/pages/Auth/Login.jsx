@@ -59,7 +59,7 @@ function LoginPage() {
           <h1 className="text-4xl font-extrabold">Tokoku</h1>
         </div>
 
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+        <h2 className="text-2xl font-semibold text-center mb-6">
           Selamat Datang Kembali!
         </h2>
 
@@ -89,9 +89,7 @@ function LoginPage() {
         <form onSubmit={handleSubmit}>
           {/* EMAIL */}
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              Email
-            </label>
+            <label className="block text-sm font-medium mb-2">Email</label>
             <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-indigo-200">
               <Icon
                 path={mdiAccount}
@@ -111,9 +109,7 @@ function LoginPage() {
 
           {/* PASSWORD */}
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-medium mb-2">
-              Password
-            </label>
+            <label className="block text-sm font-medium mb-2">Password</label>
             <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-indigo-200">
               <Icon path={mdiLock} size={0.8} className="text-gray-400 ml-3" />
               <input

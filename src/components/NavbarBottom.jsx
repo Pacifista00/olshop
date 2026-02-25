@@ -43,7 +43,7 @@ export default function NavbarBottom() {
   }, []);
 
   return (
-    <div className="bg-blue-600 py-3">
+    <div className="my-bg-primary py-3">
       <div className="max-w-7xl mx-auto px-6">
         <ul className="flex gap-4 md:gap-8 text-white text-xs items-center">
           {displayCategories.map((cat) => (

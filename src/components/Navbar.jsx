@@ -22,12 +22,12 @@ function Navbar() {
     <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">
       <div className="w-full md:max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
         {/* Logo */}
-        <h1
-          className="text-xl font-semibold text-gray-800 cursor-pointer"
+        <img
+          src="/image/logo/logo.png"
+          alt="Logo"
+          className="h-8 cursor-pointer"
           onClick={() => navigate("/")}
-        >
-          LogoNyusul
-        </h1>
+        />
 
         {/* Search Desktop */}
         <div className="flex-1 hidden md:flex mx-5">
@@ -46,7 +46,7 @@ function Navbar() {
         </div>
 
         {/* ================= DESKTOP ================= */}
-        <ul className="hidden md:flex gap-5 text-gray-700 text-xl relative">
+        <ul className="hidden md:flex gap-5 text-xl relative">
           {loading ? (
             /* SKELETON DESKTOP */
             <li className="flex items-center gap-4">
@@ -89,7 +89,7 @@ function Navbar() {
                   alt="Profile"
                   className="w-9 h-9 rounded-full object-cover border border-gray-200 shadow-sm"
                 />
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span>
+                {/* <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span> */}
               </div>
 
               {/* DROPDOWN */}
@@ -104,12 +104,8 @@ function Navbar() {
                   ) : (
                     <>
                       <div className="px-5 py-4 bg-gray-50">
-                        <p className="text-sm font-semibold text-gray-800">
-                          {user?.name}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          Total Point
-                        </p>
+                        <p className="text-sm font-semibold ">{user?.name}</p>
+                        <p className="text-xs mt-1">Total Point</p>
                         <p className="text-sm font-bold text-green-600 mt-1">
                           ⭐ {user?.point?.total_points ?? 0}
                         </p>

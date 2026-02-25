@@ -1,10 +1,57 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+:root {
+  --primary: #2176ff;
+  --primary-hover: #1d69e6; /* sedikit lebih gelap */
+  --primary-active: #195dcc; /* lebih gelap lagi */
+  --primary-light: #e9f1ff; /* versi sangat terang */
+  --primary-border: #1b63d4;
+  --secondary: #31393c;
 }
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+body {
+  color: var(--secondary);
+}
+
+.my-bg-primary {
+  background-color: var(--primary);
+}
+
+.my-bg-primary-light {
+  background-color: var(--primary-light);
+}
+
+.my-text-primary {
+  color: var(--primary);
+}
+.my-text-secondary {
+  color: var(--secondary);
+}
+
+.my-btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.my-btn-primary:hover {
+  background-color: #ffffff;
+  color: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(33, 118, 255, 0.35);
+}
+
+.my-btn-primary:active {
+  background-color: var(--primary-active);
+  border-color: var(--primary-active);
+}
+
+.my-btn-primary:disabled {
+  background-color: #b6d0ff;
+  border-color: #b6d0ff;
+  cursor: not-allowed;
+  opacity: 0.7;
 }

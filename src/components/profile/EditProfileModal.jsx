@@ -63,17 +63,15 @@ const EditProfileModal = ({ isOpen, onClose }) => {
       <div className="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8 animate-fadeIn">
         {/* Header */}
         <div className="mb-6">
-          <h3 className="text-2xl font-bold text-gray-800">Edit Profil</h3>
-          <p className="text-sm text-gray-500">Perbarui informasi akun Anda</p>
+          <h3 className="text-2xl font-bold">Edit Profil</h3>
+          <p className="text-sm ">Perbarui informasi akun Anda</p>
         </div>
 
         {/* Form */}
         <div className="space-y-5">
           {/* NAME */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Nama
-            </label>
+            <label className="block text-sm font-medium  mb-1">Nama</label>
             <input
               type="text"
               value={form.name}
@@ -87,7 +85,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
 
           {/* PHONE */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium  mb-1">
               No. Telepon
             </label>
             <input
@@ -103,18 +101,14 @@ const EditProfileModal = ({ isOpen, onClose }) => {
 
           {/* GENDER SEGMENT BUTTON */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Gender
-            </label>
+            <label className="block text-sm font-medium  mb-2">Gender</label>
 
             <div className="flex bg-gray-100 rounded-lg p-1">
               <button
                 type="button"
                 onClick={() => setForm({ ...form, gender: "male" })}
                 className={`flex-1 py-2 rounded-md text-sm font-medium transition ${
-                  form.gender === "male"
-                    ? "bg-white shadow text-blue-600"
-                    : "text-gray-500"
+                  form.gender === "male" ? "bg-white shadow text-blue-600" : ""
                 }`}
               >
                 Male
@@ -126,7 +120,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
                 className={`flex-1 py-2 rounded-md text-sm font-medium transition ${
                   form.gender === "female"
                     ? "bg-white shadow text-pink-600"
-                    : "text-gray-500"
+                    : ""
                 }`}
               >
                 Female
@@ -151,7 +145,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
           <button
             onClick={handleSubmit}
             disabled={saving}
-            className="px-5 py-2 text-sm rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition disabled:opacity-60"
+            className="px-5 py-2 text-sm rounded-lg my-btn-primary transition disabled:opacity-60"
           >
             {saving ? "Menyimpan..." : "Simpan Perubahan"}
           </button>
@@ -174,7 +168,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
               {alert.type === "success" ? "Berhasil" : "Terjadi Kesalahan"}
             </h4>
 
-            <p className="text-sm text-gray-500 mb-6">{alert.message}</p>
+            <p className="text-sm  mb-6">{alert.message}</p>
 
             <button
               onClick={() => {

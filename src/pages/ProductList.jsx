@@ -132,7 +132,7 @@ export default function ProductList() {
     <section className="max-w-7xl mx-auto px-6 pt-44 md:pt-40 pb-20">
       {/* ================= TITLE + FILTER ================= */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
-        <SubHeading className="text-gray-800">Daftar Produk</SubHeading>
+        <SubHeading>Daftar Produk</SubHeading>
 
         <div className="flex flex-col md:flex-row gap-3 mt-4 md:mt-0 text-sm">
           <select
@@ -181,9 +181,9 @@ export default function ProductList() {
                   <button
                     disabled={authLoading}
                     onClick={(e) => handleAddToCart(e, item.id)}
-                    className="absolute bottom-3 right-3 bg-white w-8 h-8 rounded-full
+                    className="absolute bottom-3 right-3 my-btn-primary w-8 h-8 rounded-full
                                flex items-center justify-center shadow
-                               hover:bg-gray-800 hover:text-white transition
+                                transition
                                disabled:opacity-50"
                     title="Tambah ke keranjang"
                   >
@@ -200,12 +200,12 @@ export default function ProductList() {
 
                   <p className="text-xs text-gray-500">Stok: {item.stock}</p>
 
-                  <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 text-sm">
+                  <h3 className="font-semibold mb-2 line-clamp-2 text-sm">
                     {item.name}
                   </h3>
 
                   <div className="mt-auto">
-                    <p className="text-blue-600 font-bold text-sm">
+                    <p className="my-text-primary font-bold text-sm">
                       Rp {item.price.toLocaleString("id-ID")}
                     </p>
                   </div>
@@ -232,7 +232,7 @@ export default function ProductList() {
                 key={pageNumber}
                 onClick={() => setPage(pageNumber)}
                 className={`px-4 py-2 text-sm border rounded-lg ${
-                  page === pageNumber ? "bg-blue-600 text-white" : "bg-white"
+                  page === pageNumber ? "my-bg-primary text-white" : "bg-white"
                 }`}
               >
                 {pageNumber}

@@ -34,7 +34,7 @@ const UserProfileCard = () => {
           />
 
           <h2 className="text-xl font-bold">{userData.name}</h2>
-          <p className="text-sm text-gray-500">{userData.email}</p>
+          <p className="text-sm">{userData.email}</p>
 
           <div className="flex gap-3 mt-4">
             <button

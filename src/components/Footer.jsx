@@ -4,12 +4,16 @@ import { mdiFacebook, mdiInstagram, mdiYoutube, mdiMusicNote } from "@mdi/js";
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-gray-700 pt-12 pb-6 mt-6 border-t border-gray-300 overflow-hidden">
+    <footer className="bg-white pt-12 pb-6 mt-6 border-t border-gray-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10">
           {/* Brand */}
           <div>
-            <h2 className="text-xl font-bold text-gray-900 mb-3">LogoNyusul</h2>
+            <img
+              src="/image/logo/logofull.png" // sesuaikan path logo kamu
+              alt="Logo"
+              className="h-8 mb-3"
+            />
             <p className="text-sm leading-relaxed">
               Platform belanja terpercaya dengan produk berkualitas dan
               pelayanan terbaik.
@@ -33,9 +37,7 @@ export default function Footer() {
 
           {/* Navigasi */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Navigasi
-            </h3>
+            <h3 className="text-lg font-semibold mb-4">Navigasi</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/" className="hover:text-black">
@@ -62,9 +64,7 @@ export default function Footer() {
 
           {/* Bantuan */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Bantuan
-            </h3>
+            <h3 className="text-lg font-semibold mb-4">Bantuan</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/tentang-kami" className="hover:text-black">
@@ -91,9 +91,7 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              Berlangganan
-            </h3>
+            <h3 className="text-lg font-semibold mb-4">Berlangganan</h3>
             <p className="text-sm mb-3">
               Dapatkan poin setiap pembelian dan tukarkan untuk potongan harga
               atau promo menarik.
@@ -102,7 +100,7 @@ export default function Footer() {
             <div className="flex items-center">
               <Link
                 to="/produk"
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg w-full text-center block"
+                className="px-4 py-2 my-btn-primary text-white rounded-lg w-full text-center block"
               >
                 Mulai Belanja
               </Link>

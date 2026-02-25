@@ -13,7 +13,7 @@ import { useAuth } from "../auth/AuthContext";
 const ShoppingCart = () => {
   const { user } = useAuth();
 
-  const userPoints = user?.point?.total_points;
+  const userPoints = user?.point?.total_points ?? 0;
 
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -428,7 +428,8 @@ const ShoppingCart = () => {
             {/* ===== POINT ===== */}
             <div className="mt-4">
               <label className="text-sm font-medium">
-                Gunakan Point (tersedia: {userPoints.toLocaleString("id-ID")})
+                Gunakan Point (tersedia:{" "}
+                {(userPoints || 0).toLocaleString("id-ID")})
               </label>
 
               <input

@@ -86,7 +86,7 @@ export default function LatestProduct() {
     <section className="max-w-7xl mx-auto px-6 py-4">
       {/* ================= HEADER ================= */}
       <div className="flex items-center justify-between mb-5">
-        <SubHeading className="text-gray-800">Produk Terbaru</SubHeading>
+        <SubHeading>Produk Terbaru</SubHeading>
       </div>
 
       {/* ================= GRID ================= */}
@@ -106,11 +106,11 @@ export default function LatestProduct() {
                   className="w-full h-32 lg:h-44 object-cover rounded-lg shadow-sm"
                 />
 
-                <h3 className="text-sm font-semibold mt-2 line-clamp-2 min-h-10 text-gray-800">
+                <h3 className="text-sm font-semibold mt-2 line-clamp-2 min-h-10 ">
                   {item.title}
                 </h3>
 
-                <p className="text-blue-600 font-bold mt-1 text-sm">
+                <p className="my-text-primary font-bold mt-1 text-sm">
                   Rp {item.price.toLocaleString("id-ID")}
                 </p>
 
@@ -122,9 +122,9 @@ export default function LatestProduct() {
                     handleAddToCart(item.id);
                   }}
                   title="Tambah ke keranjang"
-                  className="absolute bottom-3 right-3 bg-white text-gray-800
+                  className="absolute bottom-3 right-3 my-btn-primary 
                   w-8 h-8 rounded-full flex items-center justify-center shadow
-                  hover:bg-gray-800 hover:text-white transition
+                   transition
                   disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Icon path={mdiPlus} size={1} />
@@ -138,8 +138,8 @@ export default function LatestProduct() {
         <div className="flex justify-center mt-8">
           <Link
             to="/produk"
-            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-full
-            flex items-center gap-2 hover:bg-blue-700 transition text-sm"
+            className="px-6 py-2 my-btn-primary text-white font-semibold rounded-full
+            flex items-center gap-2 transition text-sm "
           >
             Load More
             <Icon path={mdiArrowRightThin} size={1} />

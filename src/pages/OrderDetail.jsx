@@ -166,10 +166,10 @@ const OrderDetail = () => {
             </div>
 
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">
+              <h2 className="text-xl font-semibold">
                 Pesanan Tidak Dapat Ditampilkan
               </h2>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm  mt-1">
                 Terjadi kendala saat memuat detail pesanan Anda.
               </p>
             </div>
@@ -177,7 +177,7 @@ const OrderDetail = () => {
 
           {/* Error Message Detail */}
           <div className="bg-gray-50 border border-gray-100 rounded-lg p-4">
-            <p className="text-sm text-gray-600 leading-relaxed">{error}</p>
+            <p className="text-sm  leading-relaxed">{error}</p>
           </div>
 
           {/* Actions */}
@@ -197,9 +197,8 @@ const OrderDetail = () => {
               onClick={() => navigate("/profile/orders")}
               className="
               px-4 py-2 text-sm font-medium
-              bg-blue-600 text-white rounded-lg
-              hover:bg-blue-700 transition
-            "
+              my-btn-primary rounded-lg
+               transition"
             >
               Kembali ke Daftar Pesanan
             </button>
@@ -220,10 +219,8 @@ const OrderDetail = () => {
             <h1 className="text-2xl font-semibold">
               Order #{order.order_number}
             </h1>
-            <p className="text-sm text-gray-500">
-              Dibuat pada {order.created_at_formatted}
-            </p>
-            <p className="mt-2 text-gray-600 text-sm">{status?.description}</p>
+            <p className="text-sm ">Dibuat pada {order.created_at_formatted}</p>
+            <p className="mt-2  text-sm">{status?.description}</p>
           </div>
 
           <span
@@ -237,25 +234,25 @@ const OrderDetail = () => {
       {/* ================= SHIPPING ================= */}
       <div className="bg-white rounded shadow p-6">
         <h2 className="text-lg font-semibold">Informasi Pengiriman</h2>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm  mb-4">
           Detail metode pengiriman yang Anda pilih untuk pesanan ini.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>
-            <p className="text-gray-500">Kurir</p>
+            <p className="">Kurir</p>
             <p className="font-medium uppercase">
               {order.courier?.code} – {order.courier?.service}
             </p>
           </div>
 
           <div>
-            <p className="text-gray-500">Estimasi Pengiriman</p>
+            <p className="">Estimasi Pengiriman</p>
             <p className="font-medium">{order.courier?.etd ?? "-"} hari</p>
           </div>
 
           <div>
-            <p className="text-gray-500">Biaya Pengiriman</p>
+            <p className="">Biaya Pengiriman</p>
             <p className="font-medium">{formatRupiah(order.shipping_cost)}</p>
           </div>
         </div>
@@ -264,7 +261,7 @@ const OrderDetail = () => {
       {/* ================= ITEMS ================= */}
       <div className="bg-white rounded shadow p-6">
         <h2 className="text-lg font-semibold">Daftar Produk</h2>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm  mb-4">
           Berikut adalah produk yang Anda pesan beserta jumlah dan harga.
         </p>
 
@@ -279,7 +276,7 @@ const OrderDetail = () => {
 
               <div className="flex-1">
                 <p className="font-medium">{item.product.name}</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm ">
                   {item.quantity} × {formatRupiah(item.unit_price)}
                 </p>
               </div>
@@ -293,7 +290,7 @@ const OrderDetail = () => {
       {/* ================= SUMMARY ================= */}
       <div className="bg-white rounded shadow p-6">
         <h2 className="text-lg font-semibold">Ringkasan Pembayaran</h2>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm  mb-4">
           Rincian total biaya yang perlu Anda bayarkan.
         </p>
 
@@ -327,7 +324,7 @@ const OrderDetail = () => {
         {order.payment_status === "unpaid" && (
           <button
             onClick={handleRetryPayment}
-            className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded"
+            className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg"
           >
             Bayar Sekarang
           </button>
@@ -335,7 +332,7 @@ const OrderDetail = () => {
 
         <button
           onClick={() => navigate("/profile/orders")}
-          className="px-4 py-2 border rounded"
+          className="px-4 py-2 border rounded-lg my-btn-primary"
         >
           Kembali ke Daftar Pesanan
         </button>

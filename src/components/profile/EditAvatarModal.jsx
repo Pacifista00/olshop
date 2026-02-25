@@ -56,12 +56,8 @@ const EditAvatarModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white w-full max-w-sm rounded-2xl shadow-2xl p-8 text-center">
         {/* Header */}
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">
-          Ganti Foto Profil
-        </h3>
-        <p className="text-sm text-gray-500 mb-6">
-          Upload foto baru untuk profil Anda
-        </p>
+        <h3 className="text-2xl font-bold mb-2">Ganti Foto Profil</h3>
+        <p className="text-sm mb-6">Upload foto baru untuk profil Anda</p>
 
         {/* Preview */}
         <div className="flex justify-center mb-6">
@@ -110,7 +106,7 @@ const EditAvatarModal = ({ isOpen, onClose }) => {
           <button
             onClick={handleSubmit}
             disabled={!file || saving}
-            className="px-5 py-2 text-sm rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition disabled:opacity-50"
+            className="px-5 py-2 text-sm rounded-lg my-btn-primary transition disabled:opacity-50"
           >
             {saving ? "Menyimpan..." : "Simpan"}
           </button>
@@ -133,7 +129,7 @@ const EditAvatarModal = ({ isOpen, onClose }) => {
               {alert.type === "success" ? "Berhasil" : "Terjadi Kesalahan"}
             </h4>
 
-            <p className="text-sm text-gray-500 mb-6">{alert.message}</p>
+            <p className="text-sm mb-6">{alert.message}</p>
 
             <button
               onClick={() => {

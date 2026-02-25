@@ -56,7 +56,7 @@ const AddressList = () => {
         <div className="flex justify-end mb-4">
           <button
             onClick={() => navigate("/addresses/new")}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition"
+            className="px-4 py-2 my-btn-primary rounded-lg text-sm  transition"
           >
             + Tambah Alamat
           </button>
@@ -81,7 +81,7 @@ const AddressList = () => {
           ))
         ) : addresses.length === 0 ? (
           /* EMPTY STATE */
-          <div className="text-center text-gray-500 py-10 rounded-xl bg-white">
+          <div className="text-center py-10 rounded-xl bg-white">
             Belum ada alamat
           </div>
         ) : (
@@ -98,12 +98,10 @@ const AddressList = () => {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="font-semibold text-gray-800">
-                      {address.recipient_name}
-                    </h4>
+                    <h4 className="font-semibold">{address.recipient_name}</h4>
 
                     {address.is_default && (
-                      <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-600">
+                      <span className="text-xs px-2 py-1 rounded-full bg-blue-100 my-text-primary">
                         Alamat Utama
                       </span>
                     )}
@@ -124,7 +122,7 @@ const AddressList = () => {
                 <div className="flex gap-3">
                   <button
                     onClick={() => navigate(`/addresses/${address.id}/edit`)}
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm my-text-primary hover:underline"
                   >
                     Edit
                   </button>
@@ -150,9 +148,7 @@ const AddressList = () => {
       {showConfirm && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-full max-w-sm">
-            <h3 className="text-lg font-semibold text-gray-800">
-              Hapus Alamat
-            </h3>
+            <h3 className="text-lg font-semibold">Hapus Alamat</h3>
             <p className="text-sm text-gray-600 mt-2">
               Apakah kamu yakin ingin menghapus alamat ini?
             </p>
