@@ -276,7 +276,7 @@ const OrderDetail = () => {
                   </p>
                 </div>
               )}
-            {isExpired && (
+            {isExpired && order.payment_status != "paid" && (
               <p className="mt-2 text-sm text-red-600 font-medium">
                 Pesanan telah kedaluwarsa.
               </p>
