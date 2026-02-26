@@ -9,6 +9,7 @@ import OrderDetail from "../components/profile/OrderDetail";
 import ProfileTabs from "../components/profile/ProfileTabs";
 import AccountInfo from "../components/profile/AccountInfo";
 import AddressList from "../components/profile/AddressList";
+import OrdersTab from "../components/profile/OrderTab";
 
 /* ============================= */
 /* ===== PROFILE SKELETON ===== */
@@ -113,7 +114,7 @@ const ProfilePage = () => {
                     onBack={() => setSelectedOrderId(null)}
                   />
                 ) : (
-                  <OrderList orders={orders} loading={loadingOrders} />
+                  <OrdersTab orders={orders} loading={loadingOrders} />
                 )}
               </>
             )}
