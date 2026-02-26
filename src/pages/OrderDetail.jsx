@@ -37,6 +37,7 @@ const OrderDetail = () => {
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [timeLeft, setTimeLeft] = useState(null);
 
   const handleRetryPayment = async () => {
     try {
@@ -56,6 +57,7 @@ const OrderDetail = () => {
       try {
         setLoading(true);
         const res = await api.get(`/orders/${id}`);
+        console.log(res.data.data);
         setOrder(res.data.data);
       } catch {
         setError("Pesanan tidak ditemukan atau Anda tidak memiliki akses.");
@@ -66,6 +68,41 @@ const OrderDetail = () => {
 
     fetchOrder();
   }, [id]);
+  const isExpired = (() => {
+    if (!order?.expired_at) return false;
+
+    const expiryTime = new Date(order.expired_at).getTime();
+
+    return Date.now() >= expiryTime;
+  })();
+  useEffect(() => {
+    if (!order?.expired_at) return;
+
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const expiry = new Date(order.expired_at).getTime();
+      const diff = expiry - now;
+
+      if (diff <= 0) {
+        setTimeLeft(0);
+        clearInterval(interval);
+      } else {
+        setTimeLeft(diff);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [order]);
+
+  const formatCountdown = (ms) => {
+    if (!ms || ms <= 0) return "00:00";
+
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  };
 
   if (loading) {
     return (
@@ -220,7 +257,30 @@ const OrderDetail = () => {
               Order #{order.order_number}
             </h1>
             <p className="text-sm ">Dibuat pada {order.created_at_formatted}</p>
-            <p className="mt-2  text-sm">{status?.description}</p>
+            {/* <p className="mt-2  text-sm">{status?.description}</p> */}
+            {order.payment_status === "unpaid" &&
+              order.expired_at &&
+              !isExpired && (
+                <div className="mt-2 text-sm text-red-600 space-y-1">
+                  <p>
+                    Pesanan akan kedaluwarsa pada{" "}
+                    <span className="font-medium">
+                      {new Date(order.expired_at).toLocaleString("id-ID")}
+                    </span>
+                  </p>
+                  <p>
+                    Sisa waktu pembayaran:{" "}
+                    <span className="font-semibold">
+                      {formatCountdown(timeLeft)}
+                    </span>
+                  </p>
+                </div>
+              )}
+            {isExpired && (
+              <p className="mt-2 text-sm text-red-600 font-medium">
+                Pesanan telah kedaluwarsa.
+              </p>
+            )}
           </div>
 
           <span
@@ -321,7 +381,7 @@ const OrderDetail = () => {
 
       {/* ================= ACTION ================= */}
       <div className="flex justify-end gap-3">
-        {order.payment_status === "unpaid" && (
+        {order.payment_status === "unpaid" && !isExpired && (
           <button
             onClick={handleRetryPayment}
             className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg"
