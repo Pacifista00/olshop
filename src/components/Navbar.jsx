@@ -48,13 +48,11 @@ function Navbar() {
         {/* ================= DESKTOP ================= */}
         <ul className="hidden md:flex gap-5 text-xl relative">
           {loading ? (
-            /* SKELETON DESKTOP */
             <li className="flex items-center gap-4">
               <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
               <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse"></div>
             </li>
           ) : !user ? (
-            /* LOGIN */
             <li
               className="cursor-pointer hover:text-gray-900"
               onClick={() => navigate("/login")}
@@ -65,7 +63,6 @@ function Navbar() {
               </button>
             </li>
           ) : (
-            /* USER MENU */
             <li className="relative flex items-center gap-4">
               {/* CART */}
               <div
@@ -76,63 +73,54 @@ function Navbar() {
               </div>
 
               {/* AVATAR */}
-              <div
-                onClick={() => setOpenProfile(!openProfile)}
-                className="relative cursor-pointer"
-              >
-                <img
-                  src={
-                    user?.photo
-                      ? `${baseUrl}/storage/${user.photo}`
-                      : "/image/user/profile.png"
-                  }
-                  alt="Profile"
-                  className="w-9 h-9 rounded-full object-cover border border-gray-200 shadow-sm"
-                />
-                {/* <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full"></span> */}
-              </div>
-
-              {/* DROPDOWN */}
-              {openProfile && (
-                <div className="absolute right-0 top-12 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50 animate-fadeIn">
-                  {loading ? (
-                    <div className="px-5 py-4">
-                      <div className="h-4 w-24 bg-gray-200 rounded animate-pulse mb-2"></div>
-                      <div className="h-3 w-16 bg-gray-200 rounded animate-pulse mb-1"></div>
-                      <div className="h-4 w-12 bg-gray-200 rounded animate-pulse"></div>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="px-5 py-4 bg-gray-50">
-                        <p className="text-sm font-semibold ">{user?.name}</p>
-                        <p className="text-xs mt-1">Total Point</p>
-                        <p className="text-sm font-bold text-green-600 mt-1">
-                          ⭐ {user?.point?.total_points ?? 0}
-                        </p>
-                      </div>
-
-                      <div className="py-2">
-                        <button
-                          className="w-full text-left px-5 py-2 text-sm hover:bg-gray-100 transition"
-                          onClick={() => {
-                            setOpenProfile(false);
-                            navigate("/profile");
-                          }}
-                        >
-                          Profil Saya
-                        </button>
-
-                        <button
-                          className="w-full text-left px-5 py-2 text-sm text-red-600 hover:bg-gray-100 transition"
-                          onClick={handleLogout}
-                        >
-                          Logout
-                        </button>
-                      </div>
-                    </>
-                  )}
+              <div className="relative">
+                <div
+                  onClick={() => setOpenProfile(!openProfile)}
+                  className="cursor-pointer"
+                >
+                  <img
+                    src={
+                      user?.photo
+                        ? `${baseUrl}/storage/${user.photo}`
+                        : "/image/user/profile.png"
+                    }
+                    alt="Profile"
+                    className="w-9 h-9 rounded-full object-cover border border-gray-200 shadow-sm"
+                  />
                 </div>
-              )}
+
+                {/* DROPDOWN DESKTOP */}
+                {openProfile && (
+                  <div className="absolute right-0 top-12 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
+                    <div className="px-5 py-4 bg-gray-50">
+                      <p className="text-sm font-semibold">{user?.name}</p>
+                      <p className="text-xs mt-1">Total Point</p>
+                      <p className="text-sm font-bold text-green-600 mt-1">
+                        ⭐ {user?.point?.total_points ?? 0}
+                      </p>
+                    </div>
+
+                    <div className="py-2">
+                      <button
+                        className="w-full text-left px-5 py-2 text-sm hover:bg-gray-100 transition"
+                        onClick={() => {
+                          setOpenProfile(false);
+                          navigate("/profile");
+                        }}
+                      >
+                        Profil Saya
+                      </button>
+
+                      <button
+                        className="w-full text-left px-5 py-2 text-sm text-red-600 hover:bg-gray-100 transition"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             </li>
           )}
         </ul>
@@ -154,6 +142,7 @@ function Navbar() {
             </button>
           ) : (
             <>
+              {/* CART */}
               <div
                 className="relative cursor-pointer"
                 onClick={() => navigate("/cart")}
@@ -161,19 +150,51 @@ function Navbar() {
                 <Icon path={mdiCartOutline} size={1} />
               </div>
 
-              <div
-                onClick={() => setOpenProfile(!openProfile)}
-                className="relative cursor-pointer"
-              >
-                <img
-                  src={
-                    user?.photo
-                      ? `${baseUrl}/storage/${user.photo}`
-                      : "/image/user/profile.png"
-                  }
-                  alt="Profile"
-                  className="w-9 h-9 rounded-full object-cover border border-gray-200 shadow-sm"
-                />
+              {/* AVATAR + DROPDOWN MOBILE */}
+              <div className="relative">
+                <div
+                  onClick={() => setOpenProfile(!openProfile)}
+                  className="cursor-pointer"
+                >
+                  <img
+                    src={
+                      user?.photo
+                        ? `${baseUrl}/storage/${user.photo}`
+                        : "/image/user/profile.png"
+                    }
+                    alt="Profile"
+                    className="w-9 h-9 rounded-full object-cover border border-gray-200 shadow-sm"
+                  />
+                </div>
+
+                {openProfile && (
+                  <div className="absolute right-0 top-12 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
+                    <div className="px-4 py-3 bg-gray-50">
+                      <p className="text-sm font-semibold">{user?.name}</p>
+                      <p className="text-xs mt-1">Total Point</p>
+                      <p className="text-sm font-bold text-green-600 mt-1">
+                        ⭐ {user?.point?.total_points ?? 0}
+                      </p>
+                    </div>
+
+                    <button
+                      className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                      onClick={() => {
+                        setOpenProfile(false);
+                        navigate("/profile");
+                      }}
+                    >
+                      Profil Saya
+                    </button>
+
+                    <button
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
             </>
           )}
