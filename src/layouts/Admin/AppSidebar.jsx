@@ -13,6 +13,7 @@ import {
   mdiPowerPlug,
   mdiChevronDown,
   mdiDotsHorizontal,
+  mdiCartOutline,
 } from "@mdi/js";
 
 import { useSidebar } from "../../context/SidebarContext";
@@ -20,9 +21,14 @@ import { useSidebar } from "../../context/SidebarContext";
 // Konfigurasi Navigasi
 const navItems = [
   {
-    icon: mdiViewDashboard,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/dashboard", pro: false }],
+    icon: mdiViewDashboard,
+    path: "/dashboard",
+  },
+  {
+    name: "Pesanan",
+    icon: mdiCartOutline,
+    path: "/dashboard/orders",
   },
   // {
   //   icon: mdiCalendar,
@@ -119,7 +125,7 @@ const AppSidebar = () => {
 
   const isActive = useCallback(
     (path) => location.pathname === path,
-    [location.pathname]
+    [location.pathname],
   );
 
   // Efek untuk membuka submenu secara otomatis berdasarkan route aktif
@@ -306,9 +312,17 @@ const AppSidebar = () => {
           className="flex items-center font-bold text-xl text-gray-900 dark:text-white"
         >
           {isExpanded || isHovered || isMobileOpen ? (
-            <span className="whitespace-nowrap">Dashboard</span>
+            <img
+              src="/image/logo/logofull.png" // sesuaikan path logo kamu
+              alt="Logo"
+              className="h-8 mb-3"
+            />
           ) : (
-            <span className="text-2xl">MD</span>
+            <img
+              src="/image/logo/logo.png" // sesuaikan path logo kamu
+              alt="Logo"
+              className="h-8 mb-3"
+            />
           )}
         </Link>
       </div>

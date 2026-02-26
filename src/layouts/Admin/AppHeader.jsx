@@ -68,14 +68,6 @@ const AppHeader = () => {
           </Link>
 
           {/* SEARCH (Desktop only) */}
-          <div className="hidden lg:block">
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Search or type command..."
-              className="h-11 w-full rounded-lg border border-gray-200 bg-transparent px-4 text-sm dark:border-gray-800 dark:text-white"
-            />
-          </div>
 
           {/* RIGHT (Mobile) */}
           <div className="flex items-center gap-3 lg:hidden">

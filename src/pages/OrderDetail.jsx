@@ -257,6 +257,10 @@ const OrderDetail = () => {
               Order #{order.order_number}
             </h1>
             <p className="text-sm ">Dibuat pada {order.created_at_formatted}</p>
+            <p>
+              Status pesanan :{" "}
+              <span className="font-semibold">{order.status}</span>
+            </p>
             {/* <p className="mt-2  text-sm">{status?.description}</p> */}
             {order.payment_status === "unpaid" &&
               order.expired_at &&

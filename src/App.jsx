@@ -33,6 +33,8 @@ import Forbidden403 from "./pages/errors/Forbidden403";
 import AddressFormPage from "./pages/AddressFormPage";
 import VerifyOtpPage from "./pages/Auth/VerifyOtpPage";
 import GuestRoute from "./auth/GuestRoute";
+import OrdersTables from "./pages/Admin/OrderTables";
+import OrdersDetailPage from "./pages/Admin/OrdersDetailPage";
 
 export default function App() {
   return (
@@ -146,6 +148,8 @@ export default function App() {
       >
         <Route path="/dashboard" element={<HomeDashboard />} />
 
+        <Route path="/dashboard/orders" element={<OrdersTables />} />
+        <Route path="/dashboard/orders/:id" element={<OrdersDetailPage />} />
         <Route path="/dashboard/product" element={<ProductTables />} />
         <Route path="/dashboard/product/add" element={<ProductForm />} />
 

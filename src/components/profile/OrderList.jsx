@@ -6,11 +6,17 @@ const OrderList = ({ orders = [], loading = false }) => {
 
   const statusStyle = (status) => {
     switch (status) {
-      case "paid":
-        return "bg-green-100 text-green-700";
-      case "pending":
+      case "created":
+        return "bg-gray-100 text-gray-700";
+      case "processing":
         return "bg-yellow-100 text-yellow-700";
-      case "failed":
+      case "packed":
+        return "bg-indigo-100 text-indigo-700";
+      case "shipped":
+        return "bg-blue-100 text-blue-700";
+      case "completed":
+        return "bg-green-100 text-green-700";
+      case "cancelled":
         return "bg-red-100 text-red-700";
       default:
         return "bg-gray-100 text-gray-800";
@@ -19,12 +25,18 @@ const OrderList = ({ orders = [], loading = false }) => {
 
   const statusLabel = (status) => {
     switch (status) {
-      case "paid":
-        return "Dibayar";
-      case "pending":
-        return "Menunggu Pembayaran";
-      case "failed":
-        return "Gagal";
+      case "created":
+        return "Pesanan Dibuat";
+      case "processing":
+        return "Diproses";
+      case "packed":
+        return "Sudah Dikemas";
+      case "shipped":
+        return "Dikirim";
+      case "completed":
+        return "Selesai";
+      case "cancelled":
+        return "Dibatalkan";
       default:
         return status;
     }
@@ -111,10 +123,10 @@ const OrderList = ({ orders = [], loading = false }) => {
               <span
                 className={`
                   w-fit px-3 py-1 text-xs font-medium rounded-full
-                  ${statusStyle(order.payment_status)}
+                  ${statusStyle(order.status)}
                 `}
               >
-                {statusLabel(order.payment_status)}
+                {statusLabel(order.status)}
               </span>
 
               <button
