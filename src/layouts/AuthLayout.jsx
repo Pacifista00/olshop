@@ -6,7 +6,7 @@ import ScrollToTop from "../components/ScrollToTop";
 export default function MainLayout() {
   const location = useLocation();
 
-  const hideNavbarRoutes = ["/login", "/register"];
+  const hideNavbarRoutes = ["/login", "/register", "/verify-otp"];
   const hideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (

@@ -6,6 +6,8 @@ import SubHeadingCenter from "../components/SubHeadingCenter";
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState(null);
   const [search, setSearch] = useState("");
+  const waNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
+  const message = import.meta.env.VITE_WHATSAPP_MESSAGE;
 
   const categories = [
     {
@@ -13,11 +15,11 @@ export default function FAQPage() {
       items: [
         {
           q: "Apa itu layanan ini?",
-          a: "Kami adalah platform e-commerce yang menyediakan berbagai kebutuhan Anda mulai dari produk digital hingga barang fisik.",
+          a: "Kami adalah platform e-commerce yang menyediakan berbagai kebutuhan Anda mulai dari kebutuhan sehari-hari hingga barang pilihan berkualitas.",
         },
         {
           q: "Apakah layanan ini gratis digunakan?",
-          a: "Ya, Anda dapat mengakses seluruh halaman dan fitur secara gratis. Namun, beberapa layanan premium mungkin berbayar.",
+          a: "Ya, Anda dapat mengakses seluruh halaman dan fitur secara gratis. Namun, pembelian produk berbayar.",
         },
       ],
     },
@@ -30,11 +32,11 @@ export default function FAQPage() {
         },
         {
           q: "Apakah pembayaran aman?",
-          a: "Seluruh transaksi menggunakan enkripsi SSL 256-bit & sistem keamanan tingkat lanjut untuk melindungi data Anda.",
+          a: "Seluruh transaksi menggunakan Midtrans Payment Gateway.",
         },
         {
           q: "Bisakah saya membayar ketika barang sampai?",
-          a: "Ya, Cash on Delivery (COD) tersedia untuk wilayah tertentu.",
+          a: "Tidak, Cash on Delivery (COD) belum tersedia untuk toko kami.",
         },
       ],
     },
@@ -47,7 +49,7 @@ export default function FAQPage() {
         },
         {
           q: "Jasa ekspedisi apa yang digunakan?",
-          a: "Kami bekerja sama dengan JNE, J&T, SiCepat, AnterAja, dan Pos Indonesia.",
+          a: "Kami bekerja sama dengan JNE dan J&T.",
         },
         {
           q: "Bagaimana cara melacak pesanan saya?",
@@ -60,31 +62,31 @@ export default function FAQPage() {
       items: [
         {
           q: "Bagaimana cara membuat akun?",
-          a: "Anda cukup mendaftar menggunakan email atau akun Google/Facebook.",
+          a: "Anda cukup mendaftar menggunakan email aktif",
         },
         {
           q: "Saya lupa password. Apa yang harus saya lakukan?",
-          a: "Gunakan fitur lupa password lalu masukkan email Anda untuk mereset kata sandi.",
+          a: "Hubungi admin untuk mereset kata sandi.",
         },
         {
           q: "Apakah saya bisa menghapus akun?",
-          a: "Ya, Anda dapat menghapus akun melalui menu Pengaturan → Keamanan.",
+          a: "Tidak, Anda tidak dapat menghapus akun.",
         },
       ],
     },
-    {
-      title: "Produk",
-      items: [
-        {
-          q: "Apakah produk memiliki garansi?",
-          a: "Sebagian besar produk memiliki garansi resmi 1 tahun. Cek deskripsi produk untuk info detail.",
-        },
-        {
-          q: "Apakah gambar produk sesuai dengan barang yang dikirim?",
-          a: "Kami berusaha menampilkan gambar produk seakurat mungkin, namun warna dapat sedikit berbeda tergantung layar perangkat.",
-        },
-      ],
-    },
+    // {
+    //   title: "Produk",
+    //   items: [
+    //     {
+    //       q: "Apakah produk memiliki garansi?",
+    //       a: "Sebagian besar produk memiliki garansi resmi 1 tahun. Cek deskripsi produk untuk info detail.",
+    //     },
+    //     {
+    //       q: "Apakah gambar produk sesuai dengan barang yang dikirim?",
+    //       a: "Kami berusaha menampilkan gambar produk seakurat mungkin, namun warna dapat sedikit berbeda tergantung layar perangkat.",
+    //     },
+    //   ],
+    // },
   ];
 
   const filteredCategories = categories.map((cat) => ({
@@ -179,10 +181,12 @@ export default function FAQPage() {
             Masih mengalami kendala? Kami siap membantu.
           </p>
           <a
-            href="#"
+            href={`https://wa.me/${waNumber}?text=${message}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block mt-3 my-btn-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-xs lg:text-sm"
           >
-            Hubungi Customer Support
+            Hubungi Kami
           </a>
         </div>
       </section>

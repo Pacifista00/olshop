@@ -3,6 +3,7 @@ import Icon from "@mdi/react";
 import { mdiFacebook, mdiInstagram, mdiYoutube, mdiMusicNote } from "@mdi/js";
 
 export default function Footer() {
+  const title = import.meta.env.VITE_APP_NAME;
   return (
     <footer className="bg-white pt-12 pb-6 mt-6 border-t border-gray-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
@@ -114,7 +115,9 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
-          <p>© {new Date().getFullYear()} TokoKu. Semua Hak Dilindungi.</p>
+          <p>
+            © {new Date().getFullYear()} {title}. Semua Hak Dilindungi.
+          </p>
         </div>
       </div>
     </footer>

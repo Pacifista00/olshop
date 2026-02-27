@@ -56,7 +56,11 @@ function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-center mb-3">
-          <h1 className="text-4xl font-extrabold">Tokoku</h1>
+          <img
+            src="/image/logo/logo.png"
+            alt="Logo"
+            className="h-12 cursor-pointer"
+          />
         </div>
 
         <h2 className="text-2xl font-semibold text-center mb-6">
@@ -138,7 +142,7 @@ function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-8 text-center text-gray-600 text-sm">
+        <p className="mt-4 text-center text-gray-600 text-sm">
           Belum punya akun?{" "}
           <a
             href="/register"

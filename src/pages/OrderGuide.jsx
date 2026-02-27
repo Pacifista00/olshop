@@ -14,11 +14,13 @@ import SubHeading2 from "../components/SubHeading2";
 import SubHeading from "../components/SubHeading";
 
 export default function OrderGuide() {
+  const waNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
+  const message = import.meta.env.VITE_WHATSAPP_MESSAGE;
   const steps = [
     {
       icon: mdiAccountCircleOutline,
       title: "1. Buat / Masuk Akun",
-      desc: "Untuk melakukan pemesanan, Anda harus membuat akun terlebih dahulu atau login menggunakan email/Google.",
+      desc: "Untuk melakukan pemesanan, Anda harus membuat akun terlebih dahulu kemudian login menggunakan email anda.",
     },
     {
       icon: mdiCartOutline,
@@ -32,8 +34,13 @@ export default function OrderGuide() {
     },
     {
       icon: mdiCreditCardOutline,
+      title: "4. Isi alamat",
+      desc: "Buka halaman Profil lalu cari Alamat. Tambahkan alamat lengkap dan jadikan 1 alamat default",
+    },
+    {
+      icon: mdiCreditCardOutline,
       title: "4. Lanjut ke Checkout",
-      desc: "Isi alamat lengkap, nomor telepon, dan pilih metode pengiriman yang Anda inginkan.",
+      desc: "Pilih metode pengiriman yang Anda inginkan.",
     },
     {
       icon: mdiCreditCardOutline,
@@ -138,7 +145,7 @@ export default function OrderGuide() {
           <ul className="space-y-2 list-disc **list-outside** px-3">
             <li className=" **pl-6**">
               Pesanan otomatis dibatalkan jika pembayaran tidak dilakukan dalam
-              waktu <strong className="font-semibold">1 × 24 jam</strong>.
+              waktu <strong className="font-semibold">1 jam</strong>.
             </li>
             <li className=" **pl-6**">
               Seluruh pembayaran diproses oleh Midtrans, sehingga{" "}
@@ -152,7 +159,7 @@ export default function OrderGuide() {
               verifikasi biasanya memerlukan waktu 1–3 menit.
             </li>
             <li className=" **pl-6**">
-              Jika mengalami kendala pembayaran, silakan hubungi CS kami melalui
+              Jika mengalami kendala pembayaran, silakan hubungi kami melalui
               WhatsApp.
             </li>
           </ul>
@@ -164,10 +171,12 @@ export default function OrderGuide() {
             Masih mengalami kendala? Kami siap membantu.
           </p>
           <a
-            href="#"
-            className="inline-block mt-3 my-btn-primary text-white px-6 py-2 rounded-full font-semibold transition text-xs lg:text-sm"
+            href={`https://wa.me/${waNumber}?text=${message}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-3 my-btn-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-xs lg:text-sm"
           >
-            Hubungi Customer Support
+            Hubungi Kami
           </a>
         </div>
       </section>

@@ -16,6 +16,9 @@ import SubHeadingCenter from "../components/SubHeadingCenter";
 import SubHeading from "../components/SubHeading";
 
 export default function About() {
+  const waNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
+  const envemail = import.meta.env.VITE_EMAIL;
+  const envlocation = import.meta.env.VITE_LOCATION;
   return (
     <div>
       {/* Header Section */}
@@ -100,7 +103,7 @@ export default function About() {
             <Icon path={mdiEmail} size={1.4} />
             <div className="text-xs lg:text-sm">
               <h3 className="font-bold text-md lg:text-lg">Email</h3>
-              <p>support@onlineshop.com</p>
+              <p>{envemail}</p>
             </div>
           </div>
 
@@ -108,7 +111,7 @@ export default function About() {
             <Icon path={mdiPhone} size={1.4} />
             <div className="text-xs lg:text-sm">
               <h3 className="font-bold text-md lg:text-lg">Telepon</h3>
-              <p>+62 812-3456-7890</p>
+              <p>{waNumber}</p>
             </div>
           </div>
 
@@ -116,7 +119,7 @@ export default function About() {
             <Icon path={mdiMapMarker} size={1.4} />
             <div className="text-xs lg:text-sm">
               <h3 className="font-bold text-md lg:text-lg">Lokasi</h3>
-              <p>Jakarta, Indonesia</p>
+              <p>{envlocation}</p>
             </div>
           </div>
         </div>

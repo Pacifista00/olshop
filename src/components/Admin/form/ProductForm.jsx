@@ -23,6 +23,7 @@ const ProductForm = () => {
     width: "",
     height: "",
     is_active: 1,
+    use_dimension: 0,
   });
 
   const [image, setImage] = useState(null);
@@ -78,6 +79,7 @@ const ProductForm = () => {
         width: product.dimension?.width ?? "",
         height: product.dimension?.height ?? "",
         is_active: product.is_active ? 1 : 0,
+        use_dimension: product.use_dimension ? 1 : 0,
       });
 
       setPreview(product.image_url);
@@ -247,6 +249,21 @@ const ProductForm = () => {
         </div>
 
         {/* DIMENSIONS */}
+        {/* USE DIMENSION */}
+        <div className="flex items-center gap-3">
+          <input
+            type="checkbox"
+            checked={form.use_dimension === 1}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                use_dimension: e.target.checked ? 1 : 0,
+              })
+            }
+            className="h-4 w-4"
+          />
+          <Label>Gunakan perhitungan dimensi (produk besar)</Label>
+        </div>
         <div className="grid grid-cols-3 gap-4">
           <div>
             <Label>Panjang (cm)</Label>
@@ -256,6 +273,7 @@ const ProductForm = () => {
               value={form.length}
               onChange={onChange}
               min={0}
+              disabled={form.use_dimension !== 1}
             />
           </div>
           <div>
@@ -266,6 +284,7 @@ const ProductForm = () => {
               value={form.width}
               onChange={onChange}
               min={0}
+              disabled={form.use_dimension !== 1}
             />
           </div>
           <div>
@@ -276,6 +295,7 @@ const ProductForm = () => {
               value={form.height}
               onChange={onChange}
               min={0}
+              disabled={form.use_dimension !== 1}
             />
           </div>
         </div>
