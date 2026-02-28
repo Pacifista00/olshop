@@ -57,7 +57,7 @@ const VoucherForm = () => {
   const fetchVoucher = async () => {
     try {
       setLoadingData(true);
-      const res = await api.get(`/voucher/${id}`);
+      const res = await api.get(`/admin/voucher/${id}`);
       const data = res.data.data;
 
       setForm({
@@ -102,10 +102,10 @@ const VoucherForm = () => {
 
       if (isEdit) {
         formData.append("_method", "PUT");
-        await api.post(`/voucher/update/${id}`, formData);
+        await api.post(`/admin/voucher/update/${id}`, formData);
         alert("Voucher berhasil diperbarui");
       } else {
-        await api.post("/voucher/store", formData);
+        await api.post("/admin/voucher/store", formData);
         alert("Voucher berhasil ditambahkan");
       }
 

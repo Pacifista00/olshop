@@ -31,7 +31,7 @@ export default function VoucherList() {
   const fetchVouchers = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await api.get(`/vouchers-admin?page=${page}`);
+      const response = await api.get(`/admin/vouchers?page=${page}`);
 
       setVouchers(response.data.data);
       setCurrentPage(response.data.meta.current_page);
@@ -59,7 +59,7 @@ export default function VoucherList() {
 
     setDeleting(true);
     try {
-      await api.delete(`/voucher/delete/${selectedVoucher.id}`);
+      await api.delete(`/admin/voucher/delete/${selectedVoucher.id}`);
 
       // hapus dari state tanpa reload
       setVouchers((prev) =>
