@@ -32,6 +32,7 @@ export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
 
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(1);
@@ -44,7 +45,7 @@ export default function ProductList() {
   });
 
   const { user, loading: authLoading } = useAuth();
-  const [searchParams] = useSearchParams();
+  const searchKeyword = searchParams.get("search") || "";
   const navigate = useNavigate();
   const categorySlug = searchParams.get("category") || "";
 
@@ -73,6 +74,7 @@ export default function ProductList() {
             category: categorySlug || undefined,
             sort,
             page,
+            search: searchKeyword || undefined,
           },
         });
 
@@ -97,12 +99,12 @@ export default function ProductList() {
     };
 
     fetchProducts();
-  }, [categorySlug, sort, page]);
+  }, [categorySlug, sort, page, searchKeyword]);
 
   /* ================= RESET PAGE ================= */
   useEffect(() => {
     setPage(1);
-  }, [categorySlug, sort]);
+  }, [categorySlug, sort, searchKeyword]);
 
   /* ================= ADD TO CART ================= */
   const handleAddToCart = async (e, productId) => {

@@ -8,9 +8,18 @@ import { useAuth } from "../auth/AuthContext";
 function Navbar() {
   const [openProfile, setOpenProfile] = useState(false);
   const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
   const baseUrl = import.meta.env.VITE_API_URL;
 
   const { user, logout, loading } = useAuth();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    const trimmed = keyword.trim();
+
+    navigate(trimmed ? `/produk?search=${trimmed}` : "/produk");
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -30,7 +39,7 @@ function Navbar() {
         />
 
         {/* Search Desktop */}
-        <div className="flex-1 hidden md:flex mx-5">
+        <form onSubmit={handleSearch} className="flex-1 hidden md:flex mx-5">
           <div className="relative w-full">
             <Icon
               path={mdiMagnify}
@@ -40,10 +49,12 @@ function Navbar() {
             <input
               type="text"
               placeholder="Cari produk..."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
               className="w-full border border-gray-300 rounded-full py-1 pl-10 pr-3 text-sm"
             />
           </div>
-        </div>
+        </form>
 
         {/* ================= DESKTOP ================= */}
         <ul className="hidden md:flex gap-5 text-xl relative">
@@ -202,7 +213,7 @@ function Navbar() {
       </div>
 
       {/* SEARCH MOBILE */}
-      <div className="md:hidden px-4 pb-3">
+      <form onSubmit={handleSearch} className="md:hidden px-4 pb-3">
         <div className="relative w-full">
           <Icon
             path={mdiMagnify}
@@ -212,10 +223,12 @@ function Navbar() {
           <input
             type="text"
             placeholder="Cari produk..."
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
             className="w-full border border-gray-300 rounded-full py-2 pl-10 pr-3 text-sm"
           />
         </div>
-      </div>
+      </form>
 
       <NavbarBottom />
     </nav>
