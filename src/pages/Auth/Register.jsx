@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { mdiAccount, mdiLock, mdiEmail } from "@mdi/js";
 import Icon from "@mdi/react";
 import { useAuth } from "../../auth/AuthContext";
+import TermsModal from "../../components/TermsModal";
 
 function RegisterPage() {
   const [isChecked, setIsChecked] = useState(false);
 
   const { register, loading } = useAuth();
+  const [openTerms, setOpenTerms] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -143,7 +145,14 @@ function RegisterPage() {
               onChange={(e) => setIsChecked(e.target.checked)}
             />
             <span className="ml-2">
-              Saya setuju dengan Syarat dan Ketentuan
+              Saya setuju dengan{" "}
+              <button
+                type="button"
+                onClick={() => setOpenTerms(true)}
+                className="my-text-primary hover:underline"
+              >
+                Syarat dan Ketentuan
+              </button>
             </span>
           </div>
 
@@ -151,7 +160,7 @@ function RegisterPage() {
             type="submit"
             disabled={!isChecked || loading}
             className={`w-full p-3 rounded-md text-white ${
-              isChecked ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400"
+              isChecked ? "my-btn-primary" : "bg-gray-400"
             }`}
           >
             {loading ? "Memproses..." : "Daftar Sekarang"}
@@ -159,14 +168,12 @@ function RegisterPage() {
         </form>
         <p className="mt-4 text-center text-gray-600 text-sm">
           Sudah punya akun?{" "}
-          <a
-            href="/login"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
+          <a href="/login" className=" my-text-primary hover:underline">
             Login Sekarang
           </a>
         </p>
       </div>
+      <TermsModal isOpen={openTerms} onClose={() => setOpenTerms(false)} />
     </div>
   );
 }

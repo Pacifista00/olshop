@@ -2,6 +2,9 @@ import SubHeading from "../components/SubHeading";
 import SubHeading2 from "../components/SubHeading2";
 
 export default function TermsAndConditions() {
+  const waNumber = import.meta.env.VITE_WHATSAPP_NUMBER;
+  const message = import.meta.env.VITE_WHATSAPP_MESSAGE;
+  const title = import.meta.env.VITE_APP_NAME;
   return (
     <div>
       <section className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40">
@@ -9,18 +12,18 @@ export default function TermsAndConditions() {
 
         <p className="leading-relaxed mb-8 text-xs lg:text-sm">
           Syarat dan Ketentuan ini mengatur penggunaan layanan pada
-          <strong> TokoKu</strong>. Dengan mengakses, menggunakan, atau
+          <strong> {title}</strong>. Dengan mengakses, menggunakan, atau
           melakukan transaksi di website kami, Anda menyatakan telah membaca,
           memahami, dan menyetujui seluruh ketentuan yang berlaku. Jika Anda
           tidak menyetujui bagian dari ketentuan ini, mohon untuk tidak
-          menggunakan layanan TokoKu.
+          menggunakan layanan {title}.
         </p>
 
         {/* 1. Ketentuan Umum */}
         <div className="mb-5">
           <SubHeading2 className="mb-2">1. Ketentuan Umum</SubHeading2>
           <p className="leading-relaxed text-xs lg:text-sm">
-            TokoKu adalah platform perdagangan online yang menyediakan berbagai
+            {title} adalah platform perdagangan online yang menyediakan berbagai
             jenis produk dari berbagai kategori. Pengguna setuju untuk tidak
             menggunakan layanan kami untuk tujuan ilegal, merusak, atau
             melanggar hukum yang berlaku. Semua aktivitas yang dilakukan melalui
@@ -34,7 +37,7 @@ export default function TermsAndConditions() {
             2. Kelayakan & Batas Usia Pengguna
           </SubHeading2>
           <p className="leading-relaxed text-xs lg:text-sm">
-            Layanan TokoKu hanya boleh digunakan oleh individu berusia minimal
+            Layanan {title} hanya boleh digunakan oleh individu berusia minimal
             18 tahun atau telah dianggap dewasa berdasarkan hukum yang berlaku.
             Jika Anda berusia di bawah 18 tahun, Anda harus menggunakan layanan
             di bawah pengawasan orang tua atau wali yang sah.
@@ -58,7 +61,7 @@ export default function TermsAndConditions() {
               sebagai aktivitas pengguna sendiri.
             </li>
             <li>
-              TokoKu berhak menonaktifkan akun yang melanggar ketentuan atau
+              {title} berhak menonaktifkan akun yang melanggar ketentuan atau
               dicurigai melakukan penyalahgunaan.
             </li>
           </ul>
@@ -70,8 +73,8 @@ export default function TermsAndConditions() {
             4. Informasi Produk & Harga
           </SubHeading2>
           <p className="leading-relaxed mb-3 text-xs lg:text-sm">
-            TokoKu berusaha memberikan informasi produk yang akurat dan terbaru.
-            Namun demikian, pengguna memahami bahwa:
+            {title} berusaha memberikan informasi produk yang akurat dan
+            terbaru. Namun demikian, pengguna memahami bahwa:
           </p>
           <ul className="list-disc pl-5 space-y-2 text-xs lg:text-sm">
             <li>
@@ -94,12 +97,12 @@ export default function TermsAndConditions() {
           <ul className="list-disc pl-5 space-y-2 text-xs lg:text-sm">
             <li>Pemesanan dianggap valid setelah pembayaran terverifikasi.</li>
             <li>
-              TokoKu berhak membatalkan pesanan apabila ditemukan kesalahan
+              {title} berhak membatalkan pesanan apabila ditemukan kesalahan
               harga, kesalahan sistem, atau indikasi penipuan.
             </li>
             <li>
-              Apabila pesanan dibatalkan oleh TokoKu, dana akan dikembalikan
-              100% ke metode pembayaran sesuai kebijakan refund.
+              Apabila pesanan dibatalkan oleh {title}, dana akan dikembalikan
+              100% ke customer.
             </li>
           </ul>
         </div>
@@ -117,7 +120,7 @@ export default function TermsAndConditions() {
               Pembayaran yang tidak sesuai menyebabkan pesanan otomatis gagal.
             </li>
             <li>
-              TokoKu tidak bertanggung jawab atas kesalahan transfer dana.
+              {title} tidak bertanggung jawab atas kesalahan transfer dana.
             </li>
             <li>Bukti pembayaran wajib disimpan untuk keperluan verifikasi.</li>
           </ul>
@@ -145,8 +148,7 @@ export default function TermsAndConditions() {
         <div className="mb-5">
           <SubHeading2 className="mb-2">8. Garansi Produk</SubHeading2>
           <p className="leading-relaxed mb-3 text-xs lg:text-sm">
-            Garansi produk mengikuti kebijakan masing-masing produsen atau
-            seller. Tidak semua produk memiliki garansi. Pengguna wajib membaca
+            Tidak semua produk memiliki garansi. Pengguna wajib membaca
             informasi garansi sebelum melakukan pembelian.
           </p>
         </div>
@@ -166,6 +168,7 @@ export default function TermsAndConditions() {
               Pengajuan dilakukan maksimal 3×24 jam setelah barang diterima.
             </li>
             <li>Produk tidak boleh dalam kondisi digunakan.</li>
+            <li>Menyertakan video bukti unboxing saat membuka paket.</li>
           </ul>
         </div>
 
@@ -178,7 +181,7 @@ export default function TermsAndConditions() {
             Seluruh konten pada website ini seperti teks, desain, logo, ikon,
             gambar, struktur, dan perangkat lunak dilindungi oleh hukum Hak
             Kekayaan Intelektual. Pengguna dilarang menyalin, mendistribusikan,
-            atau memanfaatkan konten tanpa izin tertulis dari TokoKu.
+            atau memanfaatkan konten tanpa izin tertulis dari {title}.
           </p>
         </div>
 
@@ -189,7 +192,7 @@ export default function TermsAndConditions() {
           </SubHeading2>
           <ul className="list-disc pl-5 space-y-2 text-xs lg:text-sm">
             <li>Mengunggah konten yang melanggar hukum.</li>
-            <li>Mencoba meretas atau mengganggu server TokoKu.</li>
+            <li>Mencoba meretas atau mengganggu server {title}.</li>
             <li>Membuat pesanan palsu atau spam transaksi.</li>
             <li>Menyalahgunakan voucher, promo, atau sistem reward.</li>
           </ul>
@@ -201,7 +204,7 @@ export default function TermsAndConditions() {
             12. Pembatasan Tanggung Jawab
           </SubHeading2>
           <p className="leading-relaxed text-xs lg:text-sm">
-            TokoKu tidak bertanggung jawab atas kerugian langsung, tidak
+            {title} tidak bertanggung jawab atas kerugian langsung, tidak
             langsung, insidental, atau konsekuensial yang timbul dari penggunaan
             situs, termasuk namun tidak terbatas pada kehilangan data,
             keuntungan, atau kerusakan akibat penundaan layanan pihak ketiga.
@@ -212,7 +215,7 @@ export default function TermsAndConditions() {
         <div className="mb-5">
           <SubHeading2 className="mb-2">13. Force Majeure</SubHeading2>
           <p className="leading-relaxed text-xs lg:text-sm">
-            TokoKu dibebaskan dari tanggung jawab apabila terjadi kegagalan
+            {title} dibebaskan dari tanggung jawab apabila terjadi kegagalan
             layanan akibat keadaan di luar kendali seperti bencana alam, perang,
             gangguan listrik, kebijakan pemerintah, atau serangan siber.
           </p>
@@ -224,7 +227,7 @@ export default function TermsAndConditions() {
             14. Perubahan Syarat & Ketentuan
           </SubHeading2>
           <p className="leading-relaxed text-xs lg:text-sm">
-            TokoKu berhak mengubah Syarat dan Ketentuan tanpa pemberitahuan
+            {title} berhak mengubah Syarat dan Ketentuan tanpa pemberitahuan
             sebelumnya. Pengguna diharapkan memeriksa halaman ini secara berkala
             untuk mengetahui pembaruan terbaru.
           </p>
@@ -248,6 +251,19 @@ export default function TermsAndConditions() {
             silakan hubungi layanan pelanggan melalui halaman{" "}
             <strong>Kontak</strong>.
           </p>
+        </div>
+        <div className="text-center mt-10">
+          <p className=" text-xs lg:text-sm">
+            Masih mengalami kendala? Kami siap membantu.
+          </p>
+          <a
+            href={`https://wa.me/${waNumber}?text=${message}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-3 my-btn-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-700 transition text-xs lg:text-sm"
+          >
+            Hubungi Kami
+          </a>
         </div>
       </section>
     </div>

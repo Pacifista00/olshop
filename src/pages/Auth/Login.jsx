@@ -132,7 +132,7 @@ function LoginPage() {
             type="submit"
             disabled={loading}
             className={`w-full cursor-pointer text-white p-3 rounded-md transition
-              ${loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}
+              ${loading ? "bg-gray-400" : "my-btn-primary"}
             `}
           >
             <span className="flex items-center justify-center space-x-2">
@@ -144,10 +144,7 @@ function LoginPage() {
 
         <p className="mt-4 text-center text-gray-600 text-sm">
           Belum punya akun?{" "}
-          <a
-            href="/register"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
+          <a href="/register" className="my-text-primary hover:underline">
             Daftar Sekarang
           </a>
         </p>

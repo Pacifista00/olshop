@@ -27,7 +27,7 @@ function TopCategory() {
           className="relative rounded-xl overflow-hidden cursor-pointer shadow-md group"
         >
           <img
-            src="/image/top_category/electro.jpg"
+            src="/image/top_category/electro.png"
             alt="Elektronik"
             className="w-full h-40 md:h-56 object-cover transition-transform duration-500 group-hover:scale-110"
           />
@@ -42,7 +42,7 @@ function TopCategory() {
           className="relative rounded-xl overflow-hidden cursor-pointer shadow-md group"
         >
           <img
-            src="/image/top_category/fashion.jpg"
+            src="/image/top_category/fashion.png"
             alt="Fashion"
             className="w-full h-40 md:h-56 object-cover transition-transform duration-500 group-hover:scale-110"
           />

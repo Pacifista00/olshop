@@ -80,7 +80,7 @@ function VerifyOtpPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 disabled:opacity-60"
+            className="w-full  p-3 rounded my-btn-primary disabled:opacity-60"
           >
             {loading ? "Memverifikasi..." : "Verifikasi"}
           </button>
@@ -91,7 +91,7 @@ function VerifyOtpPage() {
           <button
             onClick={handleResend}
             disabled={resending}
-            className="text-blue-600 hover:underline disabled:opacity-60"
+            className="my-text-primary hover:underline disabled:opacity-60"
           >
             {resending ? "Mengirim..." : "Kirim Ulang"}
           </button>
