@@ -1,6 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import formatRupiah from "../../utils/formatRupiah";
 
+const OrderCardSkeleton = () => {
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 animate-pulse">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="flex-1 space-y-2">
+          <div className="h-4 bg-gray-200 rounded w-40" />
+          <div className="h-3 bg-gray-200 rounded w-32" />
+          <div className="h-3 bg-gray-200 rounded w-48" />
+        </div>
+
+        <div className="space-y-2 sm:text-right">
+          <div className="h-5 bg-gray-200 rounded w-24 ml-auto" />
+          <div className="h-3 bg-gray-200 rounded w-16 ml-auto" />
+        </div>
+      </div>
+
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4">
+        <div className="h-6 bg-gray-200 rounded-full w-32" />
+        <div className="h-9 bg-gray-200 rounded-lg w-full sm:w-32" />
+      </div>
+    </div>
+  );
+};
 const OrderList = ({ orders = [], loading = false }) => {
   const navigate = useNavigate();
 
@@ -43,7 +66,13 @@ const OrderList = ({ orders = [], loading = false }) => {
   };
 
   if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
+    return (
+      <div className="space-y-4">
+        {[...Array(5)].map((_, i) => (
+          <OrderCardSkeleton key={i} />
+        ))}
+      </div>
+    );
   }
 
   if (!orders.length) {
