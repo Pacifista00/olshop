@@ -31,7 +31,7 @@ export default function ProductList() {
   const fetchProducts = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await api.get(`/products?page=${page}`);
+      const response = await api.get(`/admin/products?page=${page}`);
 
       setProducts(response.data.data);
       setCurrentPage(response.data.meta.current_page);
@@ -59,7 +59,7 @@ export default function ProductList() {
 
     setDeleting(true);
     try {
-      await api.delete(`/product/delete/${selectedProduct.id}`);
+      await api.delete(`/admin/product/delete/${selectedProduct.id}`);
 
       // hapus dari state
       setProducts((prev) => {

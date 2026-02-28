@@ -65,7 +65,7 @@ const ProductForm = () => {
   const fetchProduct = async () => {
     try {
       setLoadingProduct(true);
-      const res = await api.get(`/product/${id}`);
+      const res = await api.get(`/admin/product/${id}`);
       const product = res.data.data;
 
       setForm({
@@ -137,10 +137,10 @@ const ProductForm = () => {
 
       if (isEdit) {
         formData.append("_method", "PUT");
-        await api.post(`/product/update/${id}`, formData);
+        await api.post(`/admin/product/update/${id}`, formData);
         alert("Produk berhasil diperbarui");
       } else {
-        await api.post("/product/store", formData);
+        await api.post("/admin/product/store", formData);
         alert("Produk berhasil ditambahkan");
       }
 
