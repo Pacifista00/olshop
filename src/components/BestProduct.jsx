@@ -10,6 +10,7 @@ export default function TopProduct() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const isDragging = useRef(false);
+  const [addingId, setAddingId] = useState(null);
 
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -48,16 +49,16 @@ export default function TopProduct() {
 
   /* ================= ADD TO CART ================= */
   const handleAddToCart = async (productId) => {
-    // Tunggu auth selesai
     if (authLoading) return;
 
-    // Jika belum login → ke login
     if (!user) {
       navigate("/login");
       return;
     }
 
     try {
+      setAddingId(productId);
+
       await api.post("/cart/store", {
         product_id: productId,
         quantity: 1,
@@ -67,6 +68,8 @@ export default function TopProduct() {
     } catch (error) {
       console.error("Gagal menambahkan ke keranjang:", error);
       alert("Gagal menambahkan produk ke keranjang");
+    } finally {
+      setAddingId(null);
     }
   };
 
@@ -244,16 +247,20 @@ export default function TopProduct() {
                 <p className="text-[10px] ">{p.price}</p>
 
                 <button
-                  disabled={authLoading}
+                  disabled={authLoading || addingId === p.id}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleAddToCart(p.id);
                   }}
                   className="absolute bottom-2 right-2 my-btn-primary text-white w-6 h-6 rounded-full
-               flex items-center justify-center hover:scale-110 transition
-               disabled:opacity-50 disabled:cursor-not-allowed"
+  flex items-center justify-center hover:scale-110 transition
+  disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Icon path={mdiPlus} size={0.6} />
+                  {addingId === p.id ? (
+                    <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-3 h-3"></span>
+                  ) : (
+                    <Icon path={mdiPlus} size={0.6} />
+                  )}
                 </button>
               </div>
             ))}
@@ -270,16 +277,20 @@ export default function TopProduct() {
              cursor-pointer hover:shadow-lg transition"
             >
               <button
-                disabled={authLoading}
+                disabled={authLoading || addingId === p.id}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleAddToCart(p.id);
                 }}
                 className="absolute bottom-2 right-2 my-btn-primary text-white w-7 h-7 rounded-full
-               flex items-center justify-center hover:scale-110 transition
-               disabled:opacity-50 disabled:cursor-not-allowed"
+  flex items-center justify-center hover:scale-110 transition
+  disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Icon path={mdiPlus} size={0.8} />
+                {addingId === p.id ? (
+                  <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4"></span>
+                ) : (
+                  <Icon path={mdiPlus} size={0.8} />
+                )}
               </button>
 
               <img

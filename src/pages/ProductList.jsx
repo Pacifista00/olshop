@@ -35,6 +35,7 @@ export default function ProductList() {
 
   const [sort, setSort] = useState("");
   const [page, setPage] = useState(1);
+  const [addingId, setAddingId] = useState(null);
 
   const [pagination, setPagination] = useState({
     current_page: 1,
@@ -116,6 +117,8 @@ export default function ProductList() {
     }
 
     try {
+      setAddingId(productId);
+
       await api.post("/cart/store", {
         product_id: productId,
         quantity: 1,
@@ -125,6 +128,8 @@ export default function ProductList() {
     } catch (err) {
       console.error("Gagal tambah ke keranjang", err);
       alert("Gagal menambahkan produk");
+    } finally {
+      setAddingId(null);
     }
   };
 
@@ -179,15 +184,18 @@ export default function ProductList() {
               >
                 <div className="relative rounded-lg border border-gray-100 shadow-md hover:shadow-lg transition p-4 flex flex-col h-full">
                   <button
-                    disabled={authLoading}
+                    disabled={authLoading || addingId === item.id}
                     onClick={(e) => handleAddToCart(e, item.id)}
                     className="absolute bottom-3 right-3 my-btn-primary w-8 h-8 rounded-full
-                               flex items-center justify-center shadow
-                                transition
-                               disabled:opacity-50"
+             flex items-center justify-center shadow transition
+             disabled:opacity-50"
                     title="Tambah ke keranjang"
                   >
-                    <Icon path={mdiPlus} size={0.9} />
+                    {addingId === item.id ? (
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Icon path={mdiPlus} size={0.9} />
+                    )}
                   </button>
 
                   <div className="rounded-lg h-32 sm:h-48 lg:h-48 overflow-hidden mb-4 bg-gray-100">

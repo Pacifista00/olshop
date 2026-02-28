@@ -35,6 +35,7 @@ const ShoppingCart = () => {
   const [selectedShipping, setSelectedShipping] = useState(null);
   const [shippingLoading, setShippingLoading] = useState(false);
   const [shippingError, setShippingError] = useState(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   const shippingUnavailable =
     !shippingLoading && (shippingOptions.length === 0 || shippingError);
@@ -204,6 +205,8 @@ const ShoppingCart = () => {
     }
 
     try {
+      setCheckoutLoading(true);
+
       const { snapToken } = await checkout({
         courier_code: selectedShipping.courier_code,
         courier_service_code: selectedShipping.courier_service_code,
@@ -215,6 +218,8 @@ const ShoppingCart = () => {
       window.snap.pay(snapToken);
     } catch (err) {
       alert(err.response?.data?.message || "Checkout gagal");
+    } finally {
+      setCheckoutLoading(false);
     }
   };
 
@@ -468,11 +473,20 @@ const ShoppingCart = () => {
 
             <button
               onClick={handleCheckout}
-              disabled={!selectedShipping || shippingUnavailable}
-              className="mt-6 w-full bg-blue-600 text-white py-2 rounded
-             disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={
+                !selectedShipping || shippingUnavailable || checkoutLoading
+              }
+              className="mt-6 w-full my-btn-primary py-2 rounded
+  disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
             >
-              Bayar Sekarang
+              {checkoutLoading ? (
+                <>
+                  <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4"></span>
+                  Memproses...
+                </>
+              ) : (
+                "Bayar Sekarang"
+              )}
             </button>
             {shippingUnavailable && (
               <p className="mt-2 text-xs text-red-500 text-center">

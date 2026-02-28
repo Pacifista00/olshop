@@ -27,6 +27,7 @@ const ProductSkeleton = () => {
 };
 
 export default function LatestProduct() {
+  const [addingId, setAddingId] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -70,6 +71,8 @@ export default function LatestProduct() {
     }
 
     try {
+      setAddingId(productId);
+
       await api.post("/cart/store", {
         product_id: productId,
         quantity: 1,
@@ -79,6 +82,8 @@ export default function LatestProduct() {
     } catch (error) {
       console.error("Gagal menambahkan ke keranjang:", error);
       alert("Gagal menambahkan produk ke keranjang");
+    } finally {
+      setAddingId(null);
     }
   };
 
@@ -116,18 +121,22 @@ export default function LatestProduct() {
 
                 {/* BUTTON ADD TO CART */}
                 <button
-                  disabled={authLoading}
+                  disabled={authLoading || addingId === item.id}
                   onClick={(e) => {
                     e.stopPropagation();
                     handleAddToCart(item.id);
                   }}
                   title="Tambah ke keranjang"
                   className="absolute bottom-3 right-3 my-btn-primary 
-                  w-8 h-8 rounded-full flex items-center justify-center shadow
-                   transition
-                  disabled:opacity-50 disabled:cursor-not-allowed"
+  w-8 h-8 rounded-full flex items-center justify-center shadow
+  transition
+  disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Icon path={mdiPlus} size={1} />
+                  {addingId === item.id ? (
+                    <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-4 h-4"></span>
+                  ) : (
+                    <Icon path={mdiPlus} size={1} />
+                  )}
                 </button>
               </div>
             ))}
