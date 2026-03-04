@@ -103,6 +103,7 @@ const ShoppingCart = () => {
   const loadCart = async () => {
     try {
       const response = await getCart();
+      console.log(response.data.data);
 
       const items = response?.data?.data?.items ?? [];
 
@@ -153,6 +154,9 @@ const ShoppingCart = () => {
 
     return Math.min(requestedDiscount, maxDiscount);
   }, [pointsUsed, cartSubtotal, voucherDiscount, shippingCost]);
+  const hasUnavailableItems = useMemo(() => {
+    return cart.some((item) => item.is_active === 0);
+  }, [cart]);
   const maxUsablePoints = Math.min(
     userPoints,
     Math.floor(
@@ -290,6 +294,7 @@ const ShoppingCart = () => {
               <CartItem
                 key={item.id}
                 item={item}
+                disabled={!item.is_active}
                 updateQuantity={updateQuantity}
                 removeItem={removeItem}
               />
@@ -474,7 +479,10 @@ const ShoppingCart = () => {
             <button
               onClick={handleCheckout}
               disabled={
-                !selectedShipping || shippingUnavailable || checkoutLoading
+                !selectedShipping ||
+                shippingUnavailable ||
+                checkoutLoading ||
+                hasUnavailableItems
               }
               className="mt-6 w-full my-btn-primary py-2 rounded
   disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"

@@ -57,7 +57,6 @@ const OrderDetail = () => {
       try {
         setLoading(true);
         const res = await api.get(`/orders/${id}`);
-        console.log(res.data.data);
         setOrder(res.data.data);
       } catch {
         setError("Pesanan tidak ditemukan atau Anda tidak memiliki akses.");
