@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { updateAvatar } from "../../services/ProfileService";
 import { useAuth } from "../../auth/AuthContext";
+import defaultAvatar from "../../../public/image/user/profile.png";
 
 const EditAvatarModal = ({ isOpen, onClose }) => {
   const { user, setUser } = useAuth();
