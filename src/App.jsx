@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
-import MainLayout from "./layouts/AuthLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // pages
 import Home from "./pages/Home";
@@ -37,6 +37,21 @@ import OrdersTables from "./pages/Admin/OrderTables";
 import OrdersDetailPage from "./pages/Admin/OrdersDetailPage";
 
 export default function App() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = import.meta.env.VITE_MIDTRANS_SNAP_URL;
+    script.setAttribute(
+      "data-client-key",
+      import.meta.env.VITE_MIDTRANS_CLIENT_KEY,
+    );
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
   return (
     <Routes>
       <Route path="/403" element={<Forbidden403 />} />
@@ -69,7 +84,7 @@ export default function App() {
       </Route>
 
       {/* ===== MAIN ROUTES (WITH NAVBAR) ===== */}
-      <Route element={<MainLayout />}>
+      <Route element={<AuthLayout />}>
         {/* PUBLIC */}
         <Route path="/" element={<Home />} />
         <Route path="/tentang-kami" element={<About />} />

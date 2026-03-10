@@ -37,6 +37,7 @@ export default function UserDropdown() {
                 : "/image/user/profile.png"
             }
             alt="User"
+            className="w-12 h-12 rounded-full object-cover border border-gray-200"
           />
         </span>
 
