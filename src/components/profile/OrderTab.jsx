@@ -2,14 +2,6 @@ import { useEffect, useState } from "react";
 import api from "../../services/Api";
 import OrderList from "./OrderList";
 
-const statusMap = {
-  all: null,
-  created: ["created"], // Belum Bayar
-  packed: ["processing", "packed"], // Dikemas
-  shipped: ["shipped"], // Dikirim
-  completed: ["completed", "cancelled"], // Selesai
-};
-
 const OrdersTab = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,18 +10,17 @@ const OrdersTab = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      let params = {};
+      const params = {};
 
-      const mappedStatus = statusMap[status];
-
-      // ✅ kirim array status ke backend
-      if (mappedStatus) {
-        params.status = mappedStatus;
+      // hanya kirim status jika bukan "all"
+      if (status !== "all") {
+        params.status = status;
       }
 
       const response = await api.get("/orders/me", { params });
 
-      setOrders(response.data.data);
+      console.log(response.data?.data ?? []);
+      setOrders(response.data?.data ?? []);
     } catch (error) {
       console.error(error);
     } finally {

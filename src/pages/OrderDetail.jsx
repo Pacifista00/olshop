@@ -2,31 +2,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/Api";
 
-const STATUS_MAP = {
-  unpaid: {
-    label: "Menunggu Pembayaran",
-    color: "bg-yellow-100 text-yellow-800",
-    description:
-      "Pesanan telah dibuat dan menunggu pembayaran Anda untuk diproses.",
-  },
-  paid: {
-    label: "Dibayar",
-    color: "bg-green-100 text-green-800",
-    description: "Pembayaran telah diterima. Pesanan Anda sedang kami proses.",
-  },
-  failed: {
-    label: "Gagal",
-    color: "bg-red-100 text-red-800",
-    description: "Pembayaran gagal. Silakan lakukan pemesanan ulang.",
-  },
-  expired: {
-    label: "Kedaluwarsa",
-    color: "bg-red-100 text-red-800",
-    description:
-      "Batas waktu pembayaran telah berakhir dan pesanan dibatalkan.",
-  },
-};
-
 const formatRupiah = (value = 0) =>
   `Rp${Number(value).toLocaleString("id-ID")}`;
 
@@ -39,6 +14,77 @@ const OrderDetail = () => {
   const [error, setError] = useState("");
   const [timeLeft, setTimeLeft] = useState(null);
 
+  const getOrderStatus = (status) => {
+    switch (status) {
+      case "created":
+        return "Pesanan Dibuat";
+
+      case "pending":
+        return "Menunggu Pembayaran";
+
+      case "processing":
+        return "Pesanan Diproses";
+
+      case "packed":
+        return "Pesanan Sudah Dikemas";
+
+      case "shipped":
+        return "Pesanan Dikirim";
+
+      case "completed":
+        return "Pesanan Selesai";
+
+      case "cancelled":
+        return "Pesanan Dibatalkan";
+
+      case "returned":
+        return "Pesanan Dikembalikan";
+
+      case "disposed":
+        return "Pesanan Dimusnahkan";
+
+      default:
+        return "Status Tidak Diketahui";
+    }
+  };
+
+  const getShippingStatus = (status) => {
+    switch (status) {
+      case "allocated":
+        return "Kurir Ditugaskan";
+
+      case "picking_up":
+        return "Kurir Menuju Lokasi Pickup";
+
+      case "picked":
+        return "Paket Telah Diambil Kurir";
+
+      case "dropping_off":
+        return "Paket Dalam Perjalanan ke Tujuan";
+
+      case "on_hold":
+        return "Pengiriman Ditahan Sementara";
+
+      case "return_in_transit":
+        return "Paket Sedang Dikembalikan";
+
+      case "returned":
+        return "Paket Telah Dikembalikan";
+
+      case "disposed":
+        return "Paket Dimusnahkan";
+
+      case "delivered":
+        return "Paket Telah Diterima";
+
+      case "courier_not_found":
+        return "Kurir Tidak Ditemukan";
+
+      default:
+        return "Status Pengiriman Tidak Diketahui";
+    }
+  };
+
   const handleRetryPayment = async () => {
     try {
       const res = await api.post(`/checkout/order/${order.id}`);
@@ -47,7 +93,6 @@ const OrderDetail = () => {
         window.snap.pay(res.data.snapToken);
       }
     } catch (err) {
-      console.log(err.response?.data);
       alert("Gagal memproses pembayaran ulang");
     }
   };
@@ -244,8 +289,6 @@ const OrderDetail = () => {
     );
   }
 
-  const status = STATUS_MAP[order.payment_status];
-
   return (
     <div className="max-w-7xl mx-auto px-6 py-4 pb-10 pt-44 md:pt-40 space-y-8">
       {/* ================= STATUS ================= */}
@@ -258,7 +301,15 @@ const OrderDetail = () => {
             <p className="text-sm ">Dibuat pada {order.created_at_formatted}</p>
             <p>
               Status pesanan :{" "}
-              <span className="font-semibold">{order.status}</span>
+              <span className="font-semibold">
+                {getOrderStatus(order.status)}
+              </span>
+            </p>
+            <p>
+              Status pengiriman :{" "}
+              <span className="font-semibold">
+                {getShippingStatus(order.shipping_status)}
+              </span>
             </p>
             {/* <p className="mt-2  text-sm">{status?.description}</p> */}
             {order.payment_status === "unpaid" &&
@@ -285,38 +336,55 @@ const OrderDetail = () => {
               </p>
             )}
           </div>
-
-          <span
-            className={`self-start px-4 py-1 rounded-full text-sm font-medium ${status?.color}`}
-          >
-            {status?.label}
-          </span>
         </div>
       </div>
 
       {/* ================= SHIPPING ================= */}
       <div className="bg-white rounded shadow p-6">
         <h2 className="text-lg font-semibold">Informasi Pengiriman</h2>
-        <p className="text-sm  mb-4">
+        <p className="text-sm mb-4">
           Detail metode pengiriman yang Anda pilih untuk pesanan ini.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div>
-            <p className="">Kurir</p>
+            <p>Kurir</p>
             <p className="font-medium uppercase">
               {order.courier?.code} – {order.courier?.service}
             </p>
           </div>
 
-          <div>
-            <p className="">Estimasi Pengiriman</p>
+          {/* <div>
+            <p>Estimasi Pengiriman</p>
             <p className="font-medium">{order.courier?.etd ?? "-"} hari</p>
+          </div> */}
+
+          <div>
+            <p>Biaya Pengiriman</p>
+            <p className="font-medium">{formatRupiah(order.shipping_cost)}</p>
           </div>
 
           <div>
-            <p className="">Biaya Pengiriman</p>
-            <p className="font-medium">{formatRupiah(order.shipping_cost)}</p>
+            <p>Nomor Resi</p>
+
+            {order.tracking_number ? (
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-md border border-blue-200">
+                  {order.tracking_number}
+                </span>
+
+                <button
+                  onClick={() =>
+                    navigator.clipboard.writeText(order.tracking_number)
+                  }
+                  className="text-xs px-2 py-1 border rounded hover:bg-gray-100"
+                >
+                  Salin
+                </button>
+              </div>
+            ) : (
+              <p className="text-gray-400">Belum tersedia</p>
+            )}
           </div>
         </div>
       </div>
