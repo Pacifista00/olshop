@@ -20,6 +20,14 @@ const EditAvatarModal = ({ isOpen, onClose }) => {
     const selected = e.target.files[0];
     if (!selected) return;
 
+    if (selected.size > 2 * 1024 * 1024) {
+      setAlert({
+        type: "error",
+        message: "Ukuran foto maksimal 2MB",
+      });
+      return;
+    }
+
     setFile(selected);
     setPreview(URL.createObjectURL(selected));
   };
@@ -30,10 +38,7 @@ const EditAvatarModal = ({ isOpen, onClose }) => {
     try {
       setSaving(true);
 
-      const formData = new FormData();
-      formData.append("photo", file);
-
-      const res = await updateAvatar(formData);
+      const res = await updateAvatar(file);
 
       setUser(res.data.user);
 
