@@ -134,7 +134,7 @@ export default function OrderDetail() {
             </span>{" "}
             {order.status}
           </p>
-          {order.payment_status === "paid" && order.status !== "packed" && (
+          {/* {order.payment_status === "paid" && order.status !== "packed" && (
             <button
               onClick={handlePack}
               disabled={packing}
@@ -149,7 +149,7 @@ export default function OrderDetail() {
             >
               {packing ? "Mengemas..." : "📦 Kemas Pesanan"}
             </button>
-          )}
+          )} */}
         </div>
       </div>
 
