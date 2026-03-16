@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Label from "./Label";
 import Input from "./input/InputField";
 import Select from "./Select";
+import { compressImage } from "../../../utils/compressImage";
 import api from "../../../services/Api";
 
 const ProductForm = () => {
@@ -99,9 +100,13 @@ const ProductForm = () => {
   /* ======================
      DROPZONE IMAGE
   ====================== */
-  const onDrop = (files) => {
-    setImage(files[0]);
-    setPreview(URL.createObjectURL(files[0]));
+  const onDrop = async (files) => {
+    const file = files[0];
+
+    const compressed = await compressImage(file);
+
+    setImage(compressed);
+    setPreview(URL.createObjectURL(compressed));
   };
 
   const { getRootProps, getInputProps } = useDropzone({
