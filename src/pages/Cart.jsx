@@ -66,6 +66,7 @@ const ShoppingCart = () => {
       setSelectedShipping(null); // reset jika cart berubah
     }
   }, [cart]);
+
   const loadShipping = async () => {
     setShippingLoading(true);
     setShippingError(null);
@@ -142,34 +143,6 @@ const ShoppingCart = () => {
   const cartSubtotal = useMemo(() => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   }, [cart]);
-  const pointDiscount = useMemo(() => {
-    const maxDiscount = Math.max(
-      0,
-      cartSubtotal - voucherDiscount + shippingCost,
-    );
-
-    const requestedDiscount = pointsUsed * POINT_VALUE;
-
-    return Math.min(requestedDiscount, maxDiscount);
-  }, [pointsUsed, cartSubtotal, voucherDiscount, shippingCost]);
-  const hasUnavailableItems = useMemo(() => {
-    return cart.some((item) => item.is_active === 0);
-  }, [cart]);
-  const maxUsablePoints = Math.min(
-    userPoints,
-    Math.floor(
-      Math.max(0, cartSubtotal - voucherDiscount + shippingCost) / POINT_VALUE,
-    ),
-  );
-
-  // ===== TOTAL =====
-  const total = useMemo(() => {
-    const result =
-      cartSubtotal + shippingCost - voucherDiscount - pointDiscount;
-    return result > 0 ? result : 0;
-  }, [cartSubtotal, voucherDiscount, shippingCost, pointDiscount]);
-
-  // ===== APPLY VOUCHER =====
   const applyVoucher = async () => {
     if (!voucherInput) {
       alert("Masukkan kode voucher");
@@ -198,6 +171,35 @@ const ShoppingCart = () => {
     setVoucherInput("");
     setVoucherInfo(null);
   };
+
+  const subtotalAfterVoucher = useMemo(() => {
+    return Math.max(0, cartSubtotal - voucherDiscount);
+  }, [cartSubtotal, voucherDiscount]);
+  const pointDiscount = useMemo(() => {
+    const requestedDiscount = pointsUsed * POINT_VALUE;
+
+    return Math.min(requestedDiscount, subtotalAfterVoucher);
+  }, [pointsUsed, subtotalAfterVoucher]);
+  const hasUnavailableItems = useMemo(() => {
+    return cart.some((item) => item.is_active === 0);
+  }, [cart]);
+  const maxUsablePoints = Math.min(
+    userPoints,
+    Math.floor(subtotalAfterVoucher / POINT_VALUE),
+  );
+  useEffect(() => {
+    if (pointsUsed > maxUsablePoints) {
+      setPointsUsed(maxUsablePoints);
+    }
+  }, [maxUsablePoints]);
+
+  // ===== TOTAL =====
+  const total = useMemo(() => {
+    const result = subtotalAfterVoucher + shippingCost - pointDiscount;
+    return result > 0 ? result : 0;
+  }, [subtotalAfterVoucher, shippingCost, pointDiscount]);
+
+  // ===== APPLY VOUCHER =====
 
   // ===== CHECKOUT =====
   const handleCheckout = async () => {
@@ -449,7 +451,7 @@ const ShoppingCart = () => {
                   let val = parseInt(e.target.value || 0);
 
                   if (val < 0) val = 0;
-                  if (val > userPoints) val = userPoints;
+                  if (val > maxUsablePoints) val = maxUsablePoints;
 
                   setPointsUsed(val);
                 }}

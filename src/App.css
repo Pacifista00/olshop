@@ -55,3 +55,61 @@ body {
   cursor: not-allowed;
   opacity: 0.7;
 }
+
+.my-btn-danger {
+  background-color: #dc2626; /* red-600 */
+  color: #ffffff;
+  border: 1px solid #dc2626;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.my-btn-danger:hover {
+  background-color: #ffffff;
+  color: #dc2626;
+  border-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+}
+
+.my-btn-danger:active {
+  background-color: #b91c1c; /* red-700 */
+  border-color: #b91c1c;
+  color: #ffffff;
+}
+
+.my-btn-danger:disabled {
+  background-color: #fca5a5; /* red-300 */
+  border-color: #fca5a5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.my-btn-warning {
+  background-color: #ca8a04; /* yellow-600 */
+  color: #ffffff;
+  border: 1px solid #ca8a04;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.my-btn-warning:hover {
+  background-color: #ffffff;
+  color: #ca8a04;
+  border-color: #ca8a04;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(202, 138, 4, 0.35);
+}
+
+.my-btn-warning:active {
+  background-color: #a16207; /* yellow-700 */
+  border-color: #a16207;
+  color: #ffffff;
+}
+
+.my-btn-warning:disabled {
+  background-color: #fde68a; /* yellow-300 */
+  border-color: #fde68a;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
