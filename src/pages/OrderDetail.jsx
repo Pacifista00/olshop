@@ -42,7 +42,7 @@ const OrderDetail = () => {
         return "Pesanan Dikembalikan";
 
       case "disposed":
-        return "Pesanan Dimusnahkan";
+        return "Pesanan Dihancurkan";
 
       default:
         return "Status Tidak Diketahui";
@@ -55,25 +55,25 @@ const OrderDetail = () => {
         return "Kurir Ditugaskan";
 
       case "picking_up":
-        return "Kurir Menuju Lokasi Pickup";
+        return "Kurir Menuju Pengirim";
 
       case "picked":
-        return "Paket Telah Diambil Kurir";
+        return "Dalam Pengiriman";
 
       case "dropping_off":
-        return "Paket Dalam Perjalanan ke Tujuan";
+        return "Dalam Pengantaran";
 
       case "on_hold":
-        return "Pengiriman Ditahan Sementara";
+        return "Pengiriman Ditahan";
 
       case "return_in_transit":
-        return "Paket Sedang Dikembalikan";
+        return "Sedang Dikembalikan";
 
       case "returned":
-        return "Paket Telah Dikembalikan";
+        return "Paket Dikembalikan";
 
       case "disposed":
-        return "Paket Dimusnahkan";
+        return "Paket Dihancurkan";
 
       case "delivered":
         return "Paket Telah Diterima";
@@ -82,7 +82,7 @@ const OrderDetail = () => {
         return "Kurir Tidak Ditemukan";
 
       default:
-        return "Status Pengiriman Tidak Diketahui";
+        return "-";
     }
   };
 
@@ -202,10 +202,26 @@ const OrderDetail = () => {
       const res = await api.post(`/checkout/order/${order.id}`);
 
       if (res.data.snapToken) {
-        window.snap.pay(res.data.snapToken);
+        window.snap.pay(res.data.snapToken, {
+          onSuccess: function () {
+            navigate(`/orders/${order.id}`);
+          },
+          onPending: function () {
+            navigate(`/orders/${order.id}`);
+          },
+          onError: function () {
+            alert("Pembayaran gagal");
+            navigate(`/orders/${order.id}`);
+          },
+          onClose: function () {
+            alert("Kamu menutup pembayaran");
+            navigate(`/orders/${order.id}`);
+          },
+        });
       }
     } catch (err) {
-      alert("Gagal memproses pembayaran ulang");
+      console.log("ERROR:", err.response?.data);
+      alert(err.response?.data?.message || "Gagal retry");
     }
   };
   const handleCancelOrder = async () => {
@@ -456,7 +472,7 @@ const OrderDetail = () => {
           </div>
         </div>
         {/* Timer */}
-        {order.payment_status === "unpaid" &&
+        {["unpaid", "pending"].includes(order.payment_status) &&
           order.expired_at &&
           !isExpired && (
             <div className="mt-2 text-sm text-red-600 space-y-1 bg-red-50 p-3 rounded-md border border-red-100">
@@ -585,6 +601,12 @@ const OrderDetail = () => {
             <div className="flex justify-between text-green-600">
               <span>Diskon Voucher</span>
               <span>- {formatRupiah(order.voucher_discount)}</span>
+            </div>
+          )}
+          {order.points_discount > 0 && (
+            <div className="flex justify-between text-green-600">
+              <span>Diskon Poin ({order.points_used} poin)</span>
+              <span>- {formatRupiah(order.points_discount)}</span>
             </div>
           )}
 

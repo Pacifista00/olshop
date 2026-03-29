@@ -219,7 +219,22 @@ const ShoppingCart = () => {
         points_used: pointsUsed,
       });
 
-      window.snap.pay(snapToken);
+      window.snap.pay(snapToken, {
+        onSuccess: function (result) {
+          window.location.href = "/profile";
+        },
+        onPending: function (result) {
+          window.location.href = "/profile";
+        },
+        onError: function (result) {
+          alert("Pembayaran gagal");
+          window.location.href = "/profile";
+        },
+        onClose: function () {
+          alert("Kamu menutup pembayaran");
+          window.location.href = "/profile";
+        },
+      });
     } catch (err) {
       alert(err.response?.data?.message || "Checkout gagal");
     } finally {
