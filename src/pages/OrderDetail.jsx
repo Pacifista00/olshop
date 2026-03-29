@@ -616,9 +616,6 @@ const OrderDetail = () => {
           </div>
         </div>
       </div>
-      <p>{order.status}</p>
-      <p>{order.payment_status}</p>
-      <p>{order.shipping_status}</p>
 
       {/* ================= ACTION ================= */}
 
