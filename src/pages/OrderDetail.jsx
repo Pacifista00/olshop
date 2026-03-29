@@ -298,7 +298,7 @@ const OrderDetail = () => {
   const canCancel =
     order &&
     ["created", "pending", "processing"].includes(order.status) &&
-    ["unpaid", "pending", "paid"].includes(order.payment_status) &&
+    ["unpaid", "pending", "paid", "expired"].includes(order.payment_status) &&
     !order.shipping_status;
 
   if (loading) {
@@ -616,6 +616,9 @@ const OrderDetail = () => {
           </div>
         </div>
       </div>
+      <p>{order.status}</p>
+      <p>{order.payment_status}</p>
+      <p>{order.shipping_status}</p>
 
       {/* ================= ACTION ================= */}
 
