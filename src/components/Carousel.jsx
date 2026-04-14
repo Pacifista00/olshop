@@ -4,8 +4,8 @@ export default function Carousel() {
   const [slide, setSlide] = useState(0);
 
   const images = [
-    "/image/carousel/carousel1.jpeg",
-    "/image/carousel/carousel2.jpeg",
+    "/image/carousel/Artboard 1@300x.png",
+    "/image/carousel/Artboard 2@300x.png",
   ];
 
   const nextSlide = () => setSlide((slide + 1) % images.length);
@@ -13,13 +13,17 @@ export default function Carousel() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-4">
-      <div className="carousel w-full rounded-2xl relative">
-        <img
-          src={images[slide]}
-          className="w-full h-24 sm:h-36 md:h-44 xl:h-72 object-cover"
-        />
+      <div
+        className="relative w-full overflow-hidden rounded-2xl 
+        shadow
+                  aspect-16/6 
+                  sm:aspect-16/5 
+                  md:aspect-16/4 
+                  xl:aspect-16/3"
+      >
+        <img src={images[slide]} className="w-full h-full object-cover" />
 
-        <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 justify-between">
+        <div className="absolute inset-0 flex items-center justify-between px-4 sm:px-6 md:px-10">
           <button className="btn btn-circle" onClick={prevSlide}>
             ❮
           </button>

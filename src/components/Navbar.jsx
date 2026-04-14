@@ -32,7 +32,7 @@ function Navbar() {
       <div className="w-full md:max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
         {/* Logo */}
         <img
-          src="/image/logo/logo.png"
+          src="/image/logo/logofull.png"
           alt="Logo"
           className="h-8 cursor-pointer"
           onClick={() => navigate("/")}
@@ -103,15 +103,20 @@ function Navbar() {
                 {/* DROPDOWN DESKTOP */}
                 {openProfile && (
                   <div className="absolute right-0 top-12 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
-                    <div className="px-5 py-4 bg-gray-50">
+                    <div className="px-5 py-3 bg-gray-50">
                       <p className="text-sm font-semibold">{user?.name}</p>
                       <p className="text-xs mt-1">Total Point</p>
-                      <p className="text-sm font-bold text-green-600 mt-1">
-                        ⭐ {user?.point?.total_points ?? 0}
+                      <p className="flex items-center gap-2 text-sm font-bold text-green-600 mt-2">
+                        <img
+                          src="/image/logo/poin.png"
+                          className="w-8 h-8"
+                          alt=""
+                        />
+                        {user?.point?.total_points ?? 0}
                       </p>
                     </div>
 
-                    <div className="py-2">
+                    <div className="">
                       <button
                         className="w-full text-left px-5 py-2 text-sm hover:bg-gray-100 transition"
                         onClick={() => {

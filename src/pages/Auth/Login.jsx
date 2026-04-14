@@ -57,7 +57,7 @@ function LoginPage() {
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-center mb-3">
           <img
-            src="/image/logo/logo.png"
+            src="/image/logo/favicon.ico"
             alt="Logo"
             className="h-12 cursor-pointer"
           />

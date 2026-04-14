@@ -319,7 +319,7 @@ const AppSidebar = () => {
             />
           ) : (
             <img
-              src="/image/logo/logo.png" // sesuaikan path logo kamu
+              src="/image/logo/favicon.ico" // sesuaikan path logo kamu
               alt="Logo"
               className="h-8 mb-3"
             />
