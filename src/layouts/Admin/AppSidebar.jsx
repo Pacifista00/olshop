@@ -14,6 +14,11 @@ import {
   mdiChevronDown,
   mdiDotsHorizontal,
   mdiCartOutline,
+  mdiGiftOutline,
+  mdiPlusBoxOutline,
+  mdiHistory,
+  mdiTicketPercentOutline,
+  mdiBedOutline,
 } from "@mdi/js";
 
 import { useSidebar } from "../../context/SidebarContext";
@@ -55,11 +60,12 @@ const navItems = [
         path: "/dashboard/voucher",
         pro: false,
       },
+      { name: "Reward", path: "/dashboard/rewards", pro: false },
     ],
   },
   {
     name: "Forms",
-    icon: mdiFormatListBulleted,
+    icon: mdiPlusBoxOutline, // lebih cocok untuk tambah data
     subItems: [
       { name: "Produk", path: "/dashboard/product/add", pro: false },
       {
@@ -72,8 +78,40 @@ const navItems = [
         path: "/dashboard/voucher/add",
         pro: false,
       },
+      {
+        name: "Reward",
+        path: "/dashboard/reward/add",
+        pro: false,
+      },
     ],
   },
+  {
+    name: "Penukaran Poin",
+    icon: mdiGiftOutline, // represent reward/penukaran
+    subItems: [
+      {
+        name: "Riwayat",
+        path: "/dashboard/redemptions/history",
+        pro: false,
+      },
+      {
+        name: "Voucher",
+        path: "/dashboard/redemptions/voucher",
+        pro: false,
+      },
+      {
+        name: "Hotel",
+        path: "/dashboard/redemptions/hotel",
+        pro: false,
+      },
+      {
+        name: "Produk",
+        path: "/dashboard/redemptions/product",
+        pro: false,
+      },
+    ],
+  },
+
   // {
   //   name: "Pages",
   //   icon: mdiFileDocumentOutline,

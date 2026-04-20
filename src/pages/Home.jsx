@@ -2,6 +2,7 @@ import Carousel from "../components/Carousel";
 import TopCategory from "../components/TopCategory";
 import TopProduct from "../components/BestProduct";
 import LatestProduct from "../components/LatestProduct";
+import RewardsSection from "../components/RewardsSection";
 
 function Home() {
   return (
@@ -12,6 +13,7 @@ function Home() {
       <TopProduct />
       <TopCategory />
       <LatestProduct />
+      <RewardsSection />
     </>
   );
 }

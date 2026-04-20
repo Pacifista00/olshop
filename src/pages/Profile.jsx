@@ -10,6 +10,7 @@ import ProfileTabs from "../components/profile/ProfileTabs";
 import AccountInfo from "../components/profile/AccountInfo";
 import AddressList from "../components/profile/AddressList";
 import OrdersTab from "../components/profile/OrderTab";
+import RewardsRedemptionsList from "../components/profile/RewardRedemptionsList";
 
 /* ============================= */
 /* ===== PROFILE SKELETON ===== */
@@ -121,6 +122,7 @@ const ProfilePage = () => {
 
             {/* ADDRESS */}
             {activeTab === "address" && <AddressList />}
+            {activeTab === "rewards" && <RewardsRedemptionsList />}
           </div>
         </div>
       </div>

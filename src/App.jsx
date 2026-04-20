@@ -35,6 +35,16 @@ import VerifyOtpPage from "./pages/Auth/VerifyOtpPage";
 import GuestRoute from "./auth/GuestRoute";
 import OrdersTables from "./pages/Admin/OrderTables";
 import OrdersDetailPage from "./pages/Admin/OrdersDetailPage";
+import RewardsTables from "./pages/Admin/RewardTables";
+import RewardForm from "./pages/Admin/RewardForm";
+import PublicRewardsPage from "./pages/PublicRewardsPage";
+import RewardDetail from "./pages/RewardDetail";
+import RewardRedemptionDetail from "./pages/RewardRedemptionDetail";
+import RewardRedemptionsTables from "./pages/Admin/RewardRedemptionTables";
+import VoucherRedemptionsTables from "./pages/Admin/VoucherRedemptionTables";
+import HotelRedemptionsTables from "./pages/Admin/HotelRedemptionTables";
+import ProductRedemptionsTables from "./pages/Admin/ProductRedemptionTables";
+import MyVoucherList from "./pages/MyVoucher";
 
 export default function App() {
   useEffect(() => {
@@ -112,6 +122,23 @@ export default function App() {
         </Route>
 
         <Route
+          path="/rewards"
+          element={
+            <ProtectedRoute>
+              <PublicRewardsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reward/:id"
+          element={
+            <ProtectedRoute>
+              <RewardDetail />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/addresses/new"
           element={
             <ProtectedRoute>
@@ -136,6 +163,14 @@ export default function App() {
           }
         />
         <Route
+          path="/vouchers"
+          element={
+            <ProtectedRoute>
+              <MyVoucherList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/after-payment"
           element={
             <ProtectedRoute>
@@ -151,6 +186,14 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/redemptions/:id"
+          element={
+            <ProtectedRoute>
+              <RewardRedemptionDetail />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       {/* DASHBOARD */}
@@ -162,6 +205,9 @@ export default function App() {
         }
       >
         <Route path="/dashboard" element={<HomeDashboard />} />
+
+        <Route path="/dashboard/rewards" element={<RewardsTables />} />
+        <Route path="/dashboard/reward/add" element={<RewardForm />} />
 
         <Route path="/dashboard/orders" element={<OrdersTables />} />
         <Route path="/dashboard/orders/:id" element={<OrdersDetailPage />} />
@@ -180,12 +226,30 @@ export default function App() {
         <Route path="/dashboard/voucher" element={<VoucherTables />} />
         <Route path="/dashboard/voucher/add" element={<VoucherForm />} />
 
+        <Route path="/dashboard/reward/edit/:id" element={<RewardForm />} />
         <Route path="/dashboard/product/edit/:id" element={<ProductForm />} />
         <Route
           path="/dashboard/product-category/edit/:id"
           element={<CategoryProductForm />}
         />
         <Route path="/dashboard/voucher/edit/:id" element={<VoucherForm />} />
+
+        <Route
+          path="/dashboard/redemptions/history"
+          element={<RewardRedemptionsTables />}
+        />
+        <Route
+          path="/dashboard/redemptions/voucher"
+          element={<VoucherRedemptionsTables />}
+        />
+        <Route
+          path="/dashboard/redemptions/hotel"
+          element={<HotelRedemptionsTables />}
+        />
+        <Route
+          path="/dashboard/redemptions/product"
+          element={<ProductRedemptionsTables />}
+        />
       </Route>
     </Routes>
   );

@@ -3,6 +3,7 @@ const ProfileTabs = ({ activeTab, onChange }) => {
     { id: "account", label: "Informasi Akun" },
     { id: "orders", label: "Riwayat Pesanan" },
     { id: "address", label: "Alamat" },
+    { id: "rewards", label: "Penukaran Poin" },
   ];
 
   return (
