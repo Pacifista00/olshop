@@ -2,11 +2,11 @@
 @plugin "daisyui";
 
 :root {
-  --primary: #2176ff;
-  --primary-hover: #1d69e6; /* sedikit lebih gelap */
-  --primary-active: #195dcc; /* lebih gelap lagi */
+  --primary: #d01825;
+  --primary-hover: #b71521; /* sedikit lebih gelap */
+  --primary-active: #a5131d; /* lebih gelap lagi */
   --primary-light: #e9f1ff; /* versi sangat terang */
-  --primary-border: #1b63d4;
+  --primary-border: #d01825;
   --secondary: #31393c;
 }
 
@@ -50,10 +50,11 @@ body {
 }
 
 .my-btn-primary:disabled {
-  background-color: #b6d0ff;
-  border-color: #b6d0ff;
+  background-color: #fce8ea;
+  border-color: #fce8ea;
   cursor: not-allowed;
   opacity: 0.7;
+  color: var(--primary);
 }
 
 .my-btn-danger {

@@ -131,7 +131,7 @@ export default function FAQPage() {
         {filteredCategories.map((cat, catIndex) =>
           cat.items.length > 0 ? (
             <div key={catIndex} className="mb-10">
-              <h2 className="text-sm lg:text-lg font-bold border-l-4 border-blue-500 pl-3 mb-4">
+              <h2 className="text-sm lg:text-lg font-bold border-l-4 border-red-500 pl-3 mb-4">
                 {cat.title}
               </h2>
 

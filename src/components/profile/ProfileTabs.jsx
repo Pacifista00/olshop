@@ -14,7 +14,7 @@ const ProfileTabs = ({ activeTab, onChange }) => {
           onClick={() => onChange(tab.id)}
           className={`py-3 px-4 text-sm font-medium ${
             activeTab === tab.id
-              ? "border-b-4 border-blue-600 my-text-primary"
+              ? "border-b-4 border-red-600 my-text-primary"
               : ""
           }`}
         >

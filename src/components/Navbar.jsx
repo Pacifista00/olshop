@@ -32,7 +32,7 @@ function Navbar() {
       <div className="w-full md:max-w-7xl mx-auto px-4 md:px-6 py-3 flex justify-between items-center">
         {/* Logo */}
         <img
-          src="/image/logo/logofull.png"
+          src="/image/logo/favicon.svg"
           alt="Logo"
           className="h-8 cursor-pointer"
           onClick={() => navigate("/")}

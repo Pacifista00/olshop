@@ -22,6 +22,7 @@ import {
 } from "@mdi/js";
 
 import { useSidebar } from "../../context/SidebarContext";
+import { h4 } from "framer-motion/client";
 
 // Konfigurasi Navigasi
 const navItems = [
@@ -350,17 +351,9 @@ const AppSidebar = () => {
           className="flex items-center font-bold text-xl text-gray-900 dark:text-white"
         >
           {isExpanded || isHovered || isMobileOpen ? (
-            <img
-              src="/image/logo/logofull.png" // sesuaikan path logo kamu
-              alt="Logo"
-              className="h-8 mb-3"
-            />
+            <h4>Dashboard</h4>
           ) : (
-            <img
-              src="/image/logo/favicon.ico" // sesuaikan path logo kamu
-              alt="Logo"
-              className="h-8 mb-3"
-            />
+            <h4>Dashboard</h4>
           )}
         </Link>
       </div>

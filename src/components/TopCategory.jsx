@@ -11,7 +11,7 @@ function TopCategory() {
 
         <Link
           to="/kategori"
-          className="text-xs lg:text-sm font-medium text-blue-600 flex items-center gap-1 hover:text-blue-700 transition group"
+          className="text-xs lg:text-sm font-medium my-text-primary flex items-center gap-1  transition group"
         >
           Selengkapnya
           <span className="transition group-hover:translate-x-1">

@@ -354,7 +354,7 @@ const ShoppingCart = () => {
                       onClick={() =>
                         (window.location.href = "/profile/address")
                       }
-                      className="mt-2 text-xs text-blue-600 underline"
+                      className="mt-2 text-xs my-text-primary underline"
                     >
                       Atur alamat pengiriman
                     </button>
@@ -370,7 +370,7 @@ const ShoppingCart = () => {
           ${
             selectedShipping?.courier_code === opt.courier_code &&
             selectedShipping?.courier_service_code === opt.courier_service_code
-              ? "border-blue-600 bg-blue-50"
+              ? "border-red-600 bg-red-50"
               : "border-gray-200"
           }
         `}
@@ -486,7 +486,7 @@ const ShoppingCart = () => {
 
             <div className="flex justify-between text-lg font-semibold">
               <span>Total</span>
-              <span className="text-blue-600">
+              <span className="my-text-primary">
                 Rp {total.toLocaleString("id-ID")}
               </span>
             </div>

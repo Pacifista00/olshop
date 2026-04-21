@@ -39,7 +39,7 @@ const UserProfileCard = () => {
           <div className="flex gap-3 mt-4">
             <button
               onClick={() => setOpenProfileModal(true)}
-              className="px-4 py-1 text-sm bg-blue-500 text-white rounded"
+              className="px-4 py-1 text-sm my-btn-primary rounded"
             >
               Edit Profil
             </button>

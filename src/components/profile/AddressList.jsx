@@ -91,7 +91,7 @@ const AddressList = () => {
               key={address.id}
               className={`bg-white p-5 rounded-xl border transition ${
                 address.is_default
-                  ? "border-blue-500 ring-1 ring-blue-200"
+                  ? "border-red-500 ring-1 ring-red-200"
                   : "border-gray-200"
               }`}
             >
@@ -101,7 +101,7 @@ const AddressList = () => {
                     <h4 className="font-semibold">{address.recipient_name}</h4>
 
                     {address.is_default && (
-                      <span className="text-xs px-2 py-1 rounded-full bg-blue-100 my-text-primary">
+                      <span className="text-xs px-2 py-1 rounded-full bg-red-100 my-text-primary">
                         Alamat Utama
                       </span>
                     )}

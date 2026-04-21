@@ -102,8 +102,8 @@ export default function OrderGuide() {
               key={i}
               className="bg-white rounded-xl shadow p-5 flex gap-4 items-start"
             >
-              <div className="bg-blue-100 p-3 rounded-full">
-                <Icon path={step.icon} size={1} className="text-blue-600" />
+              <div className="bg-red-100 p-3 rounded-full">
+                <Icon path={step.icon} size={1} className="my-text-primary" />
               </div>
               <div>
                 <SubHeading>{step.title}</SubHeading>

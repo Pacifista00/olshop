@@ -49,7 +49,7 @@ const OrdersTab = () => {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap
               ${
                 status === tab.value
-                  ? "bg-blue-600 text-white"
+                  ? "my-btn-primary"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }
             `}

@@ -74,19 +74,53 @@ export default function MyVoucherList() {
         {/* DATA */}
         {!loading &&
           vouchers.map((voucher) => {
+            const now = new Date();
+
+            // ===== PARSE DATE =====
+            let expiredAt = null;
+            try {
+              if (voucher.expires_at) {
+                expiredAt = new Date(voucher.expires_at);
+              }
+            } catch {}
+
+            // ===== SAFE VARIABLE =====
+            const usageLimit = voucher.usage_limit;
+            const usageCount = voucher.usage_count;
+
+            // ===== LOGIC STATUS =====
+            const isExpired = expiredAt && expiredAt < now;
+
+            const isUsedUp =
+              usageLimit !== null && usageLimit !== undefined
+                ? usageCount >= usageLimit
+                : false;
+
+            const isInactive = voucher.is_active === false;
+
+            const isDisabled = isExpired || isUsedUp || isInactive;
+
+            // ===== STATUS LABEL =====
+            let statusLabel = "";
+            if (isExpired) statusLabel = "Kadaluarsa";
+            else if (isUsedUp) statusLabel = "Habis";
+            else if (isInactive) statusLabel = "Tidak Aktif";
+
             const isDiscount = voucher.type === "percentage";
 
             return (
               <div
                 key={voucher.id}
-                className="flex h-44 rounded-2xl overflow-hidden bg-white shadow-sm border hover:shadow-xl transition group"
+                className={`flex h-44 rounded-2xl overflow-hidden bg-white shadow-sm border transition group
+                  ${
+                    isDisabled
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:shadow-xl"
+                  }
+                `}
               >
                 {/* LEFT */}
-                <div
-                  className={
-                    "w-1/3 flex flex-col justify-center items-center text-white relative my-bg-primary"
-                  }
-                >
+                <div className="w-1/3 flex flex-col justify-center items-center text-white relative my-bg-primary">
                   {/* efek bolong */}
                   <div className="absolute right-0 top-0 bottom-0 flex flex-col justify-between py-2">
                     {[...Array(7)].map((_, i) => (
@@ -109,9 +143,16 @@ export default function MyVoucherList() {
                 </div>
 
                 {/* RIGHT */}
-                <div className="w-2/3 p-4 flex flex-col justify-between">
+                <div className="w-2/3 p-4 flex flex-col justify-between relative">
+                  {/* BADGE */}
+                  {isDisabled && (
+                    <div className="absolute top-2 right-2 bg-red-500 text-white text-[10px] px-2 py-1 rounded">
+                      {statusLabel}
+                    </div>
+                  )}
+
                   <div>
-                    <h3 className="font-semibold text-gray-800 ">
+                    <h3 className="font-semibold text-gray-800">
                       {voucher.name}
                     </h3>
 
@@ -129,8 +170,18 @@ export default function MyVoucherList() {
                       </code>
 
                       <button
-                        onClick={() => copyCode(voucher.code)}
-                        className="text-xs px-2 py-1 my-bg-primary text-white rounded"
+                        disabled={isDisabled}
+                        onClick={() => {
+                          if (isDisabled) return;
+                          copyCode(voucher.code);
+                        }}
+                        className={`text-xs px-2 py-1 rounded text-white
+                          ${
+                            isDisabled
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "my-bg-primary"
+                          }
+                        `}
                       >
                         Copy
                       </button>
@@ -138,11 +189,18 @@ export default function MyVoucherList() {
 
                     {/* EXPIRE */}
                     {voucher.expires_at && (
-                      <p className="text-[11px] text-gray-400">
-                        Berlaku sampai{" "}
-                        {new Date(voucher.expires_at).toLocaleDateString(
-                          "id-ID",
-                        )}
+                      <p
+                        className={`text-[11px] ${
+                          isExpired
+                            ? "text-red-500 font-semibold"
+                            : "text-gray-400"
+                        }`}
+                      >
+                        {isExpired
+                          ? "Voucher sudah kadaluarsa"
+                          : `Berlaku sampai ${new Date(
+                              voucher.expires_at,
+                            ).toLocaleDateString("id-ID")}`}
                       </p>
                     )}
                   </div>

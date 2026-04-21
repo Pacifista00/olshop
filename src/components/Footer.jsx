@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <img
-              src="/image/logo/logofull.png" // sesuaikan path logo kamu
+              src="/image/logo/favicon.svg" // sesuaikan path logo kamu
               alt="Logo"
               className="h-8 mb-3"
             />
