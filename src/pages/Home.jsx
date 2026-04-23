@@ -13,7 +13,7 @@ function Home() {
       <TopProduct />
       <TopCategory />
       <LatestProduct />
-      <RewardsSection />
+      {/* <RewardsSection /> */}
     </>
   );
 }

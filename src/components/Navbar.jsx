@@ -103,9 +103,9 @@ function Navbar() {
                 {/* DROPDOWN DESKTOP */}
                 {openProfile && (
                   <div className="absolute right-0 top-12 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
-                    <div className="px-5 py-3 bg-gray-50">
+                    <div className="px-5 py-3 bg-gray-100">
                       <p className="text-sm font-semibold">{user?.name}</p>
-                      <p className="text-xs mt-1">Total Point</p>
+                      {/* <p className="text-xs mt-1">Total Point</p>
                       <p className="flex items-center gap-2 text-sm font-bold text-green-600 mt-2">
                         <img
                           src="/image/logo/poin.png"
@@ -113,7 +113,7 @@ function Navbar() {
                           alt=""
                         />
                         {user?.point?.total_points ?? 0}
-                      </p>
+                      </p> */}
                     </div>
 
                     <div className="">

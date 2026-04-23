@@ -22,6 +22,7 @@ const ShoppingCart = () => {
   const [pointsUsed, setPointsUsed] = useState(0);
 
   const POINT_VALUE = 5000;
+  const PRODUCT_DISCOUNT_PERCENT = 2.5;
 
   // ===== VOUCHER STATE =====
   const [voucherInput, setVoucherInput] = useState("");
@@ -183,6 +184,9 @@ const ShoppingCart = () => {
   const hasUnavailableItems = useMemo(() => {
     return cart.some((item) => item.is_active === 0);
   }, [cart]);
+  const productDiscount = useMemo(() => {
+    return (subtotalAfterVoucher * PRODUCT_DISCOUNT_PERCENT) / 100;
+  }, [subtotalAfterVoucher]);
   const maxUsablePoints = Math.min(
     userPoints,
     Math.floor(subtotalAfterVoucher / POINT_VALUE),
@@ -195,9 +199,11 @@ const ShoppingCart = () => {
 
   // ===== TOTAL =====
   const total = useMemo(() => {
-    const result = subtotalAfterVoucher + shippingCost - pointDiscount;
+    const result =
+      subtotalAfterVoucher - productDiscount + shippingCost - pointDiscount;
+
     return result > 0 ? result : 0;
-  }, [subtotalAfterVoucher, shippingCost, pointDiscount]);
+  }, [subtotalAfterVoucher, productDiscount, shippingCost, pointDiscount]);
 
   // ===== APPLY VOUCHER =====
 
@@ -451,7 +457,7 @@ const ShoppingCart = () => {
             </div>
 
             {/* ===== POINT ===== */}
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <label className="text-sm font-medium">
                 Gunakan Point (tersedia:{" "}
                 {(userPoints || 0).toLocaleString("id-ID")})
@@ -480,7 +486,7 @@ const ShoppingCart = () => {
                   <span>- Rp {pointDiscount.toLocaleString("id-ID")}</span>
                 </div>
               )}
-            </div>
+            </div> */}
 
             <hr className="my-4" />
 
@@ -489,6 +495,10 @@ const ShoppingCart = () => {
               <span className="my-text-primary">
                 Rp {total.toLocaleString("id-ID")}
               </span>
+            </div>
+            <div className="flex justify-between text-sm mb-2 text-green-600">
+              <span>Diskon 2.5%</span>
+              <span>- Rp {productDiscount.toLocaleString("id-ID")}</span>
             </div>
 
             <button
