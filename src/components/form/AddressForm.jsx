@@ -10,17 +10,57 @@ const AddressForm = ({ addressId = null }) => {
   const [errors, setErrors] = useState({});
   const [alert, setAlert] = useState(null);
 
+  const [provinces, setProvinces] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [loadingRegion, setLoadingRegion] = useState(false);
+
   const [form, setForm] = useState({
     recipient_name: "",
     phone: "",
     street_address: "",
-    city: "",
     province: "",
+    city: "",
     postal_code: "",
     is_default: false,
   });
 
-  /* ================= FETCH DETAIL ================= */
+  /* ================= LOAD PROVINCES ================= */
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      try {
+        setLoadingRegion(true);
+        const res = await api.get("/regions/provinces");
+        setProvinces(res.data.data || []);
+      } catch (err) {
+        console.error("Failed load provinces", err);
+      } finally {
+        setLoadingRegion(false);
+      }
+    };
+
+    fetchProvinces();
+  }, []);
+
+  /* ================= LOAD CITIES WHEN PROVINCE CHANGE ================= */
+  useEffect(() => {
+    if (!form.province) return;
+
+    const fetchCities = async () => {
+      try {
+        setLoadingRegion(true);
+        const res = await api.get(`/regions/cities/${form.province}`);
+        setCities(res.data.data || []);
+      } catch (err) {
+        console.error("Failed load cities", err);
+      } finally {
+        setLoadingRegion(false);
+      }
+    };
+
+    fetchCities();
+  }, [form.province]);
+
+  /* ================= FETCH DETAIL (EDIT) ================= */
   useEffect(() => {
     if (!isEdit) return;
 
@@ -33,15 +73,15 @@ const AddressForm = ({ addressId = null }) => {
           recipient_name: data.recipient_name,
           phone: data.phone,
           street_address: data.street_address,
-          city: data.city,
-          province: data.province,
+          province: data.province_code || "",
+          city: data.city_code || "",
           postal_code: data.postal_code,
           is_default: Boolean(data.is_default),
         });
       } catch (err) {
         setAlert({
           type: "error",
-          text: err.response?.data?.message || "Gagal mengambil data alamat",
+          text: "Gagal mengambil data alamat",
         });
       }
     };
@@ -52,9 +92,11 @@ const AddressForm = ({ addressId = null }) => {
   /* ================= HANDLE ================= */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
+      ...(name === "province" ? { city: "" } : {}), // reset city kalau province berubah
     }));
   };
 
@@ -65,10 +107,20 @@ const AddressForm = ({ addressId = null }) => {
     setAlert(null);
 
     try {
+      const selectedProvince = provinces.find((p) => p.code === form.province);
+
+      const selectedCity = cities.find((c) => c.code === form.city);
+
+      const payload = {
+        ...form,
+        province: selectedProvince?.name || "",
+        city: selectedCity?.name ? cleanCityName(selectedCity.name) : "",
+      };
+
       if (isEdit) {
-        await api.put(`/addresses/update/${addressId}`, form);
+        await api.put(`/addresses/update/${addressId}`, payload);
       } else {
-        await api.post("/addresses/store", form);
+        await api.post("/addresses/store", payload);
       }
 
       navigate("/profile/address");
@@ -89,12 +141,18 @@ const AddressForm = ({ addressId = null }) => {
       setLoading(false);
     }
   };
+  const cleanCityName = (name) => {
+    return name
+      .replace(/^Kabupaten\s+/i, "")
+      .replace(/^Kota\s+/i, "")
+      .trim();
+  };
 
   /* ================= UI ================= */
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow">
       {alert && (
-        <div className="mb-4 bg-red-100 text-red-700 border border-red-200 px-4 py-3 rounded">
+        <div className="mb-4 bg-red-100 text-red-700 border px-4 py-3 rounded">
           {alert.text}
         </div>
       )}
@@ -110,6 +168,7 @@ const AddressForm = ({ addressId = null }) => {
         onChange={handleChange}
         error={errors.recipient_name}
       />
+
       <Input
         label="Nomor Telepon"
         name="phone"
@@ -117,6 +176,7 @@ const AddressForm = ({ addressId = null }) => {
         onChange={handleChange}
         error={errors.phone}
       />
+
       <Textarea
         label="Alamat Lengkap"
         name="street_address"
@@ -125,21 +185,44 @@ const AddressForm = ({ addressId = null }) => {
         error={errors.street_address}
       />
 
+      {/* ================= PROVINCE & CITY ================= */}
       <div className="grid grid-cols-2 gap-4">
-        <Input
-          label="Kota"
-          name="city"
-          value={form.city}
-          onChange={handleChange}
-          error={errors.city}
-        />
-        <Input
-          label="Provinsi"
-          name="province"
-          value={form.province}
-          onChange={handleChange}
-          error={errors.province}
-        />
+        {/* PROVINCE */}
+        <div className="mb-4">
+          <label className="block mb-1 font-medium">Provinsi</label>
+          <select
+            name="province"
+            value={form.province}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+          >
+            <option value="">Pilih Provinsi</option>
+            {provinces.map((p) => (
+              <option key={p.code} value={p.code}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* CITY */}
+        <div className="mb-4">
+          <label className="block mb-1 font-medium">Kota / Kabupaten</label>
+          <select
+            name="city"
+            value={form.city}
+            onChange={handleChange}
+            className="w-full border px-3 py-2 rounded"
+            disabled={!form.province || loadingRegion}
+          >
+            <option value="">Pilih Kota</option>
+            {cities.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <Input
@@ -168,6 +251,7 @@ const AddressForm = ({ addressId = null }) => {
         >
           {loading ? "Menyimpan..." : "Simpan"}
         </button>
+
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -180,12 +264,13 @@ const AddressForm = ({ addressId = null }) => {
   );
 };
 
+/* ================= COMPONENT INPUT ================= */
 const Input = ({ label, error, ...props }) => (
   <div className="mb-4">
     <label className="block mb-1 font-medium">{label}</label>
     <input
       {...props}
-      className={`w-full border px-3 py-2 rounded ${error && "border-red-500"}`}
+      className={`w-full border px-3 py-2 rounded ${error ? "border-red-500" : ""}`}
     />
     {error && <p className="text-xs text-red-500">{error}</p>}
   </div>
@@ -197,7 +282,7 @@ const Textarea = ({ label, error, ...props }) => (
     <textarea
       {...props}
       rows={3}
-      className={`w-full border px-3 py-2 rounded ${error && "border-red-500"}`}
+      className={`w-full border px-3 py-2 rounded ${error ? "border-red-500" : ""}`}
     />
     {error && <p className="text-xs text-red-500">{error}</p>}
   </div>
