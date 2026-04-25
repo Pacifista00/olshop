@@ -173,20 +173,23 @@ const ShoppingCart = () => {
     setVoucherInfo(null);
   };
 
+  const productDiscount = Math.floor(
+    (cartSubtotal * PRODUCT_DISCOUNT_PERCENT) / 100,
+  );
+  const subtotalAfterProductDiscount = useMemo(() => {
+    return Math.max(0, cartSubtotal - productDiscount);
+  }, [cartSubtotal, productDiscount]);
   const subtotalAfterVoucher = useMemo(() => {
-    return Math.max(0, cartSubtotal - voucherDiscount);
-  }, [cartSubtotal, voucherDiscount]);
+    return Math.max(0, subtotalAfterProductDiscount - voucherDiscount);
+  }, [subtotalAfterProductDiscount, voucherDiscount]);
   const pointDiscount = useMemo(() => {
     const requestedDiscount = pointsUsed * POINT_VALUE;
-
     return Math.min(requestedDiscount, subtotalAfterVoucher);
   }, [pointsUsed, subtotalAfterVoucher]);
   const hasUnavailableItems = useMemo(() => {
     return cart.some((item) => item.is_active === 0);
   }, [cart]);
-  const productDiscount = useMemo(() => {
-    return (subtotalAfterVoucher * PRODUCT_DISCOUNT_PERCENT) / 100;
-  }, [subtotalAfterVoucher]);
+
   const maxUsablePoints = Math.min(
     userPoints,
     Math.floor(subtotalAfterVoucher / POINT_VALUE),
@@ -199,11 +202,10 @@ const ShoppingCart = () => {
 
   // ===== TOTAL =====
   const total = useMemo(() => {
-    const result =
-      subtotalAfterVoucher - productDiscount + shippingCost - pointDiscount;
+    const result = subtotalAfterVoucher + shippingCost - pointDiscount;
 
     return result > 0 ? result : 0;
-  }, [subtotalAfterVoucher, productDiscount, shippingCost, pointDiscount]);
+  }, [subtotalAfterVoucher, shippingCost, pointDiscount]);
 
   // ===== APPLY VOUCHER =====
 
@@ -326,9 +328,22 @@ const ShoppingCart = () => {
           <div className="w-full lg:w-1/4 bg-white p-6 rounded shadow h-fit">
             <h2 className="font-bold mb-4">Ringkasan</h2>
 
-            <div className="flex justify-between text-sm mb-2">
+            <div className="flex justify-between text-sm mb-2 items-start">
               <span>Subtotal</span>
-              <span>Rp {cartSubtotal.toLocaleString("id-ID")}</span>
+
+              <div className="text-right">
+                {/* harga asli */}
+                {productDiscount > 0 && (
+                  <div className="text-gray-400 line-through text-xs">
+                    Rp {cartSubtotal.toLocaleString("id-ID")}
+                  </div>
+                )}
+
+                {/* harga setelah diskon */}
+                <div className="font-semibold">
+                  Rp {subtotalAfterProductDiscount.toLocaleString("id-ID")}
+                </div>
+              </div>
             </div>
 
             <div className="flex justify-between text-sm mb-2">
